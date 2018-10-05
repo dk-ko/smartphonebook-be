@@ -1,4 +1,4 @@
-package com.sode.phonebook.Controller;
+package com.sode.phonebook.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
