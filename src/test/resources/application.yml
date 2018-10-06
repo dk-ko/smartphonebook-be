@@ -6,9 +6,27 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        
 # local 환경
 ---
 spring:
   profiles: local
   jpa:
     show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+
+# \uc6b4\uc601 \ud658\uacbd
+---
+spring.profiles: set1
+spring.profiles.include: real-db
+
+server:
+  port: 8085
+
+---
+spring.profiles: set2
+spring.profiles.include: real-db
+
+server:
+  port: 8086
