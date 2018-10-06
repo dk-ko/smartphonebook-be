@@ -1,0 +1,31 @@
+spring:
+  profiles:
+    active: local # \uae30\ubcf8 \ud658\uacbd \uc120\ud0dd
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+
+# local \ud658\uacbd
+---
+spring:
+  profiles: local
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+
+# \uc6b4\uc601 \ud658\uacbd
+---
+spring.profiles: set1
+spring.profiles.include: real-db
+
+server:
+  port: 8085
+
+---
+spring.profiles: set2
+spring.profiles.include: real-db
+
+server:
+  port: 8086
