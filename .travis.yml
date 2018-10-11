@@ -16,6 +16,11 @@ notifications:
   slack:
     secure: jVp5SkFMvXf2zkLVLBmgzwkVQ+oL2XSNpFBsWjLL6OUAlYvlrDQ4Wh5se6xNikM/awhqoZrO8O5fMssTSgQha23Rd6vxfD4tsb5VDwGD9NNW4/sPH4Lcr46nCjGNOtbttDb63NbOqcUnOGmZPLs2Vy1fz5q0kRYMHeB/73r+pd1wuqqk/0b+Z5VkAguPqVD5enqUuw2IMKhjeyqMmM++FPazojZfqGCTzqeLjJ2gL42hNnIvqnMB3PQMoDG6NLFcH9iEvx16/5hp/UsD0915h65VC4nsckKbwM/upsJOnNEZb95oAARO98yddx8d+VVn3mGrY4D8380/Xo8a/zBbtdC/UDZ2ooqXWzq2Pr4S/P9Na+xBwLC9wH+wgmV33cTtp/6FBsHJglnqO1/MQuB0+DEr0kKkrMzqFgQ20pk1zVlMRlMXkKqYtwiAB06l39yZ3gHF1aNUBVCijps3I7KG2oElznwv4QuMYxhh6uUHSLBZsXej22i2HDON/wVnAPKUOEn5N2Mv/vpnNi/lb4RT+sYyrLDQ0Gj+ZCQaqu02Nv8BkxpIz4Ei++rC3bgOzEuTV+77BGK0tifQ6TPk3Orc40N+4CKB5vb/tswMpzPR3xh9nJrDegU/IFO/UUivoiB1xIPtD9vVrQChtowS/7KYuZKGfGVM5n5QiBKUR7Bh5Jg=
 
+before_deploy:
+  - zip -r smartphonebook *
+  - mkdir -p spb_deploy
+  - mv smartphonebook.zip spb_deploy/smartphonebook.zip
+
 deploy:
   - provider: s3
     access_key_id: $AWS_ACCESS_KEY # Travis repo settings에 설정된 값
@@ -24,6 +29,7 @@ deploy:
     region: ap-northeast-2
     skip_cleanup: true
     acl: public_read
+    local_dir: spb_deploy # before_deploy에서 생성한 디렉토리 
     wait-until-deployed: true
     on:
       repo: koda93/smartphonebook-be #Github 주소
