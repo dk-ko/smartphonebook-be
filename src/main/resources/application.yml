@@ -1,31 +1,33 @@
+# local
 spring:
   profiles:
-    active: local # \uae30\ubcf8 \ud658\uacbd \uc120\ud0dd
-  jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    active: local # 기본 환경 선택
 
-# local \ud658\uacbd
----
-spring:
-  profiles: local
   jpa:
-    show-sql: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
+    generate-ddl: false 
+    show-sql: true
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
 
-# \uc6b4\uc601 \ud658\uacbd
+  datasource:
+        url: jdbc:mariadb://localhost:3306/contact
+        username: root
+        password: test123 
+        driver-class-name: org.mariadb.jdbc.Driver
+        
+# local 환경
 ---
-spring.profiles: set1
-spring.profiles.include: real-db
+spring.profiles: local
 
 server:
   port: 8085
 
+# production 환경 
 ---
-spring.profiles: set2
+spring.profiles: prod
 spring.profiles.include: real-db
 
 server:
-  port: 8086
+  port: 8085

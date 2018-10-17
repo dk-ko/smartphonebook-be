@@ -7,10 +7,10 @@ import javax.persistence.Id;
 
 import lombok.Data;
 
-@Data
 @Entity
+@Data
 public class User {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	int id;
 }

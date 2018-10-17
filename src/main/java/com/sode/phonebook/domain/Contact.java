@@ -20,20 +20,17 @@ public class Contact {
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
-	private User user; // not null
+	private User user;
 	
 	@Column(nullable = false)
-	private String name; // not null
+	private String name;
 	
-	private String memo; // default null
-	private String birth; // default null
+	private String memo;
+	private String birth;
 	
 	@Lob
 	private byte[] photo;
 	
-	@Column(nullable = false)
-	private int favorite; // not null, default 0
-	
-	private String site; // default null
-	
+	private int favorite;
+	private String site;
 }
