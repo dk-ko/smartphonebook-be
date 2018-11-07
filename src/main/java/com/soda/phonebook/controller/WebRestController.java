@@ -18,7 +18,7 @@ public class WebRestController {
 	
 	@GetMapping("/hello")
 	public String hello() {
-		return "HelloWorld Ver.3";
+		return "HelloWorld Ver.4";
 	}
 	
 	@GetMapping("/test")
