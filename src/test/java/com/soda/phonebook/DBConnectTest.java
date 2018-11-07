@@ -1,9 +1,10 @@
-package com.sode.phonebook;
+package com.soda.phonebook;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 
 import org.junit.Test;
+
 
 public class DBConnectTest {
 	// local 

@@ -1,12 +1,12 @@
-package com.sode.phonebook.controller;
+package com.soda.phonebook.controller;
 
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sode.phonebook.domain.Contact;
-import com.sode.phonebook.repository.ContactRepository;
+import com.soda.phonebook.domain.Contact;
+import com.soda.phonebook.repository.ContactRepository;
 
 import lombok.AllArgsConstructor;
 

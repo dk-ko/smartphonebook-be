@@ -20,7 +20,15 @@ spring:
         username: root
         password: test123 
         driver-class-name: org.mariadb.jdbc.Driver
+  output:
+    ansi:
+      enabled: always
 
+logging:
+  level:
+    org.springframework.web.client: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type: TRACE
   
   
 

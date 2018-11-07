@@ -1,4 +1,4 @@
-package com.sode.phonebook;
+package com.soda.phonebook;
 
 import static org.junit.Assert.assertTrue;
 

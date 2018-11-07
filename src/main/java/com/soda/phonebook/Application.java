@@ -1,4 +1,4 @@
-package com.sode.phonebook;
+package com.soda.phonebook;
 
 //import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
