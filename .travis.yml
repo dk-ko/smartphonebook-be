@@ -10,6 +10,10 @@ cache:
   - "$HOME/.gradle"
 addons:
   mariadb: '10.3'
+before_install:
+  - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('test') where User='testuser'; update user set plugin='test';FLUSH PRIVILEGES;"
+  - sudo mysql_upgrade -u testuser -ptest
+  - sudo service mysql restart
 script: "./gradlew clean build"
 notifications:
   email:
