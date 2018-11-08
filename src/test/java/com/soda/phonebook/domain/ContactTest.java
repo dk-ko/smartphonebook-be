@@ -13,9 +13,9 @@ public class ContactTest {
 	@Test
 	public void testCreateContact() {
 		Contact contact = Contact.builder()
-				.id(MockEntity.mock(Contact.class, 1l).id)
 				.name("koda").build();
 		
+		assertThat(contact.getId(), is(nullValue()));
 		assertThat(contact.getName(), is("koda"));
 	}
 	

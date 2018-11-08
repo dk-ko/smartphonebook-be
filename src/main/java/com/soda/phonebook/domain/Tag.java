@@ -1,11 +1,12 @@
 package com.soda.phonebook.domain;
 
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -16,23 +17,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="user")
+@Table(name="tag")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class User extends BaseEntity{
+public class Tag extends BaseEntity{
 	
 	@Column(name="name", nullable=false)
 	private String name;
 	
-	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="tag", fetch=FetchType.LAZY)
 	@JsonIgnore
-	private Set<Contact> contacts;
+	private List<TagContact> tagContacts; 
 	
-	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
-	@JsonIgnore
-	private Set<Tag> tags;
-	
-	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
-	@JsonIgnore
-	private List<DataType> dataTypes;
+	@ManyToOne
+	@JoinColumn(name="user_id")
+	private User user;
 }

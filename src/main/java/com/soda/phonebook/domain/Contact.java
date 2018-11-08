@@ -1,5 +1,7 @@
 package com.soda.phonebook.domain;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -7,8 +9,10 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.soda.phonebook.domain.VO.Mark;
 
 import lombok.AccessLevel;
@@ -22,10 +26,6 @@ import lombok.NoArgsConstructor;
 @Getter
 public class Contact extends BaseEntity{
 	
-//	@Id
-//	@GeneratedValue(strategy = GenerationType.IDENTITY)
-//	private Long id;
-
 	@ManyToOne
 	@JoinColumn(name ="user_id")
 	private User user;
@@ -44,11 +44,22 @@ public class Contact extends BaseEntity{
 	@Enumerated(EnumType.STRING)
 	private Mark favorite = Mark.N;
 	
-	// 이 밑부터 digits. infoes, tags
+	
+	@OneToMany(mappedBy="contact")
+	@JsonIgnore
+	List<Digit> digits;
+	
+	@OneToMany(mappedBy="contact")
+	@JsonIgnore
+	List<Info> infoes;
+	
+	@OneToMany(mappedBy="contact")
+	@JsonIgnore
+	List<TagContact> tagContacts;
+	
 	
 	@Builder
-	public Contact(Long id, String name, String memo, byte[] photo, Mark favorite) {
-		this.id = id;
+	public Contact(String name, String memo, byte[] photo, Mark favorite) {
 		this.name = name;
 		this.memo = memo;
 		this.photo = photo;
