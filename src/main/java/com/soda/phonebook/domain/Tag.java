@@ -1,7 +1,7 @@
 package com.soda.phonebook.domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
@@ -38,11 +38,16 @@ public class Tag extends BaseEntity{
 			joinColumns = @JoinColumn(name="tag_id"),
 			inverseJoinColumns = @JoinColumn(name="contact_id"))
 	@OrderBy("name asc")
-	private List<Contact> contacts = new ArrayList<Contact>();
+	private Set<Contact> contacts = new HashSet<Contact>();
 	
 	@Builder
 	public Tag (String name, User user){
 		this.name = name;
 		this.user = user;
+	}
+	
+	public void addContact(Contact contact) {
+		this.contacts.add(contact);
+		// 
 	}
 }

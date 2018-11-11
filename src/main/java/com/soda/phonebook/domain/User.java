@@ -1,6 +1,6 @@
 package com.soda.phonebook.domain;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -48,11 +48,15 @@ public class User extends BaseEntity{
 			joinColumns = @JoinColumn(name="user_id"),
 			inverseJoinColumns = @JoinColumn(name="contact_id"))
 	@OrderBy("id desc")
-	private List<Contact> favorites = new ArrayList<Contact>();
+	private Set<Contact> favorites = new HashSet<Contact>();
 	
 	@Builder
 	public User(String name) {
 		this.name = name;
+	}
+	
+	public void addFavorite(Contact contact) {
+		this.favorites.add(contact);
 	}
 	
 	public void updateName(String name) {

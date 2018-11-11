@@ -38,4 +38,8 @@ public abstract class Info extends BaseEntity{
 		this.contents = contents;
 		this.category = category;
 	}
+	
+	public void updateCategory(Category category) {
+		this.category = category;
+	}
 }

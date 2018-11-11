@@ -8,7 +8,7 @@ cache:
   directories:
   - "$HOME/.m2/repository"
   - "$HOME/.gradle"
-script: "./gradlew clean build -x test" # 우선 테스트 제외 
+script: "./gradlew clean build" 
 notifications:
   email:
     recipients:

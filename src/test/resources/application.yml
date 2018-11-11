@@ -4,6 +4,8 @@ spring:
     active: test # 기본 환경 선택
   h2:
     console:
+      settings:
+        trace: true
       enabled: true
 
   datasource:

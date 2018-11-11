@@ -1,7 +1,8 @@
 package com.soda.phonebook.domain;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
@@ -51,7 +52,11 @@ public class Contact extends BaseEntity{
 	List<Info> infoes;
 	
 	@ManyToMany(mappedBy="contacts")
-	private List<Tag> tags = new ArrayList<Tag>();
+	private Set<Tag> tags = new HashSet<Tag>();
+	
+	public void addTag(Tag tag) {
+		this.tags.add(tag);
+	}
 	
 	@Builder
 	public Contact(User user,String name, String memo, byte[] photo) {
