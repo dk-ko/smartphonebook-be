@@ -5,12 +5,13 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.soda.phonebook.domain.VO.Mark;
-import com.soda.phonebook.domain.VO.PhoneNumber;
+import com.soda.phonebook.domain.VO.Numbers;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -24,30 +25,32 @@ import lombok.NoArgsConstructor;
 public class Digit extends BaseEntity{
 	
 	@ManyToOne
-	@JoinColumn(name="contact_id")
+	@JoinColumn(name="contact_id",foreignKey = @ForeignKey(name="fk_digit_contact"))
 	private Contact contact;
 	
 	@Embedded 
-	@Column(name="phoneNumber", nullable=false)
-	private PhoneNumber phoneNumber;
+	@Column(name="numbers", nullable=false)
+	private Numbers numbers;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name="representation", nullable=false)
 	private Mark representation = Mark.N;
 	
 	@ManyToOne
-	@JoinColumn(name="data_type_id")
-	private DataType dataType;
+	@JoinColumn(name="category_id",foreignKey = @ForeignKey(name="fk_digit_category"))
+	private Category category;
 
 	
 	@Builder
-	public Digit(PhoneNumber phoneNumber, Mark representation) {
-		this.phoneNumber = phoneNumber;
+	public Digit(Contact contact, Numbers numbers, Mark representation, Category category) {
+		this.contact = contact;
+		this.numbers = numbers;
 		this.representation = representation;
+		this.category = category;
 	}
 	
-	public void updatePhoneNumber(PhoneNumber phoneNumber) {
-		this.phoneNumber = phoneNumber;
+	public void updateNumbers(Numbers numbers) {
+		this.numbers = numbers;
 	}
 	
 	public void updateRepresentation(Mark representation) {

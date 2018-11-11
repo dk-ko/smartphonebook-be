@@ -10,13 +10,13 @@ import lombok.NoArgsConstructor;
 @Embeddable
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class PhoneNumber {
+public class Numbers {
 	private String first;
 	private String second;
 	private String third;
 	
 	@Builder
-	public PhoneNumber(String first, String second, String third) {
+	public Numbers(String first, String second, String third) {
 		this.first = first;
 		this.second = second;
 		this.third = third;

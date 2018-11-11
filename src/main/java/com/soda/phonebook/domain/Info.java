@@ -3,6 +3,7 @@ package com.soda.phonebook.domain;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
@@ -22,17 +23,19 @@ import lombok.NoArgsConstructor;
 public abstract class Info extends BaseEntity{
 	
 	@ManyToOne
-	@JoinColumn(name="contact_id")
+	@JoinColumn(name="contact_id",foreignKey = @ForeignKey(name="fk_info_contact"))
 	private Contact contact;
 	
 	@Column(name="contents", nullable=false)
 	private String contents;
 	
 	@ManyToOne
-	@JoinColumn(name="data_type_id")
-	private DataType dataType;
+	@JoinColumn(name="category_id",foreignKey = @ForeignKey(name="fk_info_category"))
+	private Category category;
 	
-	public Info(String contents) {
+	public Info(Contact contact, String contents, Category category) {
+		this.contact = contact;
 		this.contents = contents;
+		this.category = category;
 	}
 }

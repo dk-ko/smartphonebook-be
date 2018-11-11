@@ -1,19 +1,20 @@
 package com.soda.phonebook.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.ForeignKey;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.soda.phonebook.domain.VO.Mark;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -22,12 +23,13 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name="contact")
+@AttributeOverride(name="id", column=@Column(name="contact_id"))
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Contact extends BaseEntity{
 	
 	@ManyToOne
-	@JoinColumn(name ="user_id")
+	@JoinColumn(name="user_id",foreignKey = @ForeignKey(name="fk_contact_user"))
 	private User user;
 	
 	@Column(name="name", nullable=false)
@@ -40,11 +42,6 @@ public class Contact extends BaseEntity{
 	@Column(name="photo")
 	private byte[] photo = null;
 	
-	@Column(name="favorite", nullable=false)
-	@Enumerated(EnumType.STRING)
-	private Mark favorite = Mark.N;
-	
-	
 	@OneToMany(mappedBy="contact")
 	@JsonIgnore
 	List<Digit> digits;
@@ -53,24 +50,21 @@ public class Contact extends BaseEntity{
 	@JsonIgnore
 	List<Info> infoes;
 	
-	@OneToMany(mappedBy="contact")
-	@JsonIgnore
-	List<TagContact> tagContacts;
-	
+	@ManyToMany(mappedBy="contact")
+	private List<Tag> tags = new ArrayList<Tag>();
 	
 	@Builder
-	public Contact(String name, String memo, byte[] photo, Mark favorite) {
+	public Contact(User user,String name, String memo, byte[] photo) {
+		this.user = user;
 		this.name = name;
 		this.memo = memo;
 		this.photo = photo;
-		this.favorite = favorite;
 	}
 
-	public void updateAllInfo(String name, String memo, byte[] photo, Mark favorite) {
+	public void updateAllInfo(String name, String memo, byte[] photo) {
 		this.name = name;
 		this.memo = memo;
 		this	.photo = photo;
-		this.favorite = favorite;
 	}
 	
 	public void updateName(String name) {
@@ -83,9 +77,5 @@ public class Contact extends BaseEntity{
 	
 	public void updatePhoto(byte[] photo) {
 		this.photo = photo;
-	}
-	
-	public void updateFavorite(Mark favorite) {
-		this.favorite = favorite;
 	}
 }

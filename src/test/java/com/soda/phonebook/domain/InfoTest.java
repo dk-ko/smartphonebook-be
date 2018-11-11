@@ -5,18 +5,34 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import com.soda.phonebook.domain.VO.Type;
 import com.soda.phonebook.domain.info.Address;
 
 public class InfoTest {
 
 	@Test
 	public void testAddressCreate() {
-		Info address = Address.builder().contents("seoul").build();
+		User user = MockEntity.mock(User.class, 1l);
+		user.updateName("고다경");
 		
-		assertThat(address.getContents(), is("seoul"));
-		// assertThat(address.getType(), is(Type.ADDRESS));
+		Category c1 = Category.builder()
+				.name("집")
+				.type(Type.ADDRESS)
+				.user(user).build();
+		
+		Category c2 = Category.builder()
+				.name("회사")
+				.type(Type.ADDRESS)
+				.user(user).build();
+		
+		Info address = Address.builder()
+				.contents("서울 구로구 항동")
+				.category(c2)
+				.build();
+		
+		assertThat(address.getContents(), is("서울 구로구 항동"));
+		assertThat(address.getCategory().getName(), is("회사"));
+		assertThat(address.getCategory().getType(), is(Type.ADDRESS));
 	}
-	
-	// DTYPE으로 조회하는 TEST
 
 }

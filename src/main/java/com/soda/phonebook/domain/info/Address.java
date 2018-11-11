@@ -3,6 +3,8 @@ package com.soda.phonebook.domain.info;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
+import com.soda.phonebook.domain.Category;
+import com.soda.phonebook.domain.Contact;
 import com.soda.phonebook.domain.Info;
 
 import lombok.Builder;
@@ -12,7 +14,7 @@ import lombok.Builder;
 public class Address extends Info{
 	
 	@Builder
-	public Address(String contents) {
-		super(contents);
+	public Address(Contact contact, String contents, Category category) {
+		super(contact, contents, category);
 	}
 }

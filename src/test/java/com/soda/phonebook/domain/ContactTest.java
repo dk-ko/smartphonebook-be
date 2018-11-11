@@ -6,8 +6,6 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import com.soda.phonebook.domain.VO.Mark;
-
 public class ContactTest {
 
 	@Test
@@ -29,7 +27,6 @@ public class ContactTest {
 		assertThat(contact.getName(), is("koda"));
 		assertThat(contact.getMemo(), is(nullValue()));
 		assertThat(contact.getPhoto(), is(nullValue()));
-		assertThat(contact.getFavorite(), is(Mark.N));
 	}
 
 }

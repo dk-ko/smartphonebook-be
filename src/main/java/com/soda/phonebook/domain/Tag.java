@@ -1,23 +1,27 @@
 package com.soda.phonebook.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name="tag")
+@AttributeOverride(name="id", column=@Column(name="tag_id"))
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Tag extends BaseEntity{
@@ -25,11 +29,20 @@ public class Tag extends BaseEntity{
 	@Column(name="name", nullable=false)
 	private String name;
 	
-	@OneToMany(mappedBy="tag", fetch=FetchType.LAZY)
-	@JsonIgnore
-	private List<TagContact> tagContacts; 
-	
 	@ManyToOne
-	@JoinColumn(name="user_id")
+	@JoinColumn(name="user_id",foreignKey = @ForeignKey(name="fk_tag_user"))
 	private User user;
+	
+	@ManyToMany
+	@JoinTable(name="tag_contact",
+			joinColumns = @JoinColumn(name="tag_id"),
+			inverseJoinColumns = @JoinColumn(name="contact_id"))
+	@OrderBy("name asc")
+	private List<Contact> contacts = new ArrayList<Contact>();
+	
+	@Builder
+	public Tag (String name, User user){
+		this.name = name;
+		this.user = user;
+	}
 }
