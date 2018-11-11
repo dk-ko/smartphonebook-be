@@ -1,6 +1,7 @@
 package com.soda.phonebook.domain;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -10,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.soda.phonebook.converter.MarkAttributeConverter;
 import com.soda.phonebook.domain.VO.Mark;
 import com.soda.phonebook.domain.VO.Numbers;
 
@@ -32,9 +34,10 @@ public class Digit extends BaseEntity{
 	@Column(name="numbers", nullable=false)
 	private Numbers numbers;
 	
+	@Convert(converter = MarkAttributeConverter.class)
 	@Enumerated(EnumType.STRING)
-	@Column(name="representation", nullable=false)
-	private Mark representation = Mark.N;
+	@Column(name="representation")
+	private Mark representation;
 	
 	@ManyToOne
 	@JoinColumn(name="category_id",foreignKey = @ForeignKey(name="fk_digit_category"))
@@ -47,6 +50,7 @@ public class Digit extends BaseEntity{
 		this.numbers = numbers;
 		this.representation = representation;
 		this.category = category;
+		this.representation = Mark.N;
 	}
 	
 	public void updateNumbers(Numbers numbers) {

@@ -1,6 +1,7 @@
 package com.soda.phonebook.domain;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 //import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -10,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.soda.phonebook.converter.TypeAttributeConverter;
 //import com.soda.phonebook.converter.TypeAttributeConverter;
 import com.soda.phonebook.domain.VO.Type;
 
@@ -27,10 +29,10 @@ public class Category extends BaseEntity{
 	@Column(name="name", nullable=false)
 	private String name;
 	
-	//@Convert(converter = TypeAttributeConverter.class)
+	@Convert(converter = TypeAttributeConverter.class)
 	@Enumerated(EnumType.STRING)
 	@Column(name="type", nullable=false)
-	private Type type; // default 값 설정해야 
+	private Type type;
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id", foreignKey = @ForeignKey(name="fk_category_user"))
