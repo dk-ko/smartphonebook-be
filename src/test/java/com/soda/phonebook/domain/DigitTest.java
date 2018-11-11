@@ -40,7 +40,9 @@ public class DigitTest {
 				.third("5678").build();
 		
 		digit = Digit.builder()
-				.numbers(numbers).build();
+				.numbers(numbers)
+				.representation(Mark.N)
+				.build();
 	}
 	
 	@Test
@@ -50,7 +52,7 @@ public class DigitTest {
 		// native query 
 		Query query = em.createNativeQuery(
 				"select * from digit where representation = 0", Digit.class);
-		assertThat(query.getFirstResult(), is(0)); // default value(Mark.N) is 0.
+		assertThat(query.getFirstResult(), is(0)); // Mark.N is 0.
 		
 		// confirm
 		assertThat(savedDigit.getRepresentation(), is(Mark.N));

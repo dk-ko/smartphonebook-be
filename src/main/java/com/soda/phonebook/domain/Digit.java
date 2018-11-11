@@ -37,7 +37,7 @@ public class Digit extends BaseEntity{
 	@Convert(converter = MarkAttributeConverter.class)
 	@Enumerated(EnumType.STRING)
 	@Column(name="representation")
-	private Mark representation;
+	private Mark representation = Mark.N;
 	
 	@ManyToOne
 	@JoinColumn(name="category_id",foreignKey = @ForeignKey(name="fk_digit_category"))
@@ -50,7 +50,6 @@ public class Digit extends BaseEntity{
 		this.numbers = numbers;
 		this.representation = representation;
 		this.category = category;
-		this.representation = Mark.N;
 	}
 	
 	public void updateNumbers(Numbers numbers) {
