@@ -50,7 +50,7 @@ public class Contact extends BaseEntity{
 	@JsonIgnore
 	List<Info> infoes;
 	
-	@ManyToMany(mappedBy="contact")
+	@ManyToMany(mappedBy="contacts")
 	private List<Tag> tags = new ArrayList<Tag>();
 	
 	@Builder
