@@ -6,8 +6,6 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,17 +18,17 @@ import com.soda.phonebook.repository.TagRepository;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class ContactTest {
-	
+public class JoinTableTest {
+
 	@Autowired
 	ContactRepository contactRepository;
 	
 	@Autowired
 	TagRepository tagRepository;
 	
-//	private Contact contact;
-	private List<Tag> tags = new ArrayList<Tag>();;
-
+	private Contact contact;
+	private List<Tag> tags = new ArrayList<Tag>();
+	
 	@Before
 	public void setUp() {
 		tags.add(Tag.builder()
@@ -41,34 +39,32 @@ public class ContactTest {
 				.name("동네친구")
 				.build());
 		
-//		contact = Contact.builder()
-//				.name("연락처1")
-//				.build();
-	}
-	
-	
-	
-	@Test
-	@Transactional
-	public void testCreateContact() {
-		Contact contact = Contact.builder()
-				.name("koda").build();
-		
-		assertThat(contact.getId(), is(nullValue()));
-		assertThat(contact.getName(), is("koda"));
+		contact = Contact.builder()
+				.name("연락처1")
+				.build();
 	}
 	
 	@Test
-	@Transactional
-	public void testUpdateContactName() {
-		Contact contact = MockEntity.mock(Contact.class, 1l);
+	public void test_tag_조인테이블() throws Exception{
+		List<Tag> savedTags = new ArrayList<Tag>();
+		savedTags.add(tagRepository.save(tags.get(0)));
+		savedTags.add(tagRepository.save(tags.get(1)));
 		
-		contact.updateName("koda");
+		// tag - contact 관계 설정 
+		savedTags.get(0).addContact(contact);
+		savedTags.get(1).addContact(contact);
 		
-		assertThat(contact.getId(), is(1l));
-		assertThat(contact.getName(), is("koda"));
-		assertThat(contact.getMemo(), is(nullValue()));
-		assertThat(contact.getPhoto(), is(nullValue()));
+		// contact - tag 관계 설정 
+		contact.addTag(savedTags.get(0));
+		contact.addTag(savedTags.get(1));
+		
+		contactRepository.save(contact);
+		
+		Contact afterContact = contactRepository.findOne(1l);
+		Tag afterTag = tagRepository.findOne(1l);
+		
+		assertThat(afterContact.getTags().size(), is(2));
+		assertThat(afterTag.getContacts().size(), is(1));
 	}
 
 }
