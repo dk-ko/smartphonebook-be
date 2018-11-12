@@ -6,6 +6,8 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,6 +47,7 @@ public class ContactTest {
 	}
 	
 	@Test
+	@Transactional
 	public void test_tag_조인테이블() throws Exception{
 		List<Tag> savedTags = new ArrayList<Tag>();
 		savedTags.add(tagRepository.save(tags.get(0)));
@@ -68,6 +71,7 @@ public class ContactTest {
 	}
 	
 	@Test
+	@Transactional
 	public void testCreateContact() {
 		Contact contact = Contact.builder()
 				.name("koda").build();
@@ -77,6 +81,7 @@ public class ContactTest {
 	}
 	
 	@Test
+	@Transactional
 	public void testUpdateContactName() {
 		Contact contact = MockEntity.mock(Contact.class, 1l);
 		
