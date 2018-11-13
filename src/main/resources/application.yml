@@ -23,6 +23,10 @@ spring.profiles: local
 
 server:
   port: 8085
+logging:
+  level:
+    com.soda.phonebook: DEBUG
+  file: ./log/local
 
 # production 환경 
 ---
@@ -31,3 +35,6 @@ spring.profiles.include: real-db
 
 server:
   port: 8085
+  
+logging:
+  file: ./log/prod
