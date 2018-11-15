@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.AttributeOverride;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -31,15 +32,21 @@ public class User extends BaseEntity{
 	@Column(name="name", nullable=false)
 	private String name;
 	
-	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="user", 
+				fetch=FetchType.LAZY, 
+				cascade = CascadeType.ALL)
 	@JsonIgnore
 	private Set<Contact> contacts;
 	
-	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="user", 
+				fetch=FetchType.LAZY, 
+				cascade = CascadeType.ALL)
 	@JsonIgnore
 	private Set<Tag> tags;
 	
-	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="user", 
+				fetch=FetchType.LAZY, 
+				cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<Category> categories;
 	

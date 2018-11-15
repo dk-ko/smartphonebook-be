@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -29,8 +30,10 @@ public class Tag extends BaseEntity{
 	@Column(name="name", nullable=false)
 	private String name;
 	
-	@ManyToOne
-	@JoinColumn(name="user_id",foreignKey = @ForeignKey(name="fk_tag_user"))
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="user_id",
+				foreignKey = @ForeignKey(name="fk_tag_user"),
+				nullable = false)
 	private User user;
 	
 	@ManyToMany

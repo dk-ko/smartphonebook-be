@@ -6,6 +6,7 @@ import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -34,8 +35,10 @@ public class Category extends BaseEntity{
 	@Column(name="type", nullable=false)
 	private Type type;
 	
-	@ManyToOne
-	@JoinColumn(name = "user_id", foreignKey = @ForeignKey(name="fk_category_user"))
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id", 
+				foreignKey = @ForeignKey(name="fk_category_user"),
+				nullable = false)
 	private User user;
 	
 	@Builder

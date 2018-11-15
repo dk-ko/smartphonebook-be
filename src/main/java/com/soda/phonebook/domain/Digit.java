@@ -6,6 +6,7 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,8 +27,10 @@ import lombok.NoArgsConstructor;
 @Getter
 public class Digit extends BaseEntity{
 	
-	@ManyToOne
-	@JoinColumn(name="contact_id",foreignKey = @ForeignKey(name="fk_digit_contact"))
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="contact_id",
+				foreignKey = @ForeignKey(name="fk_digit_contact"),
+				nullable = false)
 	private Contact contact;
 	
 	@Embedded 
@@ -39,8 +42,10 @@ public class Digit extends BaseEntity{
 	@Column(name="representation")
 	private Mark representation = Mark.N;
 	
-	@ManyToOne
-	@JoinColumn(name="category_id",foreignKey = @ForeignKey(name="fk_digit_category"))
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="category_id",
+				foreignKey = @ForeignKey(name="fk_digit_category"),
+				nullable = false)
 	private Category category;
 
 	

@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 
 import com.soda.phonebook.domain.Category;
 import com.soda.phonebook.domain.Contact;
-import com.soda.phonebook.domain.Info;
 
 import lombok.Builder;
 

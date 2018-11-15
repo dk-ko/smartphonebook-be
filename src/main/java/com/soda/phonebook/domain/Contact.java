@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.AttributeOverride;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
@@ -16,6 +18,7 @@ import javax.persistence.Table;
 import javax.persistence.ForeignKey;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.soda.phonebook.domain.info.Info;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -29,8 +32,10 @@ import lombok.NoArgsConstructor;
 @Getter
 public class Contact extends BaseEntity{
 	
-	@ManyToOne
-	@JoinColumn(name="user_id",foreignKey = @ForeignKey(name="fk_contact_user"))
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="user_id", 
+				foreignKey = @ForeignKey(name="fk_contact_user"),
+				nullable=false)
 	private User user;
 	
 	@Column(name="name", nullable=false)
@@ -43,11 +48,11 @@ public class Contact extends BaseEntity{
 	@Column(name="photo")
 	private byte[] photo = null;
 	
-	@OneToMany(mappedBy="contact")
+	@OneToMany(mappedBy="contact", cascade = CascadeType.ALL)
 	@JsonIgnore
 	List<Digit> digits;
 	
-	@OneToMany(mappedBy="contact")
+	@OneToMany(mappedBy="contact", cascade = CascadeType.ALL)
 	@JsonIgnore
 	List<Info> infoes;
 	
