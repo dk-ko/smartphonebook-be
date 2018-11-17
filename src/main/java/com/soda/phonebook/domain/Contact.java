@@ -1,5 +1,6 @@
 package com.soda.phonebook.domain;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -50,11 +51,11 @@ public class Contact extends BaseEntity{
 	
 	@OneToMany(mappedBy="contact", cascade = CascadeType.ALL)
 	@JsonIgnore
-	List<Digit> digits;
+	private List<Digit> digits = new ArrayList<Digit>();
 	
 	@OneToMany(mappedBy="contact", cascade = CascadeType.ALL)
 	@JsonIgnore
-	List<Info> infoes;
+	private List<Info> infoes = new ArrayList<Info>();
 	
 	@ManyToMany(mappedBy="contacts")
 	private Set<Tag> tags = new HashSet<Tag>();
@@ -64,11 +65,15 @@ public class Contact extends BaseEntity{
 	}
 	
 	@Builder
-	public Contact(User user,String name, String memo, byte[] photo) {
+	public Contact(User user,String name, String memo, byte[] photo,
+				List<Digit> digits, List<Info> infoes, Set<Tag> tags) {
 		this.user = user;
 		this.name = name;
 		this.memo = memo;
 		this.photo = photo;
+		this.digits = digits;
+		this.infoes = infoes;
+		this.tags = tags;
 	}
 
 	public void updateAllInfo(String name, String memo, byte[] photo) {
@@ -87,5 +92,9 @@ public class Contact extends BaseEntity{
 	
 	public void updatePhoto(byte[] photo) {
 		this.photo = photo;
+	}
+	
+	public void updateUser(User user) {
+		this.user = user;
 	}
 }

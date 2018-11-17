@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.soda.phonebook.domain.VO.Type;
 import com.soda.phonebook.domain.info.Address;
+import com.soda.phonebook.domain.info.Info;
 import com.soda.phonebook.domain.User;
 import com.soda.phonebook.domain.Contact;
 import com.soda.phonebook.domain.Category;

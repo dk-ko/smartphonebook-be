@@ -6,6 +6,7 @@ spring:
     console:
       settings:
         trace: true
+        web-allow-others: true
       enabled: true
 
   datasource:
@@ -16,6 +17,10 @@ spring:
   output:
     ansi:
       enabled: always
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
 
 logging:
   level:
@@ -24,5 +29,6 @@ logging:
     org.hibernate.SQL: DEBUG
     org.hibernate.type: TRACE
   
- 
+server:
+  port: 8085
 

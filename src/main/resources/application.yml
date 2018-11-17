@@ -3,11 +3,7 @@ spring:
   profiles:
     active: local # 기본 환경 선택
 
-  jpa:
-    hibernate:
-      ddl-auto: update
-    generate-ddl: false 
-    show-sql: true
+  jpa: 
     database: mysql
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
 
@@ -20,6 +16,15 @@ spring:
 # local 환경
 ---
 spring.profiles: local
+spring:
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+    generate-ddl: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
 
 server:
   port: 8085
@@ -27,6 +32,8 @@ logging:
   level:
     com.soda.phonebook: DEBUG
   file: ./log/local
+  
+
 
 # production 환경 
 ---

@@ -23,6 +23,7 @@ public class Application {
 		.properties(APPLICATION_LOCATIONS)
 		.run(args);
 		
+		// log test
 		log.error("error");
 		log.warn("warn");
 		log.info("info");
