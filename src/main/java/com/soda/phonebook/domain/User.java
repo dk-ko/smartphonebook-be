@@ -50,7 +50,7 @@ public class User extends BaseEntity{
 	@JsonIgnore
 	private List<Category> categories;
 	
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	@JoinTable(name="user_contact",
 			joinColumns = @JoinColumn(name="user_id"),
 			inverseJoinColumns = @JoinColumn(name="contact_id"))

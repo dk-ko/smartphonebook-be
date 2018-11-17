@@ -8,7 +8,7 @@ cache:
   directories:
   - "$HOME/.m2/repository"
   - "$HOME/.gradle"
-script: "./gradlew clean build --stacktrace -x test" 
+script: "./gradlew clean build --stacktrace" 
 notifications:
   email:
     recipients:

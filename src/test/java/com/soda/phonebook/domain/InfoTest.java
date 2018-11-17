@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.soda.phonebook.domain.VO.ContactType;
 import com.soda.phonebook.domain.VO.DataType;
 import com.soda.phonebook.domain.info.Address;
 import com.soda.phonebook.domain.info.Info;
@@ -51,6 +52,7 @@ public class InfoTest {
 				.name("고다경")
 				.memo("skhu")
 				.user(user)
+				.type(ContactType.DEFAULT)
 				.build());
 		
 		category = categoryRepository.save(Category.builder()

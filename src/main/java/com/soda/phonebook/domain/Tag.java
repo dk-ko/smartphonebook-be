@@ -53,4 +53,8 @@ public class Tag extends BaseEntity{
 		this.contacts.add(contact);
 		// 
 	}
+	
+	public void updateContacts(Set<Contact> contacts) {
+		this.contacts = contacts;
+	}
 }

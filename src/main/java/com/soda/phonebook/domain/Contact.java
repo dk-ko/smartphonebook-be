@@ -22,7 +22,7 @@ import javax.persistence.Table;
 import javax.persistence.ForeignKey;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.soda.phonebook.converter.ContactTypeAttributeConverter;
+//import com.soda.phonebook.converter.ContactTypeAttributeConverter;
 import com.soda.phonebook.domain.VO.ContactType;
 import com.soda.phonebook.domain.info.Info;
 
@@ -65,7 +65,7 @@ public class Contact extends BaseEntity{
 	@ManyToMany(mappedBy="contacts")
 	private Set<Tag> tags = new HashSet<Tag>();
 	
-	@Convert(converter = ContactTypeAttributeConverter.class)
+//	@Convert(converter = ContactTypeAttributeConverter.class)
 	@Enumerated(EnumType.STRING)
 	@Column(name="type", nullable=false)
 	private ContactType type = ContactType.DEFAULT;
@@ -85,6 +85,10 @@ public class Contact extends BaseEntity{
 	
 	public void addTag(Tag tag) {
 		this.tags.add(tag);
+	}
+	
+	public void updateTags(Set<Tag> tags) {
+		this.tags = tags;
 	}
 	
 	public void updateContactType(ContactType type) {
