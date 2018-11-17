@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.soda.phonebook.domain.VO.Type;
+import com.soda.phonebook.domain.VO.DataType;
 import com.soda.phonebook.repository.CategoryRepository;
 
 @RunWith(SpringRunner.class)
@@ -34,12 +34,12 @@ public class CategoryTest {
 	
 	@Before
 	public void setUp() {
-		categoryList.add(Category.builder().name("집").type(Type.DIGIT).build());
-		categoryList.add(Category.builder().name("회사").type(Type.DIGIT).build());
-		categoryList.add(Category.builder().name("기타").type(Type.DIGIT).build());
-		categoryList.add(Category.builder().name("집").type(Type.ADDRESS).build());
-		categoryList.add(Category.builder().name("회사").type(Type.ADDRESS).build());
-		categoryList.add(Category.builder().name("기타").type(Type.ADDRESS).build());
+		categoryList.add(Category.builder().name("집").type(DataType.DIGIT).build());
+		categoryList.add(Category.builder().name("회사").type(DataType.DIGIT).build());
+		categoryList.add(Category.builder().name("기타").type(DataType.DIGIT).build());
+		categoryList.add(Category.builder().name("집").type(DataType.ADDRESS).build());
+		categoryList.add(Category.builder().name("회사").type(DataType.ADDRESS).build());
+		categoryList.add(Category.builder().name("기타").type(DataType.ADDRESS).build());
 	}
 	
 	@Test
@@ -54,7 +54,7 @@ public class CategoryTest {
 		// confirm 
 		Category savedCategory = em.find(Category.class, 1l);
 		System.out.println(savedCategory.getType());
-		assertThat(savedCategory.getType(),is(Type.DIGIT)); 
+		assertThat(savedCategory.getType(),is(DataType.DIGIT)); 
 	}
 
 }

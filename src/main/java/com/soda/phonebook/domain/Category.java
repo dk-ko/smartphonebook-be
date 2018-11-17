@@ -12,9 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.soda.phonebook.converter.TypeAttributeConverter;
+import com.soda.phonebook.converter.DataTypeAttributeConverter;
 //import com.soda.phonebook.converter.TypeAttributeConverter;
-import com.soda.phonebook.domain.VO.Type;
+import com.soda.phonebook.domain.VO.DataType;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -30,10 +30,10 @@ public class Category extends BaseEntity{
 	@Column(name="name", nullable=false)
 	private String name;
 	
-	@Convert(converter = TypeAttributeConverter.class)
+	@Convert(converter = DataTypeAttributeConverter.class)
 	@Enumerated(EnumType.STRING)
 	@Column(name="type", nullable=false)
-	private Type type;
+	private DataType type;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", 
@@ -42,7 +42,7 @@ public class Category extends BaseEntity{
 	private User user;
 	
 	@Builder
-	public Category(String name, Type type, User user) {
+	public Category(String name, DataType type, User user) {
 		this.name = name;
 		this.type = type;
 		this.user = user;

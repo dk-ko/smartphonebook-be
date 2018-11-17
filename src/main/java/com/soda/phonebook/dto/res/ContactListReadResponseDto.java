@@ -6,6 +6,7 @@ import java.util.Set;
 import com.soda.phonebook.domain.Contact;
 import com.soda.phonebook.domain.Digit;
 import com.soda.phonebook.domain.Tag;
+import com.soda.phonebook.domain.VO.ContactType;
 import com.soda.phonebook.domain.info.Info;
 
 import lombok.Getter;
@@ -19,6 +20,7 @@ public class ContactListReadResponseDto {
 	private List<Digit> digits;
 	private List<Info> infoes;
 	private Set<Tag> tags;
+	private ContactType type;
 	
 	public ContactListReadResponseDto(Contact contact) {
 		this.id = contact.getId();
@@ -28,5 +30,6 @@ public class ContactListReadResponseDto {
 		this.digits = contact.getDigits();
 		this.infoes = contact.getInfoes();
 		this.tags = contact.getTags();
+		this.type = contact.getType();
 	}
 }

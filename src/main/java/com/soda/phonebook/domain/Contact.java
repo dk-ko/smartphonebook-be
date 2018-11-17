@@ -8,7 +8,10 @@ import java.util.Set;
 import javax.persistence.AttributeOverride;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -19,6 +22,8 @@ import javax.persistence.Table;
 import javax.persistence.ForeignKey;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.soda.phonebook.converter.ContactTypeAttributeConverter;
+import com.soda.phonebook.domain.VO.ContactType;
 import com.soda.phonebook.domain.info.Info;
 
 import lombok.AccessLevel;
@@ -60,13 +65,14 @@ public class Contact extends BaseEntity{
 	@ManyToMany(mappedBy="contacts")
 	private Set<Tag> tags = new HashSet<Tag>();
 	
-	public void addTag(Tag tag) {
-		this.tags.add(tag);
-	}
+	@Convert(converter = ContactTypeAttributeConverter.class)
+	@Enumerated(EnumType.STRING)
+	@Column(name="type", nullable=false)
+	private ContactType type = ContactType.DEFAULT;
 	
 	@Builder
 	public Contact(User user,String name, String memo, byte[] photo,
-				List<Digit> digits, List<Info> infoes, Set<Tag> tags) {
+				List<Digit> digits, List<Info> infoes, Set<Tag> tags, ContactType type) {
 		this.user = user;
 		this.name = name;
 		this.memo = memo;
@@ -74,6 +80,15 @@ public class Contact extends BaseEntity{
 		this.digits = digits;
 		this.infoes = infoes;
 		this.tags = tags;
+		this.type = type;
+	}
+	
+	public void addTag(Tag tag) {
+		this.tags.add(tag);
+	}
+	
+	public void updateContactType(ContactType type) {
+		this.type = type;
 	}
 
 	public void updateAllInfo(String name, String memo, byte[] photo) {

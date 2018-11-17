@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.soda.phonebook.domain.VO.Type;
+import com.soda.phonebook.domain.VO.DataType;
 import com.soda.phonebook.domain.info.Address;
 import com.soda.phonebook.domain.info.Info;
 import com.soda.phonebook.domain.User;
@@ -55,7 +55,7 @@ public class InfoTest {
 		
 		category = categoryRepository.save(Category.builder()
 				.name("학교")
-				.type(Type.ADDRESS)
+				.type(DataType.ADDRESS)
 				.user(user)
 				.build());
 		
@@ -84,12 +84,12 @@ public class InfoTest {
 		
 		Category c1 = Category.builder()
 				.name("집")
-				.type(Type.ADDRESS)
+				.type(DataType.ADDRESS)
 				.user(user).build();
 		
 		Category c2 = Category.builder()
 				.name("회사")
-				.type(Type.ADDRESS)
+				.type(DataType.ADDRESS)
 				.user(user).build();
 		
 		Info address = Address.builder()
@@ -99,7 +99,7 @@ public class InfoTest {
 		
 		assertThat(address.getContents(), is("서울 구로구 항동"));
 		assertThat(address.getCategory().getName(), is("회사"));
-		assertThat(address.getCategory().getType(), is(Type.ADDRESS));
+		assertThat(address.getCategory().getType(), is(DataType.ADDRESS));
 		
 		address.updateCategory(c1);
 		assertThat(address.getCategory(), is(c1));
