@@ -64,7 +64,8 @@ public class DataTypeAttributeConverterTest {
 		assertThat(query.getFirstResult(), is(0)); // DIGIT is 0.
 		
 		// confirm 
-		Category savedCategory = em.find(Category.class, 1l);
+//		Category savedCategory = em.find(Category.class, 1l);
+		Category savedCategory = categoryRepository.findOne(1l);
 		assertThat(savedCategory.getType(),is(DataType.DIGIT)); 
 	}
 
