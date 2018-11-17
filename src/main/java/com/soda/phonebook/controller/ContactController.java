@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.soda.phonebook.dto.res.ContactListReadResponseDto;
 import com.soda.phonebook.dto.res.ContactResponseDto;
 import com.soda.phonebook.domain.Contact;
 import com.soda.phonebook.dto.req.ContactSaveRequestDto;
@@ -32,11 +33,11 @@ public class ContactController {
 	
 	@GetMapping("/")
 	@ResponseStatus(value = HttpStatus.OK)
-	public List<ContactResponseDto> getAllContacts() {
+	public List<ContactListReadResponseDto> getAllContacts() {
 		List<Contact> findList = contactService.findAll();
-		List<ContactResponseDto> dtoList = new ArrayList<>();
+		List<ContactListReadResponseDto> dtoList = new ArrayList<>();
 		for(int i = 0; i < findList.size(); i++) 
-			dtoList.add(new ContactResponseDto(findList.get(i)));
+			dtoList.add(new ContactListReadResponseDto(findList.get(i)));
 		return dtoList;
 	}
 	
