@@ -6,13 +6,16 @@ spring:
   output:
     ansi:
       enabled: always
+  jpa:
+    open-in-view: false
+      
+server:
+  port: 8085
+  
         
 # local 환경
 ---
 spring.profiles: local
-
-server:
-  port: 8080
 
 spring:
   jpa:
@@ -30,6 +33,11 @@ spring:
         driver-class-name: org.mariadb.jdbc.Driver
   main:
     allow-bean-definition-overriding: true
+  devtools:
+    livereload:
+      enabled: true
+  freemarker:
+    cache: false
 
 logging:
   level:
@@ -43,9 +51,6 @@ logging:
 ---
 spring.profiles: prod
 spring.profiles.include: real-db
-
-server:
-  port: 8080
   
 logging:
   file: ./log/prod
