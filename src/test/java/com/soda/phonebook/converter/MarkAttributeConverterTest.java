@@ -90,7 +90,7 @@ public class MarkAttributeConverterTest {
 				.contact(savedContact)
 				.category(savedCategory)
 				.numbers(numbers)
-				.representation(Mark.Y)
+				.rep(Mark.Y)
 				.build();
 	}
 	
@@ -107,7 +107,7 @@ public class MarkAttributeConverterTest {
 		query.setParameter("representation", 1);
 		List<Digit> list = query.getResultList();
 		
-		Mark resultMark = list.get(0).getRepresentation();
+		Mark resultMark = list.get(0).getRep();
 		assertThat(Mark.Y, is(resultMark));
 		
 		// native query 

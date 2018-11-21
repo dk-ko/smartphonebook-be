@@ -43,11 +43,11 @@ public class DigitTest {
 	public void testDigitCreate() {
 		
 		Digit digit = Digit.builder()
-				.representation(Mark.Y)
+				.rep(Mark.Y)
 				.numbers(numbers).build();
 		
 		assertThat(digit.getNumbers().getFirst(),is("010"));
-		assertThat(digit.getRepresentation(),is(Mark.Y));
+		assertThat(digit.getRep(),is(Mark.Y));
 		
 	}
 	
@@ -56,7 +56,7 @@ public class DigitTest {
 		
 		Digit digit = MockEntity.mock(Digit.class, 1l);
 		digit.updateNumbers(numbers);
-		digit.updateRepresentation(Mark.N);
+		digit.updateRep(Mark.N);
 		
 		digit.updateNumbers(Numbers.builder()
 				.first("010")

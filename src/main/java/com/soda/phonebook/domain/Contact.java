@@ -67,7 +67,7 @@ public class Contact extends BaseEntity{
 	
 	@Convert(converter = ContactTypeAttributeConverter.class)
 	@Enumerated(EnumType.STRING)
-	@Column(name="type", nullable=false)
+	@Column(name="contact_type", nullable=false)
 	private ContactType type = ContactType.DEFAULT;
 	
 	@Builder

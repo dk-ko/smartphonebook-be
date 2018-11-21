@@ -65,13 +65,15 @@ public class DataTypeAttributeConverterTest {
 	
 	@Test
 	@Transactional
-	public void test_type_converter() {
+	public void test_dataType_converter() {
 		Iterator<Category> it = categoryList.iterator();
 		while(it.hasNext()) {
 			Category c = it.next();
-			//categoryRepository.save(c);
-			em.persist(c);
+			categoryRepository.save(c);
+			//em.persist(c);
 		}
+		//em.flush();
+		//em.clear();
 		
 		// native query
 		Query query = em.createNativeQuery("select * from category where type = 4", Category.class);

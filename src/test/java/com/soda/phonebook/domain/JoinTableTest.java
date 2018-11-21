@@ -18,6 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.soda.phonebook.domain.VO.ContactType;
+import com.soda.phonebook.repository.ContactRepository;
 import com.soda.phonebook.repository.UserRepository;
 
 @RunWith(SpringRunner.class)
@@ -30,6 +31,9 @@ public class JoinTableTest {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private ContactRepository contactRepository;
 	
 	private Contact contact;
 	private User user;
@@ -77,9 +81,9 @@ public class JoinTableTest {
 		
 		assertEquals(0, contact.getTags().size());
 		contact.updateTags(tags);
-		em.persist(contact);
+		Contact savedContact = contactRepository.save(contact);
 		
-		assertNotNull(contact);
+		assertNotNull(savedContact.getTags());
 	}
 	
 	@Test

@@ -5,7 +5,7 @@ import javax.persistence.Converter;
 
 import com.soda.phonebook.domain.VO.ContactType;
 
-@Converter
+@Converter(autoApply = true)
 public class ContactTypeAttributeConverter implements AttributeConverter<ContactType, Integer>{
 
 	@Override

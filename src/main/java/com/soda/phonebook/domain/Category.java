@@ -1,7 +1,5 @@
 package com.soda.phonebook.domain;
 
-import com.soda.phonebook.converter.*;
-
 import javax.persistence.Column;
 import javax.persistence.Convert;
 //import javax.persistence.Convert;
@@ -23,7 +21,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-// @Convert(converter = DataTypeAttributeConverter.class, attributeName = "type")
+@Convert(converter = DataTypeAttributeConverter.class, attributeName = "data_type")
 @Entity
 @Table(name="category")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -33,9 +31,9 @@ public class Category extends BaseEntity{
 	@Column(name="name", nullable=false)
 	private String name;
 	
-	@Convert(converter = DataTypeAttributeConverter.class)
+//	@Convert(converter = DataTypeAttributeConverter.class)
 	@Enumerated(EnumType.STRING)
-	@Column(name="type", nullable=false)
+	@Column(name="data_type", nullable=false)
 	private DataType type;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
