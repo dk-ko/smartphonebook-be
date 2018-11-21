@@ -2,6 +2,7 @@ package com.soda.phonebook.domain;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,9 +23,11 @@ public class BaseEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Long id;
 	
+	@Column(name = "created_date", nullable = false, updatable = false)
 	@CreatedDate
 	protected LocalDateTime createDate;
 	
+	@Column(name = "modified_date")
 	@LastModifiedDate
 	protected LocalDateTime modifiedDate;
 

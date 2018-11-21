@@ -32,7 +32,7 @@ dependencies {
 	//compile('org.springframework.boot:spring-boot-starter-security')
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.1.0.RELEASE'
 	compile group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.2.5'
-	testCompile group: 'com.h2database', name: 'h2', version: '1.4.196'
+	compile group: 'com.h2database', name: 'h2', version: '1.4.196'
 	compile group: 'org.hibernate', name: 'hibernate-core', version: '5.3.7.Final'
 	compile('ch.qos.logback:logback-classic')
 	compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.16.20'
@@ -40,4 +40,6 @@ dependencies {
 	//testCompile('org.springframework.security:spring-security-test')
 	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.5.0'
 	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.5.0'
+	compile group: 'org.springframework', name: 'spring-aspects', version: '5.0.8.RELEASE'
+	compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.3.7.Final'
 }

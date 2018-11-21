@@ -68,7 +68,8 @@ public class DataTypeAttributeConverterTest {
 		Iterator<Category> it = categoryList.iterator();
 		while(it.hasNext()) {
 			Category c = it.next();
-			categoryRepository.save(c);
+			//categoryRepository.save(c);
+			em.persist(c);
 		}
 		
 		// native query

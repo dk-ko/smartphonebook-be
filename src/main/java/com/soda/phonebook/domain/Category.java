@@ -1,5 +1,7 @@
 package com.soda.phonebook.domain;
 
+import com.soda.phonebook.converter.*;
+
 import javax.persistence.Column;
 import javax.persistence.Convert;
 //import javax.persistence.Convert;
@@ -33,7 +35,7 @@ public class Category extends BaseEntity{
 	
 	@Convert(converter = DataTypeAttributeConverter.class)
 	@Enumerated(EnumType.STRING)
-	@Column(name="type", nullable=false, columnDefinition="ENUM")
+	@Column(name="type", nullable=false)
 	private DataType type;
 	
 	@ManyToOne(fetch = FetchType.LAZY)

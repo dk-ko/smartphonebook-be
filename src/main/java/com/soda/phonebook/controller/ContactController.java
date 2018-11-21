@@ -2,6 +2,7 @@ package com.soda.phonebook.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -43,7 +44,9 @@ public class ContactController {
 	@ResponseStatus(value = HttpStatus.OK)
 	public ContactResponseDto getContacts(@PathVariable final Long id) {
 		// optional로 
-		return new ContactResponseDto(contactService.findById(id));
+//		Optional<Contact> ContactOptional = contactService.findById(id);
+		Contact findContact = contactService.findById(id).orElse(null);
+		return new ContactResponseDto(findContact);
 	}
 	
 	@DeleteMapping("/{id}")
