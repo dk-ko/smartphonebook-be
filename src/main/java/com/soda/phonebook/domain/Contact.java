@@ -54,8 +54,8 @@ public class Contact extends BaseEntity{
 	@Column(name="photo")
 	private byte[] photo = null;
 	
-	@OneToMany(mappedBy="contact", cascade = CascadeType.ALL)
 	@JsonIgnore
+	@OneToMany(mappedBy="contact", cascade = CascadeType.ALL)
 	private List<Digit> digits = new ArrayList<Digit>();
 	
 	@OneToMany(mappedBy="contact", cascade = CascadeType.ALL)

@@ -28,12 +28,11 @@ ext['hibernate.version'] = '5.2.11.Final'
 
 dependencies {
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '2.1.0.RELEASE'
-	compile group: 'org.springframework.data', name: 'spring-data-jpa', version: '2.1.0.RELEASE'
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.1.0.RELEASE'
 	//compile('org.springframework.boot:spring-boot-starter-security')
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.1.0.RELEASE'
 	compile group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.2.5'
-	compile group: 'com.h2database', name: 'h2', version: '1.4.196'
-	compile group: 'org.hibernate', name: 'hibernate-core', version: '5.3.7.Final'
+	runtime group: 'com.h2database', name: 'h2', version: '1.4.196'
 	compile('ch.qos.logback:logback-classic')
 	compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.16.20'
 	testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.0.4.RELEASE'

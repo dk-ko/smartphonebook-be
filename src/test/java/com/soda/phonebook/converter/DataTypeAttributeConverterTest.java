@@ -30,6 +30,7 @@ import com.soda.phonebook.repository.UserRepository;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles("local")
+//@DataJpaTest
 public class DataTypeAttributeConverterTest {
 	
 	@PersistenceContext
