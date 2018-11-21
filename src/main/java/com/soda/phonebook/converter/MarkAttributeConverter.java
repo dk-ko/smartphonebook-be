@@ -10,12 +10,19 @@ public class MarkAttributeConverter implements AttributeConverter<Mark, Integer>
 
 	@Override
 	public Integer convertToDatabaseColumn(Mark attribute) {
-		switch(attribute) {
-			case N: return 0;
-			case Y: return 1;
-		}
-		return -1;
+		if(attribute.equals(Mark.N)) return 0;
+		else if(attribute.equals(Mark.Y)) return 1;
+		else return -1;
 	}
+	
+//	@Override
+//	public Integer convertToDatabaseColumn(Mark attribute) {
+//		switch(attribute) {
+//			case N: return 0;
+//			case Y: return 1;
+//		}
+//		return -1;
+//	}
 
 	@Override
 	public Mark convertToEntityAttribute(Integer dbData) {

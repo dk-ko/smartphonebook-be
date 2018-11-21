@@ -1,18 +1,26 @@
 package com.soda.phonebook.converter;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
+import javax.persistence.Parameter;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.soda.phonebook.domain.Category;
 import com.soda.phonebook.domain.Contact;
@@ -28,7 +36,8 @@ import com.soda.phonebook.repository.DigitRepository;
 import com.soda.phonebook.repository.UserRepository;
 
 @RunWith(SpringRunner.class)
-@DataJpaTest
+@ActiveProfiles("local")
+@SpringBootTest
 public class MarkAttributeConverterTest {
 
 	@PersistenceContext
@@ -81,21 +90,40 @@ public class MarkAttributeConverterTest {
 				.contact(savedContact)
 				.category(savedCategory)
 				.numbers(numbers)
-				.representation(Mark.N)
+				.representation(Mark.Y)
 				.build();
 	}
 	
 	@Test
+	@Transactional
 	public void test_mark_converter() {
-		Digit savedDigit = digitRepository.save(digit);
+		em.persist(digit);
+		em.flush();
+		em.clear();
+//		Digit savedDigit = digitRepository.save(digit);
+//		em.persist(digit);
+		
+		Query query = em.createNativeQuery("select * from digit where representation = :representation", Digit.class);
+		query.setParameter("representation", 1);
+		List<Digit> list = query.getResultList();
+		
+		Mark resultMark = list.get(0).getRepresentation();
+		assertThat(Mark.Y, is(resultMark));
 		
 		// native query 
-		Query query = em.createNativeQuery(
-				"select * from digit where representation = 0", Digit.class);
-		assertThat(query.getFirstResult(), is(0)); // Mark.N is 0.
+//		Query query = em.createNativeQuery(
+//				"select * from digit where representation = \"Y\"", Digit.class);
+//		Digit findDigit = (Digit) query.getResultList().get(0);
+//		assertThat(findDigit.getRepresentation(), is(1)); // Mark.N is 0.
 		
 		// confirm
-		assertThat(savedDigit.getRepresentation(), is(Mark.N));
+//		assertThat(findDigit.getRepresentation(), is(Mark.Y));
 	}
 
+//	@After
+//	void end() {
+//		digitRepository.deleteAll();
+//		contactRepository.deleteAll();
+//		categoryRepository.deleteAll();
+//	}
 }

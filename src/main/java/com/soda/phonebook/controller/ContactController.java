@@ -42,6 +42,7 @@ public class ContactController {
 	@GetMapping("/{id}")
 	@ResponseStatus(value = HttpStatus.OK)
 	public ContactResponseDto getContacts(@PathVariable final Long id) {
+		// optional로 
 		return new ContactResponseDto(contactService.findById(id));
 	}
 	

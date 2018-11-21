@@ -12,10 +12,17 @@ spring:
         username: root
         password: test123 
         driver-class-name: org.mariadb.jdbc.Driver
+  output:
+    ansi:
+      enabled: always
         
 # local 환경
 ---
 spring.profiles: local
+
+server:
+  port: 8080
+
 spring:
   jpa:
     show-sql: true
@@ -26,11 +33,12 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
 
-server:
-  port: 8085
 logging:
   level:
     com.soda.phonebook: DEBUG
+    org.springframework.web.client: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type: TRACE
   file: ./log/local
   
 
@@ -41,7 +49,7 @@ spring.profiles: prod
 spring.profiles.include: real-db
 
 server:
-  port: 8085
+  port: 8080
   
 logging:
   file: ./log/prod

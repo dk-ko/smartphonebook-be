@@ -21,6 +21,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+// @Convert(converter = DataTypeAttributeConverter.class, attributeName = "type")
 @Entity
 @Table(name="category")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -32,7 +33,7 @@ public class Category extends BaseEntity{
 	
 	@Convert(converter = DataTypeAttributeConverter.class)
 	@Enumerated(EnumType.STRING)
-	@Column(name="type", nullable=false)
+	@Column(name="type", nullable=false, columnDefinition="ENUM")
 	private DataType type;
 	
 	@ManyToOne(fetch = FetchType.LAZY)

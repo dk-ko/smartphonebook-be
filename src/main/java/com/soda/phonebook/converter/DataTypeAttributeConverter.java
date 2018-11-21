@@ -10,15 +10,25 @@ public class DataTypeAttributeConverter implements AttributeConverter<DataType, 
 
 	@Override
 	public Integer convertToDatabaseColumn(DataType attribute) {
-		switch(attribute) {
-			case DIGIT: return 0;
-			case URL: return 1;
-			case EMAIL: return 2;
-			case DATE: return 3;
-			case ADDRESS: return 4;
-		}
-		return -1;
+		if(attribute.equals(DataType.DIGIT)) return 0;
+		else if(attribute.equals(DataType.URL)) return 1;
+		else if(attribute.equals(DataType.EMAIL)) return 2;
+		else if(attribute.equals(DataType.DATE)) return 3;
+		else if(attribute.equals(DataType.ADDRESS)) return 4;
+		else return -1;
 	}
+	
+//	@Override
+//	public Integer convertToDatabaseColumn(DataType attribute) {
+//		switch(attribute) {
+//			case DIGIT: return 0;
+//			case URL: return 1;
+//			case EMAIL: return 2;
+//			case DATE: return 3;
+//			case ADDRESS: return 4;
+//		}
+//		return -1;
+//	}
 
 	@Override
 	public DataType convertToEntityAttribute(Integer dbData) {

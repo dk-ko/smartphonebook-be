@@ -1,7 +1,8 @@
 package com.soda.phonebook.service;
 
 import java.util.List;
-  
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,8 +20,8 @@ public class ContactService {
 	private final ContactRepository contactRepository;
 	private final UserService userService;
 	
-	public Contact findById(Long id) {
-		return contactRepository.findOne(id);
+	public Optional<Contact> findById(Long id) {
+		return contactRepository.findById(id);
 	}
 	
 	// 전체 Contact 목록 조회 
@@ -29,7 +30,7 @@ public class ContactService {
 	}
 	
 	public void delete(Long id) {
-		contactRepository.delete(id);
+		contactRepository.deleteById(id);
 	}
 	
 	public Contact create(ContactSaveRequestDto dto) {
