@@ -18,65 +18,34 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.soda.phonebook.domain.Category;
 import com.soda.phonebook.domain.Contact;
-import com.soda.phonebook.domain.Digit;
 import com.soda.phonebook.domain.User;
 import com.soda.phonebook.domain.VO.ContactType;
-import com.soda.phonebook.domain.VO.DataType;
-import com.soda.phonebook.domain.VO.Mark;
-import com.soda.phonebook.domain.VO.Numbers;
 
 
 @RunWith(SpringRunner.class)
 //@ActiveProfiles("local")
 //@SpringBootTest
 @DataJpaTest
-public class MarkAttributeConverterTest {
-
+public class ContactTypeAttributeConverterTest {
 	@PersistenceContext
     private EntityManager em;
 	
-	private Digit digit;
-	private User user;
 	private Contact contact;
-	private Category category;
-	private Numbers numbers;
 	
 	@Before
 	public void setUp() {
-		user = User.builder()
+		User user = User.builder()
 				.name("테스트유저")
 				.build();
 		em.persist(user);
 		
 		contact = Contact.builder()
+				.name("name")
 				.user(user)
-				.name("연락처 A")
-				.type(ContactType.DEFAULT)
+				.type(ContactType.FAVORITED)
 				.build();
 		em.persist(contact);
-		
-		category = Category.builder()
-				.name("집")
-				.type(DataType.DIGIT)
-				.user(user)
-				.build();
-		em.persist(category);
-		
-		numbers = Numbers.builder()
-				.first("010")
-				.second("1234")
-				.third("5678").build();
-		
-		digit = Digit.builder()
-				.contact(contact)
-				.category(category)
-				.numbers(numbers)
-				.rep(Mark.Y)
-				.build();
-		
-		em.persist(digit);
 		em.flush();
 		em.clear();
 	}
@@ -84,16 +53,14 @@ public class MarkAttributeConverterTest {
 	@SuppressWarnings("unchecked")
 	@Test
 	@Transactional
-	public void test_mark_converter() {
-
-		// native query 
-		Query query = em.createNativeQuery("select * from digit where rep = :rep", Digit.class);
-		query.setParameter("rep", 1); // Y is 1
-		List<Digit> list = query.getResultList();
+	public void test_contactType_converter() {
+		
+		Query query = em.createNativeQuery("select * from contact where contact_type = :contact_type", Contact.class);
+		query.setParameter("contact_type", 2); // FAVORITED is 2
+		List<Contact> list = query.getResultList();
 		
 		// confirm
-		Mark resultMark = list.get(0).getRep();
-		assertThat(Mark.Y, is(resultMark));
-		
+		assertThat(ContactType.FAVORITED, is(list.get(0).getType()));
 	}
+
 }

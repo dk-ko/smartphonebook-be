@@ -4,8 +4,6 @@ import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
@@ -38,8 +36,7 @@ public class Digit extends BaseEntity{
 	private Numbers numbers;
 	
 	@Convert(converter = MarkAttributeConverter.class)
-	@Enumerated(EnumType.STRING)
-	@Column(name="rep")
+	@Column(name="rep", nullable=false)
 	private Mark rep = Mark.N;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -55,6 +52,18 @@ public class Digit extends BaseEntity{
 		this.numbers = numbers;
 		this.rep = rep;
 		this.category = category;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("id: %d\n")
+				.append("contact_id: %d\n")
+				.append("numbers: %s\n")
+				.append("rep: %s\n")
+				.append("category_id: %d\n");
+		return String.format(builder.toString(), this.id, this.contact.getId(), 
+				this.numbers.toString(),this.rep,this.category.getId());
 	}
 	
 	public void updateNumbers(Numbers numbers) {

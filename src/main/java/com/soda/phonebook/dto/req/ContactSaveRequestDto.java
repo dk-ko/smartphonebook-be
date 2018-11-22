@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.hibernate.validator.constraints.NotEmpty;
+import javax.validation.constraints.NotEmpty;
 
 import com.soda.phonebook.domain.Contact;
 import com.soda.phonebook.domain.Digit;
@@ -34,7 +34,7 @@ public class ContactSaveRequestDto {
 	
 	@Builder
 	public ContactSaveRequestDto(String name, String memo, byte[] photo, 
-			List<Digit> digits, List<Info> infoes, Set<Tag> tags, ContactType type) {
+			List<Digit> digits, List<Info> infoes, Set<Tag> tags, ContactType type){
 		this.name = name;
 		this.memo = memo;
 		this.photo = photo;

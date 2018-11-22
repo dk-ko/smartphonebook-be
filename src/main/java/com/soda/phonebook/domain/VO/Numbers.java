@@ -21,4 +21,9 @@ public class Numbers {
 		this.second = second;
 		this.third = third;
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("%s-%s-%s", this.first, this.second, this.third);
+	}
 }

@@ -16,7 +16,7 @@ apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 
 group = 'com.soda'
-version = '0.0.6'
+version = '0.0.7'
 sourceCompatibility = 1.8
 
 repositories {
@@ -40,6 +40,5 @@ dependencies {
 	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.5.0'
 	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.5.0'
 	compile group: 'org.springframework', name: 'spring-aspects', version: '5.0.8.RELEASE'
-	compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.3.7.Final'
 	compile group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '2.1.0.RELEASE'
 }

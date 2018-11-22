@@ -37,6 +37,8 @@ public class ContactService {
 		// if name is null
 		Contact saveContact = dto.toEntity();
 		saveContact.updateUser(userService.getCurrentUser());
+		
+		
 		return contactRepository.save(saveContact);
 	}
 	

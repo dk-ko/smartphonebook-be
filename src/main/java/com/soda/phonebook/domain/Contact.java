@@ -10,8 +10,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -66,7 +64,6 @@ public class Contact extends BaseEntity{
 	private Set<Tag> tags = new HashSet<Tag>();
 	
 	@Convert(converter = ContactTypeAttributeConverter.class)
-	@Enumerated(EnumType.STRING)
 	@Column(name="contact_type", nullable=false)
 	private ContactType type = ContactType.DEFAULT;
 	
