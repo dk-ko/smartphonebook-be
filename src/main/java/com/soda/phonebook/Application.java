@@ -21,11 +21,6 @@ public class Application {
 		.properties(APPLICATION_LOCATIONS)
 		.run(args);
 		
-		// log test
-		log.error("error");
-		log.warn("warn");
-		log.info("info");
-		log.trace("trace");
-		log.debug("debug");
+		log.error("start");
 	}
 }

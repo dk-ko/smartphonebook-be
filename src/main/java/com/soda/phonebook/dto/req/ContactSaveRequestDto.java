@@ -26,11 +26,11 @@ public class ContactSaveRequestDto {
 	
 	private String memo;
 	private byte[] photo;
+	private ContactType type;
 	
 	private List<Digit> digits;
 	private List<Info> infoes;
 	private Set<Tag> tags = new HashSet<Tag>();
-	private ContactType type;
 	
 	@Builder
 	public ContactSaveRequestDto(String name, String memo, byte[] photo, 

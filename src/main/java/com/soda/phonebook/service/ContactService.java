@@ -1,7 +1,6 @@
 package com.soda.phonebook.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,16 +19,22 @@ public class ContactService {
 	private final ContactRepository contactRepository;
 	private final UserService userService;
 	
-	public Optional<Contact> findById(Long id) {
-		return contactRepository.findById(id);
+	@Transactional(readOnly = true)
+	public Contact findById(Long id) {
+		return contactRepository.findById(id)
+				.orElseThrow(()->new IllegalArgumentException("findById error : wrong id"));
 	}
 	
-	// 전체 Contact 목록 조회 
+	// 전체 Contact 목록 조회
+	@Transactional(readOnly = true)
 	public List<Contact> findAll() {
-		return contactRepository.findAll(); 
+		List<Contact> result = contactRepository.findAll();
+		return result;
 	}
 	
 	public void delete(Long id) {
+		if(!contactRepository.findById(id).isPresent())
+			throw new IllegalArgumentException("delete error : wrong id");
 		contactRepository.deleteById(id);
 	}
 	
@@ -37,7 +42,6 @@ public class ContactService {
 		// if name is null
 		Contact saveContact = dto.toEntity();
 		saveContact.updateUser(userService.getCurrentUser());
-		
 		
 		return contactRepository.save(saveContact);
 	}

@@ -30,7 +30,7 @@ public class ContactController {
 	
 	private ContactService contactService;
 	
-	@GetMapping("/")
+	@GetMapping(value= {"/", "/list"})
 	@ResponseStatus(value = HttpStatus.OK)
 	public List<ContactListReadResponseDto> getAllContacts() {
 		List<Contact> findList = contactService.findAll();
@@ -43,9 +43,7 @@ public class ContactController {
 	@GetMapping("/{id}")
 	@ResponseStatus(value = HttpStatus.OK)
 	public ContactResponseDto getContacts(@PathVariable final Long id) {
-		// optional로 
-//		Optional<Contact> ContactOptional = contactService.findById(id);
-		Contact findContact = contactService.findById(id).orElse(null);
+		Contact findContact = contactService.findById(id);
 		return new ContactResponseDto(findContact);
 	}
 	

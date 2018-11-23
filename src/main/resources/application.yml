@@ -30,6 +30,8 @@ spring:
       
 server:
   port: 8085
+  error.whitelabel.enabled: false
+
   
 # local 환경
 ---
