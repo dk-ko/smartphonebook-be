@@ -1,22 +1,21 @@
-# local
+# main
 spring:
   profiles:
     active: local # 기본 환경 선택
     
+    
+    
+# common setting
+--- 
+spring.profiles: common
+
+spring:   
   main:
     allow-bean-definition-overriding: true
 
   output:
     ansi:
       enabled: always
-  
-  h2:
-    console:
-      settings:
-        trace: true
-        web-allow-others: true
-      enabled: true
-      path: /h2/
       
   devtools:
     livereload:
@@ -32,18 +31,22 @@ server:
   port: 8085
   error.whitelabel.enabled: false
 
+
+
   
 # local 환경
 ---
 spring.profiles: local
+spring.profiles.include: common
 
 spring:
   datasource:
-    url: jdbc:mariadb://localhost:3306/contact
-    username: root
-    password: test123 
-    driver-class-name: org.mariadb.jdbc.Driver
-    initialization-mode: always
+    hikari:
+      jdbc-url: jdbc:mariadb://localhost:3306/contact
+      username: root
+      password: test123 
+      driver-class-name: org.mariadb.jdbc.Driver
+#      initialization-mode: always
         
   jpa:
     database: mysql
@@ -58,16 +61,60 @@ spring:
   
 logging:
   level:
-    com.soda.phonebook: DEBUG
     org.springframework.web.client: DEBUG
     org.hibernate.SQL: DEBUG
     org.hibernate.type: TRACE
   file: ./log/local
+
+
+
+
+# local에서 test
+---
+spring.profiles: test
+spring.profiles.include: common
+
+spring:
+  h2:
+    console:
+      enabled: true
+      path: /h2/
+      settings:
+        trace: true
+        web-allow-others: true
+        
+  datasource:
+    hikari:
+#      jdbc-url: jdbc:h2:mem://localhost/~/contact;MVCC=TRUE
+#      jdbc-url: jdbc:h2:mem:contact;DB_CLOSE_ON_EXIT=false;DB_CLOSE_DELAY=-1;FILE_LOCK=NO
+      jdbc-url: jdbc:h2:tcp://localhost/~/contact;DB_CLOSE_ON_EXIT=false;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE;MVCC=TRUE
+      username: sa
+      password: 
+      driver-class-name: org.h2.Driver
   
+  jpa:
+    database: h2
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+    generate-ddl: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+
+logging:
+  level:
+    org.springframework.web.client: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type: TRACE
+
+
+
 # production 환경 
 ---
 spring.profiles: prod
-spring.profiles.include: real-db
+spring.profiles.include: real-db, common
   
 logging:
   file: ./log/prod

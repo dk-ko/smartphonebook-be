@@ -1,5 +1,7 @@
 package com.soda.phonebook;
 
+import com.soda.phonebook.DB;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 
@@ -7,22 +9,16 @@ import org.junit.Test;
 
 
 public class DBConnectTest {
-	// local 
-	private static final String DRIVER = "org.mariadb.jdbc.Driver";
-	private static final String URL = "jdbc:mariadb://localhost:3306/contact";
-	private static final String USER = "root";
-	private static final String PASSWORD = "test123";
 	
-	// server 
-//	private static final String DRIVER = "org.mariadb.jdbc.Driver";
-//	private static final String URL = 
-//	private static final String USER = 
-//	private static final String PASSWORD = 
+	// TYPE : LOCAL, TEST 
+	DB db = DB.getInstance(TYPE.TEST);
+	
 	
 	@Test
-	public void testConnection() throws Exception {
-		Class.forName(DRIVER);
-		try(Connection con = DriverManager.getConnection(URL, USER, PASSWORD)){
+	public void testConnection() throws Exception{
+		Class.forName(db.getDRIVER());
+		try(Connection con = DriverManager.
+				getConnection(db.getURL(), db.getUSER(), db.getPASSWORD())){
 			System.out.println(con);
 		} catch (Exception e) {
 			e.printStackTrace();

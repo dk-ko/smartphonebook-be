@@ -21,6 +21,6 @@ public class Application {
 		.properties(APPLICATION_LOCATIONS)
 		.run(args);
 		
-		log.error("start");
+		log.warn("start");
 	}
 }

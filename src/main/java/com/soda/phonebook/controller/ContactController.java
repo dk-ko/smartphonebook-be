@@ -30,7 +30,7 @@ public class ContactController {
 	
 	private ContactService contactService;
 	
-	@GetMapping(value= {"/", "/list"})
+	@GetMapping("/")
 	@ResponseStatus(value = HttpStatus.OK)
 	public List<ContactListReadResponseDto> getAllContacts() {
 		List<Contact> findList = contactService.findAll();
