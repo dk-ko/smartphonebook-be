@@ -1,5 +1,6 @@
 package com.soda.phonebook.dto.res;
 
+import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -20,10 +21,10 @@ public class ContactListReadResponseDto {
 	private ContactType type;
 	
 	@JsonIgnore
-	private Set<Digit> digits;
+	private List<Digit> digits;
 	
 	@JsonIgnore
-	private Set<Info> infoes;
+	private List<Info> infoes;
 	
 	@JsonIgnore
 	private Set<Tag> tags;

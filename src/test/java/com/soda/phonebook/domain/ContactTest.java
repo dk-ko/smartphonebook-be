@@ -30,6 +30,7 @@ public class ContactTest {
 	@Autowired
 	private UserRepository userRepository;
 	
+	private Contact contact;
 	private User savedUser;
 	
 	@Before
@@ -37,33 +38,36 @@ public class ContactTest {
 		
 		User user = User.builder().name("테스트유저").build();
 		savedUser = userRepository.save(user);
+		
+		contact = Contact.builder()
+				.user(savedUser)
+				.type(ContactType.DEFAULT)
+				.name("koda").build();
 	}
 	
 	@Test
 	@Transactional
 	public void test_Contact_빌더패턴_생성() {
-		Contact contact = Contact.builder()
-				.user(savedUser)
-				.type(ContactType.DEFAULT)
-				.name("koda").build();
 		
 		log.info(contact.toString());
 		
-		assertThat(contact.getId(), is(nullValue()));
+		assertThat(contact.getId(), is(nullValue())); // JPA ID 생성 규약 
 		assertThat(contact.getName(), is("koda"));
 	}
-	
+	/*
 	@Test
 	@Transactional
-	public void testUpdateContactName() {
-		Contact contact = MockEntity.mock(Contact.class, 1l);
+	public void test_Contact_cascade_저장() {
 		
-		contact.updateName("koda");
+		// digit, info, tag 생성 후 add		
+		// contact만 persist
 		
 		assertThat(contact.getId(), is(1l));
-		assertThat(contact.getName(), is("koda"));
-		assertThat(contact.getMemo(), is(nullValue()));
-		assertThat(contact.getPhoto(), is(nullValue()));
-	}
-
+		
+		// is not empty
+		assertFalse(contact.getDigits().isEmpty());
+		assertFalse(contact.getInfoes().isEmpty());
+		assertFalse(contact.getTags().isEmpty()); 
+		
+	}*/
 }

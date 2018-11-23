@@ -1,5 +1,6 @@
 package com.soda.phonebook.dto.req;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.constraints.NotEmpty;
@@ -14,8 +15,10 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ContactSaveRequestDto {
 	
@@ -26,13 +29,13 @@ public class ContactSaveRequestDto {
 	private byte[] photo;
 	private ContactType type;
 	
-	private Set<Digit> digits;
-	private Set<Info> infoes;
+	private List<Digit> digits;
+	private List<Info> infoes;
 	private Set<Tag> tags;
 	
 	@Builder
 	public ContactSaveRequestDto(String name, String memo, byte[] photo, 
-			Set<Digit> digits, Set<Info> infoes, Set<Tag> tags, ContactType type){
+			List<Digit> digits, List<Info> infoes, Set<Tag> tags, ContactType type){
 		this.name = name;
 		this.memo = memo;
 		this.photo = photo;

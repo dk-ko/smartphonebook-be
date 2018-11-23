@@ -74,10 +74,13 @@ public class JoinTableTest {
 				.name("A")
 				.type(ContactType.DEFAULT)
 				.build();
+		em.persist(c);
+		em.flush();
+		em.clear();
 	}
 	
 	@Test
-	public void test_tag_contact_MtoM_조인테이블() throws Exception{
+	public void test_tag_contact_MtoM_tagContact_조인테이블() throws Exception{
 		
 		assertEquals(0, contact.getTags().size());
 		for(Tag tag : tags)
@@ -88,7 +91,7 @@ public class JoinTableTest {
 	}
 	
 	@Test
-	public void test_user_contact_favorite_조인테이블() throws Exception{
+	public void test_user_contact_1toM_favorite_조인테이블() throws Exception{
 		
 		user.addFavorite(c); 
 		User savedUser = userRepository.save(user); // cascade

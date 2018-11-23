@@ -1,6 +1,7 @@
 package com.soda.phonebook.domain;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.persistence.AttributeOverride;
@@ -30,24 +31,28 @@ public class Tag extends BaseEntity{
 	@Column(name="name", nullable=false)
 	private String name;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name="user_id",
 				foreignKey = @ForeignKey(name="fk_tag_user"),
 				nullable = false)
 	private User user;
 	
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name="tag_contact",
 			joinColumns = @JoinColumn(name="tag_id"),
 			inverseJoinColumns = @JoinColumn(name="contact_id"))
 	@OrderBy("name asc")
 	private Set<Contact> contacts = new HashSet<Contact>();
 	
+	
 	@Builder
-	public Tag (String name, User user){
+	public Tag (String name, User user, Set<Contact> contacts){
 		this.name = name;
 		this.user = user;
+		
+		this.contacts = Optional.ofNullable(contacts).orElse(this.contacts);
 	}
+	
 	
 	public void addContact(Contact contact) {
 		this.contacts.add(contact);

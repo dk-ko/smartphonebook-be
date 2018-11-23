@@ -30,11 +30,12 @@ public class Category extends BaseEntity{
 	@Column(name="data_type", nullable=false)
 	private DataType type;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "user_id", 
 				foreignKey = @ForeignKey(name="fk_category_user"),
 				nullable = false)
 	private User user;
+	
 	
 	@Builder
 	public Category(String name, DataType type, User user) {
@@ -42,4 +43,5 @@ public class Category extends BaseEntity{
 		this.type = type;
 		this.user = user;
 	}
+	
 }

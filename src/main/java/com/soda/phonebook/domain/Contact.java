@@ -1,6 +1,8 @@
 package com.soda.phonebook.domain;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -35,7 +37,7 @@ import lombok.NoArgsConstructor;
 @Getter
 public class Contact extends BaseEntity{
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name="user_id", 
 				foreignKey = @ForeignKey(name="fk_contact_user"),
 				nullable=false)
@@ -48,6 +50,7 @@ public class Contact extends BaseEntity{
 	@Column(name="name", nullable=false)
 	private String name;
 	
+	
 	@Column(name="memo")
 	private String memo = null;
 	
@@ -55,25 +58,29 @@ public class Contact extends BaseEntity{
 	@Column(name="photo")
 	private byte[] photo = null;
 	
-	
-	@OneToMany(mappedBy="contact", cascade = CascadeType.ALL
-				,fetch = FetchType.EAGER)
 	@JsonIgnore
-	private Set<Digit> digits = new HashSet<>();
+	@OneToMany(mappedBy="contact", 
+				cascade = CascadeType.ALL,
+				fetch = FetchType.LAZY,
+				orphanRemoval = true)
+	private List<Digit> digits = new ArrayList<>();
 	
-	
-	@OneToMany(mappedBy="contact", cascade = CascadeType.ALL
-				,fetch = FetchType.EAGER)
 	@JsonIgnore
-	private Set<Info> infoes = new HashSet<>();
+	@OneToMany(mappedBy="contact", 
+				cascade = CascadeType.ALL,
+				fetch = FetchType.LAZY, 
+				orphanRemoval = true)
+	private List<Info> infoes = new ArrayList<>();
 	
-	@ManyToMany(mappedBy="contacts", fetch = FetchType.EAGER)
+	@ManyToMany(mappedBy="contacts", 
+				cascade = CascadeType.PERSIST, 
+				fetch = FetchType.LAZY)
 	private Set<Tag> tags = new HashSet<>();
 
 	
 	@Builder
 	public Contact(User user, ContactType type, String name, String memo, byte[] photo,
-				Set<Digit> digits, Set<Info> infoes, Set<Tag> tags) {
+				List<Digit> digits, List<Info> infoes, Set<Tag> tags) {
 		this.user = user;
 		this.type = type;
 		this.name = name;
@@ -84,6 +91,7 @@ public class Contact extends BaseEntity{
 		this.infoes = Optional.ofNullable(infoes).orElse(this.infoes);
 		this.tags = Optional.ofNullable(tags).orElse(this.tags);
 	}
+	
 	
 	// 1:N
 	public void addDigit(Digit digit) {

@@ -1,5 +1,6 @@
 package com.soda.phonebook.domain.info;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
@@ -27,7 +28,7 @@ import lombok.NoArgsConstructor;
 @DiscriminatorColumn(name="DTYPE")
 public abstract class Info extends BaseEntity{
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name="contact_id",
 				foreignKey = @ForeignKey(name="fk_info_contact"),
 				nullable = false)
@@ -36,11 +37,13 @@ public abstract class Info extends BaseEntity{
 	@Column(name="contents", nullable=false)
 	private String contents;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false, 
+				cascade = CascadeType.PERSIST)
 	@JoinColumn(name="category_id",
 				foreignKey = @ForeignKey(name="fk_info_category"),
 				nullable = false)
 	private Category category;
+	
 	
 	public Info(Contact contact, String contents, Category category) {
 		this.contact = contact;
@@ -48,6 +51,7 @@ public abstract class Info extends BaseEntity{
 		this.category = category;
 	}
 	
+	//
 	public void updateCategory(Category category) {
 		this.category = category;
 	}
