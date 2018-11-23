@@ -25,7 +25,6 @@ public class ContactService {
 				.orElseThrow(()->new IllegalArgumentException("findById error : wrong id"));
 	}
 	
-	// 전체 Contact 목록 조회
 	@Transactional(readOnly = true)
 	public List<Contact> findAll() {
 		List<Contact> result = contactRepository.findAll();

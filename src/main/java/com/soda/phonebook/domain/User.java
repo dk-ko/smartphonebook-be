@@ -1,7 +1,6 @@
 package com.soda.phonebook.domain;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.AttributeOverride;
@@ -34,23 +33,23 @@ public class User extends BaseEntity{
 	
 	@OneToMany(mappedBy="user", 
 				fetch=FetchType.LAZY, 
-				cascade = CascadeType.ALL)
+				cascade = CascadeType.REMOVE)
 	@JsonIgnore
-	private Set<Contact> contacts;
+	private Set<Contact> contacts = new HashSet<>();
 	
 	@OneToMany(mappedBy="user", 
 				fetch=FetchType.LAZY, 
-				cascade = CascadeType.ALL)
+				cascade = CascadeType.REMOVE)
 	@JsonIgnore
-	private Set<Tag> tags;
+	private Set<Tag> tags = new HashSet<>();
 	
 	@OneToMany(mappedBy="user", 
 				fetch=FetchType.LAZY, 
-				cascade = CascadeType.ALL)
+				cascade = CascadeType.REMOVE)
 	@JsonIgnore
-	private List<Category> categories;
+	private Set<Category> categories = new HashSet<>();
 	
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.REMOVE)
 	@JoinTable(name="user_contact",
 			joinColumns = @JoinColumn(name="user_id"),
 			inverseJoinColumns = @JoinColumn(name="contact_id"))

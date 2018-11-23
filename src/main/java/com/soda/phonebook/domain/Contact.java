@@ -1,8 +1,7 @@
 package com.soda.phonebook.domain;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.persistence.AttributeOverride;
@@ -42,6 +41,10 @@ public class Contact extends BaseEntity{
 				nullable=false)
 	private User user;
 	
+	@Convert(converter = ContactTypeAttributeConverter.class)
+	@Column(name="contact_type", nullable=false)
+	private ContactType type;
+	
 	@Column(name="name", nullable=false)
 	private String name;
 	
@@ -52,41 +55,52 @@ public class Contact extends BaseEntity{
 	@Column(name="photo")
 	private byte[] photo = null;
 	
-	@OneToMany(mappedBy="contact", cascade = CascadeType.ALL)
+	
+	@OneToMany(mappedBy="contact", cascade = CascadeType.ALL
+				,fetch = FetchType.EAGER)
 	@JsonIgnore
-	private List<Digit> digits = new ArrayList<Digit>();
+	private Set<Digit> digits = new HashSet<>();
 	
-	@OneToMany(mappedBy="contact", cascade = CascadeType.ALL)
+	
+	@OneToMany(mappedBy="contact", cascade = CascadeType.ALL
+				,fetch = FetchType.EAGER)
 	@JsonIgnore
-	private List<Info> infoes = new ArrayList<Info>();
+	private Set<Info> infoes = new HashSet<>();
 	
-	@ManyToMany(mappedBy="contacts")
-	private Set<Tag> tags = new HashSet<Tag>();
-	
-	@Convert(converter = ContactTypeAttributeConverter.class)
-	@Column(name="contact_type", nullable=false)
-	private ContactType type = ContactType.DEFAULT;
+	@ManyToMany(mappedBy="contacts", fetch = FetchType.EAGER)
+	private Set<Tag> tags = new HashSet<>();
+
 	
 	@Builder
-	public Contact(User user,String name, String memo, byte[] photo,
-				List<Digit> digits, List<Info> infoes, Set<Tag> tags, ContactType type) {
+	public Contact(User user, ContactType type, String name, String memo, byte[] photo,
+				Set<Digit> digits, Set<Info> infoes, Set<Tag> tags) {
 		this.user = user;
-		this.name = name;
-		this.memo = memo;
-		this.photo = photo;
-		this.digits = digits;
-		this.infoes = infoes;
-		this.tags = tags;
 		this.type = type;
+		this.name = name;
+		
+		this.memo = Optional.ofNullable(memo).orElse(this.memo);
+		this.photo = Optional.ofNullable(photo).orElse(this.photo);
+		this.digits = Optional.ofNullable(digits).orElse(this.digits);
+		this.infoes = Optional.ofNullable(infoes).orElse(this.infoes);
+		this.tags = Optional.ofNullable(tags).orElse(this.tags);
 	}
 	
+	// 1:N
+	public void addDigit(Digit digit) {
+		this.digits.add(digit);
+	}
+	
+	public <T extends Info> void addInfo(T info) {
+		this.infoes.add(info);
+	}
+	
+	// Join Table
 	public void addTag(Tag tag) {
 		this.tags.add(tag);
 	}
 	
-	public void updateTags(Set<Tag> tags) {
-		this.tags = tags;
-	}
+	
+	// 밑에 확인 후 필요 없는 것 삭제 
 	
 	public void updateContactType(ContactType type) {
 		this.type = type;
@@ -112,5 +126,18 @@ public class Contact extends BaseEntity{
 	
 	public void updateUser(User user) {
 		this.user = user;
+	}
+	
+	@Override
+	public String toString() {
+		String f = "\n[Contact] id: %d, user_id: %d, type: %s, name: %s, memo: %s, photo: %s, tags: %s, digits: %s, infoes: %s";
+		
+		return String.format(f, this.id, this.user.getId(), this.type, 
+				this.name, this.memo, withPhoto(), this.tags.toString(), 
+				this.digits.toString(),this.infoes.toString());
+	}
+	
+	private String withPhoto() {
+		return this.photo != null ? "exist" : "none";
 	}
 }

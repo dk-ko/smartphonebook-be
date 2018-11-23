@@ -80,7 +80,8 @@ public class JoinTableTest {
 	public void test_tag_contact_MtoM_조인테이블() throws Exception{
 		
 		assertEquals(0, contact.getTags().size());
-		contact.updateTags(tags);
+		for(Tag tag : tags)
+			contact.addTag(tag);
 		Contact savedContact = contactRepository.save(contact);
 		
 		assertNotNull(savedContact.getTags());

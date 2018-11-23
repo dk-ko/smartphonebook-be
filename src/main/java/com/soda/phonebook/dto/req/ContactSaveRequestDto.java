@@ -1,7 +1,5 @@
 package com.soda.phonebook.dto.req;
 
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.validation.constraints.NotEmpty;
@@ -28,13 +26,13 @@ public class ContactSaveRequestDto {
 	private byte[] photo;
 	private ContactType type;
 	
-	private List<Digit> digits;
-	private List<Info> infoes;
-	private Set<Tag> tags = new HashSet<Tag>();
+	private Set<Digit> digits;
+	private Set<Info> infoes;
+	private Set<Tag> tags;
 	
 	@Builder
 	public ContactSaveRequestDto(String name, String memo, byte[] photo, 
-			List<Digit> digits, List<Info> infoes, Set<Tag> tags, ContactType type){
+			Set<Digit> digits, Set<Info> infoes, Set<Tag> tags, ContactType type){
 		this.name = name;
 		this.memo = memo;
 		this.photo = photo;

@@ -35,8 +35,8 @@ public class ContactController {
 	public List<ContactListReadResponseDto> getAllContacts() {
 		List<Contact> findList = contactService.findAll();
 		List<ContactListReadResponseDto> dtoList = new ArrayList<>();
-		for(int i = 0; i < findList.size(); i++) 
-			dtoList.add(new ContactListReadResponseDto(findList.get(i)));
+		for(Contact contact : findList)
+			dtoList.add(new ContactListReadResponseDto(contact));
 		return dtoList;
 	}
 	
