@@ -20,8 +20,8 @@ public class DB {
 			this.PASSWORD = "test123";
 		} else if(t == TYPE.TEST) {
 			this.DRIVER = "org.h2.Driver";
-//			this.URL = "jdbc:h2:mem://localhost/~/contact"; // Embedded DB
-			this.URL = "jdbc:h2:tcp://localhost/~/contact"; // External DB
+			this.URL = "jdbc:h2:mem://localhost/~/contact"; // Embedded DB
+//			this.URL = "jdbc:h2:tcp://localhost/~/contact"; // External DB
 			this.USER = "sa";
 			this.PASSWORD = "";
 		} 
