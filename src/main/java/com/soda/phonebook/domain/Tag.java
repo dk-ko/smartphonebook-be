@@ -56,7 +56,7 @@ public class Tag extends BaseEntity{
 	
 	public void addContact(Contact contact) {
 		this.contacts.add(contact);
-		// 
+		// xax
 	}
 	
 	public void updateContacts(Set<Contact> contacts) {

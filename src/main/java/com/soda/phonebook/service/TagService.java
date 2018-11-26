@@ -1,6 +1,6 @@
 package com.soda.phonebook.service;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.springframework.stereotype.Service;
@@ -18,10 +18,11 @@ public class TagService {
 	
 	private final TagRepository tagRepository;
 	
+	
 	public Set<Tag> findAllByContact(Long id){
 		Set<Tag> findTags = tagRepository.findAllByContact(id);
 		return (findTags.isEmpty() || findTags.equals(null)) 
-				? new HashSet<Tag>() : findTags; 
+				? new LinkedHashSet<Tag>() : findTags; 
 	}
 	
 }

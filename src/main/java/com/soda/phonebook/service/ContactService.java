@@ -6,14 +6,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.soda.phonebook.domain.Contact;
 import com.soda.phonebook.domain.Digit;
 import com.soda.phonebook.domain.Tag;
-import com.soda.phonebook.domain.User;
 import com.soda.phonebook.domain.info.Info;
 import com.soda.phonebook.dto.req.ContactSaveRequestDto;
 import com.soda.phonebook.dto.res.ContactListReadResponseDto;
@@ -22,7 +20,6 @@ import com.soda.phonebook.dto.res.DigitResponseDto;
 import com.soda.phonebook.dto.res.InfoResponseDto;
 import com.soda.phonebook.dto.res.TagResponseDto;
 import com.soda.phonebook.repository.ContactRepository;
-import com.soda.phonebook.repository.TagRepository;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,9 +31,10 @@ import lombok.extern.slf4j.Slf4j;
 public class ContactService {
 
 	private final ContactRepository contactRepository;
-	private final TagRepository tagRepository;
 	
 	private final UserService userService;
+	private final TagService tagService;
+	
 	
 	@Transactional(readOnly = true)
 	public ContactResponseDto findById(Long id) {
@@ -69,10 +67,13 @@ public class ContactService {
 	}
 	
 	public void delete(Long id) {
-		if(!contactRepository.findById(id).isPresent())
+		Optional<Contact> findContact = contactRepository.findById(id);
+		if(!findContact.isPresent())
 			throw new IllegalArgumentException("delete error : wrong id");
 		
-		// contact id와 일치하는 tag를 찾아서 contac_id만 삭제하도록 수정 
+		Set<Tag> findTags = tagService.findAllByContact(id);
+		for(Tag t : findTags)
+			t.getContacts().remove(findContact.get());
 		
 		contactRepository.deleteById(id);
 	}
