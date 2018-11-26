@@ -1,6 +1,8 @@
 package com.soda.phonebook.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.stereotype.Service;
@@ -11,6 +13,7 @@ import com.soda.phonebook.domain.Digit;
 import com.soda.phonebook.domain.Tag;
 import com.soda.phonebook.domain.info.Info;
 import com.soda.phonebook.dto.req.ContactSaveRequestDto;
+import com.soda.phonebook.dto.res.ContactListReadResponseDto;
 import com.soda.phonebook.dto.res.ContactResponseDto;
 import com.soda.phonebook.repository.ContactRepository;
 
@@ -45,9 +48,12 @@ public class ContactService {
 
 	
 	@Transactional(readOnly = true)
-	public List<Contact> findAll() {
-		List<Contact> result = contactRepository.findAll();
-		return result;
+	public List<ContactListReadResponseDto> findAll() {
+		List<Contact> findList = contactRepository.findAll();
+		List<ContactListReadResponseDto> dtoList = new ArrayList<>();
+		for(Contact contact : findList)
+			dtoList.add(new ContactListReadResponseDto(contact));
+		return dtoList;
 	}
 	
 	public void delete(Long id) {
@@ -56,12 +62,12 @@ public class ContactService {
 		contactRepository.deleteById(id);
 	}
 	
-	public Contact create(ContactSaveRequestDto dto) {
+	public boolean create(ContactSaveRequestDto dto) {
 		// to-do : name, type null check
 		Contact saveContact = dto.toEntity();
 		saveContact.updateUser(userService.getCurrentUser());
 		
-		return contactRepository.save(saveContact);
+		return Optional.ofNullable(contactRepository.save(saveContact)).isPresent(); 
 	}
 	
 	// edit 

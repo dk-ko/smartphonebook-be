@@ -1,6 +1,5 @@
 package com.soda.phonebook.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 //import java.util.Optional;
 
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.soda.phonebook.dto.res.ContactListReadResponseDto;
 import com.soda.phonebook.dto.res.ContactResponseDto;
-import com.soda.phonebook.domain.Contact;
 import com.soda.phonebook.dto.req.ContactSaveRequestDto;
 import com.soda.phonebook.service.ContactService;
 
@@ -35,11 +33,7 @@ public class ContactController {
 	@GetMapping("/")
 	@ResponseStatus(value = HttpStatus.OK)
 	public List<ContactListReadResponseDto> getAllContacts() {
-		List<Contact> findList = contactService.findAll();
-		List<ContactListReadResponseDto> dtoList = new ArrayList<>();
-		for(Contact contact : findList)
-			dtoList.add(new ContactListReadResponseDto(contact));
-		return dtoList;
+		return contactService.findAll();
 	}
 	
 	@GetMapping("/{id}")
@@ -54,11 +48,11 @@ public class ContactController {
 		contactService.delete(id);
 	}
 	
-//	@PostMapping("/")
-//	@ResponseStatus(value = HttpStatus.CREATED)
-//	public ContactResponseDto createContacts(@RequestBody final ContactSaveRequestDto dto) {
-//		return new ContactResponseDto(contactService.create(dto));
-//	}
+	@PostMapping("/")
+	@ResponseStatus(value = HttpStatus.CREATED)
+	public boolean createContacts(@RequestBody final ContactSaveRequestDto dto) {
+		return contactService.create(dto);
+	}
 	
 //	@PutMapping("/{id}")
 //	@ResponseStatus(value = HttpStatus.OK)

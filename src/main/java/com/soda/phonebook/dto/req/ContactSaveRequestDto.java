@@ -45,9 +45,9 @@ public class ContactSaveRequestDto {
 		// nullable
 		this.memo = memo;
 		this.photo = photo;
-		this.digits.addAll(Optional.ofNullable(digits).orElse(this.digits));
-		this.infoes.addAll(Optional.ofNullable(infoes).orElse(this.infoes));
-		this.tags.addAll(Optional.ofNullable(tags).orElse(this.tags));
+		this.digits = Optional.ofNullable(digits).orElse(this.digits);
+		this.infoes = Optional.ofNullable(infoes).orElse(this.infoes);
+		this.tags = Optional.ofNullable(tags).orElse(this.tags);
 	}
 	
 	public Contact toEntity() {
