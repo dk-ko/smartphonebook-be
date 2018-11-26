@@ -24,7 +24,8 @@ public class CustomErrorController implements ErrorController{
 		log.info("[CustomErrorController]");
 		log.error("[statusCode]: "+statusCode+", [exception]: "+exception);
 		
-		return "redirect:";
+//		return "redirect:/api/contacts";
+		return "/hello";
 	}
 
 	@Override

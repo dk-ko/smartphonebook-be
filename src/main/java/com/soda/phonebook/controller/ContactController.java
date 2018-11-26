@@ -22,7 +22,9 @@ import com.soda.phonebook.dto.req.ContactSaveRequestDto;
 import com.soda.phonebook.service.ContactService;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @AllArgsConstructor
 @RequestMapping("/api/contacts")
 @RestController
@@ -43,8 +45,7 @@ public class ContactController {
 	@GetMapping("/{id}")
 	@ResponseStatus(value = HttpStatus.OK)
 	public ContactResponseDto getContacts(@PathVariable final Long id) {
-		Contact findContact = contactService.findById(id);
-		return new ContactResponseDto(findContact);
+		return contactService.findById(id);
 	}
 	
 	@DeleteMapping("/{id}")
@@ -53,11 +54,11 @@ public class ContactController {
 		contactService.delete(id);
 	}
 	
-	@PostMapping("/")
-	@ResponseStatus(value = HttpStatus.CREATED)
-	public ContactResponseDto createContacts(@RequestBody final ContactSaveRequestDto dto) {
-		return new ContactResponseDto(contactService.create(dto));
-	}
+//	@PostMapping("/")
+//	@ResponseStatus(value = HttpStatus.CREATED)
+//	public ContactResponseDto createContacts(@RequestBody final ContactSaveRequestDto dto) {
+//		return new ContactResponseDto(contactService.create(dto));
+//	}
 	
 //	@PutMapping("/{id}")
 //	@ResponseStatus(value = HttpStatus.OK)

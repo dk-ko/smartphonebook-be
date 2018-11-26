@@ -9,6 +9,10 @@ spring:
 --- 
 spring.profiles: common
 
+server:
+  port: 8085
+  error.whitelabel.enabled: false
+
 spring:   
   main:
     allow-bean-definition-overriding: true
@@ -27,19 +31,13 @@ spring:
   jpa:
     open-in-view: false
       
-server:
-  port: 8085
-  error.whitelabel.enabled: false
-
-
-
   
 # local 환경
 ---
-spring.profiles: local
-spring.profiles.include: common
-
 spring:
+  profiles: local
+  profiles.include: common
+
   datasource:
     hikari:
       jdbc-url: jdbc:mariadb://localhost:3306/contact

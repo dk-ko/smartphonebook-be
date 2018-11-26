@@ -87,9 +87,9 @@ public class Contact extends BaseEntity{
 		
 		this.memo = Optional.ofNullable(memo).orElse(this.memo);
 		this.photo = Optional.ofNullable(photo).orElse(this.photo);
-		this.digits = Optional.ofNullable(digits).orElse(this.digits);
-		this.infoes = Optional.ofNullable(infoes).orElse(this.infoes);
-		this.tags = Optional.ofNullable(tags).orElse(this.tags);
+		this.digits.addAll(Optional.ofNullable(digits).orElse(this.digits));
+		this.infoes.addAll(Optional.ofNullable(infoes).orElse(this.infoes));
+		this.tags.addAll(Optional.ofNullable(tags).orElse(this.tags));
 	}
 	
 	
@@ -112,12 +112,6 @@ public class Contact extends BaseEntity{
 	
 	public void updateContactType(ContactType type) {
 		this.type = type;
-	}
-
-	public void updateAllInfo(String name, String memo, byte[] photo) {
-		this.name = name;
-		this.memo = memo;
-		this	.photo = photo;
 	}
 	
 	public void updateName(String name) {

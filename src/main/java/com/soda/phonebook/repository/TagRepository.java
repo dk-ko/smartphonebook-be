@@ -1,9 +1,15 @@
 package com.soda.phonebook.repository;
 
+import java.util.Set;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.soda.phonebook.domain.Tag;
 
 public interface TagRepository extends JpaRepository<Tag, Long>{
-
+	
+	@Query("SELECT DISTINCT t FROM Contact c LEFT JOIN c.tags t WHERE c.id = :id")
+	Set<Tag> findAllByContact(@Param("id") Long id);
 }
