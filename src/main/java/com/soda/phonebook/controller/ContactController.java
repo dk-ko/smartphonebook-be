@@ -39,7 +39,10 @@ public class ContactController {
 	@GetMapping("/{id}")
 	@ResponseStatus(value = HttpStatus.OK)
 	public ContactResponseDto getContacts(@PathVariable final Long id) {
-		return contactService.findById(id);
+		log.info("* before service");
+		ContactResponseDto dto = contactService.findById(id);
+		log.info("* after service");
+		return dto;
 	}
 	
 	@DeleteMapping("/{id}")

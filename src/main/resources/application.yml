@@ -30,8 +30,8 @@ spring:
     
   jpa:
     open-in-view: false
-      
-  
+
+
 # local 환경
 ---
 spring:
@@ -89,6 +89,7 @@ spring:
       username: sa
       password: 
       driver-class-name: org.h2.Driver
+    data: classpath:init.sql
   
   jpa:
     database: h2

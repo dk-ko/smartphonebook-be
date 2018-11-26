@@ -42,7 +42,7 @@ public class ContactTypeAttributeConverterTest {
 		
 		contact = Contact.builder()
 				.name("name")
-				.user(user)
+//				.user(user)
 				.type(ContactType.FAVORITED)
 				.build();
 		em.persist(contact);

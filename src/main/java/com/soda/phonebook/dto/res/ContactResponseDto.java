@@ -6,10 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.soda.phonebook.domain.Contact;
-import com.soda.phonebook.domain.Digit;
-import com.soda.phonebook.domain.Tag;
 import com.soda.phonebook.domain.VO.ContactType;
-import com.soda.phonebook.domain.info.Info;
 
 import lombok.Getter;
 
@@ -21,13 +18,16 @@ public class ContactResponseDto {
 	private String memo;
 	private byte[] photo;
 	
-	private List<Digit> digits = new ArrayList<>();
-	private List<Info> infoes = new ArrayList<>();
-	private Set<Tag> tags = new HashSet<>();
 	
-	public ContactResponseDto(Contact contact, List<Digit> digits, List<Info> infoes, Set<Tag> tags) {
+	private List<DigitResponseDto> digits = new ArrayList<>();
+	private List<InfoResponseDto> infoes = new ArrayList<>();
+	private Set<TagResponseDto> tags = new HashSet<>();
+	
+	public ContactResponseDto(Contact contact, 
+			List<DigitResponseDto> digits, List<InfoResponseDto> infoes, Set<TagResponseDto> tags) {
 		this.type = contact.getType();
 		this.name = contact.getName();
+		
 		// nullable
 		this.memo = contact.getMemo();
 		this.photo = contact.getPhoto();

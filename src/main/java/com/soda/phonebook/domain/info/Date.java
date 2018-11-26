@@ -6,8 +6,11 @@ import javax.persistence.Entity;
 import com.soda.phonebook.domain.Category;
 import com.soda.phonebook.domain.Contact;
 
+import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @DiscriminatorValue("D")
 public class Date extends Info{

@@ -51,7 +51,7 @@ public class InfoTest {
 				Contact.builder()
 				.name("고다경")
 				.memo("skhu")
-				.user(user)
+//				.user(user)
 				.type(ContactType.DEFAULT)
 				.build());
 		

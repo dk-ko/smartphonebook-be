@@ -1,21 +1,28 @@
 package com.soda.phonebook.service;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.soda.phonebook.domain.Contact;
 import com.soda.phonebook.domain.Digit;
 import com.soda.phonebook.domain.Tag;
+import com.soda.phonebook.domain.User;
 import com.soda.phonebook.domain.info.Info;
 import com.soda.phonebook.dto.req.ContactSaveRequestDto;
 import com.soda.phonebook.dto.res.ContactListReadResponseDto;
 import com.soda.phonebook.dto.res.ContactResponseDto;
+import com.soda.phonebook.dto.res.DigitResponseDto;
+import com.soda.phonebook.dto.res.InfoResponseDto;
+import com.soda.phonebook.dto.res.TagResponseDto;
 import com.soda.phonebook.repository.ContactRepository;
+import com.soda.phonebook.repository.TagRepository;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,10 +34,9 @@ import lombok.extern.slf4j.Slf4j;
 public class ContactService {
 
 	private final ContactRepository contactRepository;
+	private final TagRepository tagRepository;
+	
 	private final UserService userService;
-	private final DigitService digitService;
-	private final InfoService infoService;
-	private final TagService tagService;
 	
 	@Transactional(readOnly = true)
 	public ContactResponseDto findById(Long id) {
@@ -38,14 +44,20 @@ public class ContactService {
 		Contact findContact = contactRepository.findById(id)
 				.orElseThrow(()->new IllegalArgumentException("findById error : wrong id"));
 		
-		// 성능 향상을 위해 1:N에서 조회하는 것이 아닌 N:1에서 조회 
-		List<Digit> digits = digitService.findAllByContact(id);
-		List<Info> infoes = infoService.findAllByContact(id);
-		Set<Tag> tags = tagService.findAllByContact(id);
+		List<DigitResponseDto> digitsDto = new ArrayList<>();
+		for(Digit d : findContact.getDigits())
+			digitsDto.add(new DigitResponseDto(d));
 		
-		return new ContactResponseDto(findContact, digits, infoes, tags);
+		List<InfoResponseDto> infoesDto = new ArrayList<>();
+		for(Info i : findContact.getInfoes())
+			infoesDto.add(new InfoResponseDto(i));
+		
+		Set<TagResponseDto> tagsDto = new LinkedHashSet<>();
+		for(Tag t : findContact.getTags())
+			tagsDto.add(new TagResponseDto(t));
+		
+		return new ContactResponseDto(findContact, digitsDto, infoesDto, tagsDto);
 	}
-
 	
 	@Transactional(readOnly = true)
 	public List<ContactListReadResponseDto> findAll() {
@@ -59,6 +71,9 @@ public class ContactService {
 	public void delete(Long id) {
 		if(!contactRepository.findById(id).isPresent())
 			throw new IllegalArgumentException("delete error : wrong id");
+		
+		// contact id와 일치하는 tag를 찾아서 contac_id만 삭제하도록 수정 
+		
 		contactRepository.deleteById(id);
 	}
 	
