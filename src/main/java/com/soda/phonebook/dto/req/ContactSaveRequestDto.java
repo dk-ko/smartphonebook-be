@@ -13,6 +13,9 @@ import com.soda.phonebook.domain.Digit;
 import com.soda.phonebook.domain.Tag;
 import com.soda.phonebook.domain.VO.ContactType;
 import com.soda.phonebook.domain.info.Info;
+import com.soda.phonebook.dto.res.DigitResponseDto;
+import com.soda.phonebook.dto.res.InfoResponseDto;
+import com.soda.phonebook.dto.res.TagResponseDto;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -24,8 +27,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ContactSaveRequestDto {
 	
-	@NotEmpty
-	private ContactType type;
+	private ContactType type = ContactType.DEFAULT;
 	
 	@NotEmpty
 	private String name;
@@ -33,14 +35,14 @@ public class ContactSaveRequestDto {
 	private String memo = null;
 	private byte[] photo = null;
 	
-	private List<Digit> digits = new ArrayList<>();
-	private List<Info> infoes = new ArrayList<>();
-	private Set<Tag> tags = new HashSet<>();
+	private List<DigitResponseDto> digits = new ArrayList<>();
+	private List<InfoResponseDto> infoes = new ArrayList<>();
+	private Set<TagResponseDto> tags = new HashSet<>();
 	
 	@Builder
 	public ContactSaveRequestDto(ContactType type, String name, String memo,  
-			byte[] photo, List<Digit> digits, List<Info> infoes, Set<Tag> tags){
-		this.type = type;
+			byte[] photo, List<DigitResponseDto> digits, List<InfoResponseDto> infoes, Set<TagResponseDto> tags){
+		this.type = Optional.ofNullable(type).orElse(this.type);
 		this.name = name;
 		// nullable
 		this.memo = memo;
@@ -52,13 +54,13 @@ public class ContactSaveRequestDto {
 	
 	public Contact toEntity() {
 		return Contact.builder()
+				.type(this.type)
 				.name(this.name)
 				.memo(this.memo)
 				.photo(this.photo)
-				.digits(this.digits)
-				.infoes(this.infoes)
-				.tags(this.tags)
-				.type(this.type)
+//				.digits(this.digits)
+//				.infoes(this.infoes)
+//				.tags(this.tags)
 				.build();
 	}
 }

@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.soda.phonebook.domain.Category;
 import com.soda.phonebook.domain.Digit;
 
 public interface DigitRepository extends JpaRepository<Digit, Long>{
@@ -13,4 +14,7 @@ public interface DigitRepository extends JpaRepository<Digit, Long>{
 	@Query("SELECT d FROM Digit d JOIN FETCH d.contact c WHERE c.id = :id")
 //	@Query("SELECT d FROM Digit d LEFT JOIN d.contact c WHERE c.id = :id")
 	List<Digit> findAllByContact(@Param("id") Long id);
+	
+	@Query("SELECT d FROM Digit d WHERE d.category = :category")
+	List<Digit> findByCategory(@Param("category") Category category);
 }

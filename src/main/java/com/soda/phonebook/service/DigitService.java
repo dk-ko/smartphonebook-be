@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.soda.phonebook.domain.Category;
 import com.soda.phonebook.domain.Digit;
 import com.soda.phonebook.repository.DigitRepository;
 
@@ -24,4 +25,7 @@ public class DigitService {
 				? new ArrayList<Digit>() : findDigits;
 	}
 
+	public List<Digit> findByCategory(Category category){
+		return digitRepository.findByCategory(category);
+	}
 }

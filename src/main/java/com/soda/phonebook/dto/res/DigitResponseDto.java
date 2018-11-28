@@ -19,4 +19,5 @@ public class DigitResponseDto {
 		this.numbers = digit.getNumbers(); 
 		this.rep = digit.getRep();
 	}
+	
 }

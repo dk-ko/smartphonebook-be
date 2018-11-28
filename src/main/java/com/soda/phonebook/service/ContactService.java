@@ -38,23 +38,39 @@ public class ContactService {
 	
 	@Transactional(readOnly = true)
 	public ContactResponseDto findById(Long id) {
-		log.info("findContact 전");
+		
 		Contact findContact = contactRepository.findById(id)
 				.orElseThrow(()->new IllegalArgumentException("findById error : wrong id"));
 		
-		List<DigitResponseDto> digitsDto = new ArrayList<>();
-		for(Digit d : findContact.getDigits())
-			digitsDto.add(new DigitResponseDto(d));
-		
-		List<InfoResponseDto> infoesDto = new ArrayList<>();
-		for(Info i : findContact.getInfoes())
-			infoesDto.add(new InfoResponseDto(i));
-		
-		Set<TagResponseDto> tagsDto = new LinkedHashSet<>();
-		for(Tag t : findContact.getTags())
-			tagsDto.add(new TagResponseDto(t));
+		List<DigitResponseDto> digitsDto = getDigitsResponseDto(findContact);
+		List<InfoResponseDto> infoesDto = getInfoesResponseDto(findContact);
+		Set<TagResponseDto> tagsDto = getTagsResponseDto(findContact);
 		
 		return new ContactResponseDto(findContact, digitsDto, infoesDto, tagsDto);
+	}
+	
+	@Transactional(readOnly = true)
+	private List<DigitResponseDto> getDigitsResponseDto(Contact contact) {
+		List<DigitResponseDto> digitsDto = new ArrayList<>();
+		for(Digit d : contact.getDigits())
+			digitsDto.add(new DigitResponseDto(d));
+		return digitsDto;
+	}
+	
+	@Transactional(readOnly = true)
+	private List<InfoResponseDto> getInfoesResponseDto(Contact contact){
+		List<InfoResponseDto> infoesDto = new ArrayList<>();
+		for(Info i : contact.getInfoes())
+			infoesDto.add(new InfoResponseDto(i));
+		return infoesDto;
+	}
+	
+	@Transactional(readOnly = true)
+	private Set<TagResponseDto> getTagsResponseDto(Contact contact){
+		Set<TagResponseDto> tagsDto = new LinkedHashSet<>();
+		for(Tag t : contact.getTags())
+			tagsDto.add(new TagResponseDto(t));
+		return tagsDto;
 	}
 	
 	@Transactional(readOnly = true)
@@ -71,19 +87,30 @@ public class ContactService {
 		if(!findContact.isPresent())
 			throw new IllegalArgumentException("delete error : wrong id");
 		
-		Set<Tag> findTags = tagService.findAllByContact(id);
-		for(Tag t : findTags)
-			t.getContacts().remove(findContact.get());
+		removeContactFromTag(id, findContact);
 		
 		contactRepository.deleteById(id);
 	}
 	
+	private void removeContactFromTag(Long id, Optional<Contact> contact) {
+		Set<Tag> findTags = tagService.findAllByContact(id);
+		if(!findTags.isEmpty())
+			for(Tag tag : findTags) 
+				tag.getContacts().remove(contact.get());
+		else
+			log.info("tag 없음");
+	}
+	
 	public boolean create(ContactSaveRequestDto dto) {
 		// to-do : name, type null check
-		Contact saveContact = dto.toEntity();
-		saveContact.updateUser(userService.getCurrentUser());
+		Contact contact = dto.toEntity();
+		dto.getDigits();
+		dto.getInfoes();
+		dto.getTags();
 		
-		return Optional.ofNullable(contactRepository.save(saveContact)).isPresent(); 
+		contact.updateUser(userService.getCurrentUser());
+		
+		return Optional.ofNullable(contactRepository.save(contact)).isPresent(); 
 	}
 	
 	// edit 
