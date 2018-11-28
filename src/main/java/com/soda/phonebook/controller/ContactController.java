@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 public class ContactController {
 	
-	private ContactService contactService;
+	private final ContactService contactService;
 	
 	@GetMapping("/")
 	@ResponseStatus(value = HttpStatus.OK)

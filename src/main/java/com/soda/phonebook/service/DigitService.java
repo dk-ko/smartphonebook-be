@@ -28,4 +28,8 @@ public class DigitService {
 	public List<Digit> findByCategory(Category category){
 		return digitRepository.findByCategory(category);
 	}
+	
+	public Digit save(Digit digit) {
+		return digitRepository.save(digit);
+	}
 }

@@ -8,6 +8,7 @@ import java.util.Set;
 import com.soda.phonebook.domain.Contact;
 import com.soda.phonebook.domain.VO.ContactType;
 
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
@@ -23,6 +24,7 @@ public class ContactResponseDto {
 	private List<InfoResponseDto> infoes = new ArrayList<>();
 	private Set<TagResponseDto> tags = new HashSet<>();
 	
+	@Builder
 	public ContactResponseDto(Contact contact, 
 			List<DigitResponseDto> digits, List<InfoResponseDto> infoes, Set<TagResponseDto> tags) {
 		this.type = contact.getType();

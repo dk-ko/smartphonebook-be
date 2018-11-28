@@ -1,21 +1,14 @@
 package com.soda.phonebook.dto.req;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import javax.validation.constraints.NotEmpty;
 
 import com.soda.phonebook.domain.Contact;
-import com.soda.phonebook.domain.Digit;
-import com.soda.phonebook.domain.Tag;
+import com.soda.phonebook.domain.User;
 import com.soda.phonebook.domain.VO.ContactType;
-import com.soda.phonebook.domain.info.Info;
-import com.soda.phonebook.dto.res.DigitResponseDto;
-import com.soda.phonebook.dto.res.InfoResponseDto;
-import com.soda.phonebook.dto.res.TagResponseDto;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -35,32 +28,38 @@ public class ContactSaveRequestDto {
 	private String memo = null;
 	private byte[] photo = null;
 	
-	private List<DigitResponseDto> digits = new ArrayList<>();
-	private List<InfoResponseDto> infoes = new ArrayList<>();
-	private Set<TagResponseDto> tags = new HashSet<>();
+	private List<DigitSaveRequestDto> digits = new ArrayList<>();
+//	private List<InfoSaveRequestDto> infoes = new ArrayList<>();
+	private List<UrlSaveRequestDto> urls = new ArrayList<>();
+	private List<EmailSaveRequestDto> emails = new ArrayList<>();
+	private List<DateSaveRequestDto> dates = new ArrayList<>();
+	private List<AddressSaveRequestDto> addresses = new ArrayList<>();
 	
 	@Builder
-	public ContactSaveRequestDto(ContactType type, String name, String memo,  
-			byte[] photo, List<DigitResponseDto> digits, List<InfoResponseDto> infoes, Set<TagResponseDto> tags){
+	public ContactSaveRequestDto(ContactType type, String name, String memo, byte[] photo, 
+			List<DigitSaveRequestDto> digits, List<UrlSaveRequestDto> urls,
+			List<EmailSaveRequestDto> emails,List<DateSaveRequestDto> dates,
+			List<AddressSaveRequestDto> addresses){
 		this.type = Optional.ofNullable(type).orElse(this.type);
 		this.name = name;
 		// nullable
 		this.memo = memo;
 		this.photo = photo;
+		
 		this.digits = Optional.ofNullable(digits).orElse(this.digits);
-		this.infoes = Optional.ofNullable(infoes).orElse(this.infoes);
-		this.tags = Optional.ofNullable(tags).orElse(this.tags);
+		this.urls = Optional.ofNullable(urls).orElse(this.urls);
+		this.emails = Optional.ofNullable(emails).orElse(this.emails);
+		this.dates = Optional.ofNullable(dates).orElse(this.dates);
+		this.addresses = Optional.ofNullable(addresses).orElse(this.addresses);
 	}
 	
-	public Contact toEntity() {
+	public Contact toEntity(User user) {
 		return Contact.builder()
+				.user(user)
 				.type(this.type)
 				.name(this.name)
 				.memo(this.memo)
 				.photo(this.photo)
-//				.digits(this.digits)
-//				.infoes(this.infoes)
-//				.tags(this.tags)
 				.build();
 	}
 }

@@ -30,7 +30,7 @@ public class CategoryService {
 	
 	private final UserService userService;
 	private final DigitService digitService;
-	private final InfoService infoService;
+	private final InfoService<Info> infoService;
 	
 	@Transactional(readOnly = true)
 	public Set<CategoryResponseDto> findByType(DataType type){
@@ -43,10 +43,10 @@ public class CategoryService {
 		return dtoList;
 	}
 	
-	public boolean create(CategorySaveRequestDto dto) {
+	public CategoryResponseDto create(CategorySaveRequestDto dto) {
 		Category category = dto.toEntity(userService.getCurrentUser());
 		
-		return Optional.ofNullable(categoryRepository.save(category)).isPresent();
+		return new CategoryResponseDto(categoryRepository.save(category));
 	}
 	
 	public void delete(Long id) {
@@ -62,5 +62,10 @@ public class CategoryService {
 		if(findCategory.getIsDefault().equals(Mark.N))
 			categoryRepository.delete(findCategory);
 		else throw new CanNotDeleteCategory("default category");
+	}
+	
+	@Transactional(readOnly = true)
+	public Optional<Category> findById(Long id) {
+		return categoryRepository.findById(id);
 	}
 }

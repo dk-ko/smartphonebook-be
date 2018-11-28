@@ -1,7 +1,5 @@
 package com.soda.phonebook.domain;
 
-import java.util.Optional;
-
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -45,11 +43,11 @@ public class Category extends BaseEntity{
 	private Mark isDefault = Mark.N;
 	
 	@Builder
-	public Category(String name, DataType type, User user, Mark isDefault) {
+	public Category(String name, DataType type, User user) {
 		this.name = name;
 		this.type = type;
 		this.user = user;
-		this.isDefault = Optional.ofNullable(isDefault).orElse(this.isDefault);
+		this.isDefault = Mark.N;
 	}
 	
 }

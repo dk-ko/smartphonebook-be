@@ -37,7 +37,7 @@ public class CategoryController {
 	
 	@PostMapping("/{type}")
 	@ResponseStatus(value = HttpStatus.CREATED)
-	public boolean createCategory(@PathVariable DataType type, @RequestBody CategorySaveRequestDto dto) {
+	public CategoryResponseDto createCategory(@PathVariable DataType type, @RequestBody CategorySaveRequestDto dto) {
 		return categoryService.create(dto);
 	}
 	

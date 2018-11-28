@@ -95,15 +95,6 @@ public class Contact extends BaseEntity{
 	}
 	
 	
-	// 1:N
-	public void addDigit(Digit digit) {
-		this.digits.add(digit);
-	}
-	
-	public <T extends Info> void addInfo(T info) {
-		this.infoes.add(info);
-	}
-	
 	// Join Table
 	public void addTag(Tag tag) {
 		this.tags.add(tag);
@@ -128,9 +119,6 @@ public class Contact extends BaseEntity{
 		this.photo = photo;
 	}
 	
-	public void updateUser(User user) {
-		this.user = user;
-	}
 	
 	@Override
 	public String toString() {

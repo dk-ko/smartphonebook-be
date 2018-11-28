@@ -5,7 +5,6 @@ import javax.validation.constraints.NotEmpty;
 import com.soda.phonebook.domain.Category;
 import com.soda.phonebook.domain.User;
 import com.soda.phonebook.domain.VO.DataType;
-import com.soda.phonebook.domain.VO.Mark;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -16,6 +15,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class CategorySaveRequestDto {
+	@NotEmpty
+	private Long id;
 	
 	@NotEmpty
 	private String name;
@@ -23,7 +24,6 @@ public class CategorySaveRequestDto {
 	@NotEmpty
 	private DataType type;
 	
-	private Mark isDefault = Mark.N;
 	
 	@Builder
 	public CategorySaveRequestDto(String name, DataType type) {
@@ -35,7 +35,6 @@ public class CategorySaveRequestDto {
 		return Category.builder()
 				.name(this.name)
 				.type(this.type)
-				.isDefault(this.isDefault)
 				.user(user)
 				.build();
 	}

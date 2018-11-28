@@ -14,4 +14,7 @@ import com.soda.phonebook.domain.info.Info;
 public interface InfoRepository<T extends Info> extends JpaRepository<T, Long>{
 	@Query("SELECT i FROM Info i WHERE i.category = :category")
 	List<T> findByCategory(@Param("category") Category category);
+	
+	@SuppressWarnings("hiding")
+	<T extends Info> T save(T t);
 }
