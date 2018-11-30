@@ -44,6 +44,7 @@ public class ContactService {
 	private final CategoryService categoryService;
 	
 	
+	// read one
 	@Transactional(readOnly = true)
 	public ContactResponseDto findById(Long id) {
 		
@@ -81,6 +82,7 @@ public class ContactService {
 		return tagsDto;
 	}
 	
+	// read all
 	@Transactional(readOnly = true)
 	public List<ContactListReadResponseDto> findAll() {
 		List<Contact> findList = contactRepository.findAll();
@@ -90,25 +92,29 @@ public class ContactService {
 		return dtoList;
 	}
 	
+	// delete
 	public void delete(Long id) {
-		Optional<Contact> findContact = contactRepository.findById(id);
-		if(!findContact.isPresent())
-			throw new IllegalArgumentException("delete error : wrong id");
+		Contact findContact = contactRepository.findById(id)
+				.orElseThrow(()->new IllegalArgumentException("delete error : wrong id"));
 		
 		removeContactFromTag(id, findContact);
 		
 		contactRepository.deleteById(id);
 	}
 	
-	private void removeContactFromTag(Long id, Optional<Contact> contact) {
+	private void removeContactFromTag(Long id, Contact contact) {
 		Set<Tag> findTags = tagService.findAllByContact(id);
-		if(!findTags.isEmpty())
+		
+		if(contact.getTags().size()!=0) {
+			contact.getTags().clear();
 			for(Tag tag : findTags) 
-				tag.getContacts().remove(contact.get());
-		else
+				tag.getContacts().remove(contact);
+		}else {
 			log.info("tag 없음");
+		}
 	}
 	
+	// create
 	public boolean create(ContactSaveRequestDto dto) {
 		User currentUser = userService.getCurrentUser();
 		
@@ -116,10 +122,10 @@ public class ContactService {
 		
 		addDigitToContact(savedContact, dto.getDigits());
 
-		addInfoToContact(savedContact, dto.getUrls(), currentUser);
-		addInfoToContact(savedContact, dto.getEmails(), currentUser);
-		addInfoToContact(savedContact, dto.getDates(), currentUser);
-		addInfoToContact(savedContact, dto.getAddresses(), currentUser);
+		addInfoToContact(savedContact, dto.getUrls());
+		addInfoToContact(savedContact, dto.getEmails());
+		addInfoToContact(savedContact, dto.getDates());
+		addInfoToContact(savedContact, dto.getAddresses());
 		
 		return Optional.ofNullable(contactRepository.save(savedContact)).isPresent(); 
 	}
@@ -135,7 +141,7 @@ public class ContactService {
 		}
 	}
 	
-	private <T extends InfoSaveRequestDto> void addInfoToContact(Contact contact, List<T> getInfoes, User user) {
+	private <T extends InfoSaveRequestDto> void addInfoToContact(Contact contact, List<T> getInfoes) {
 		for(T infoDto : getInfoes) {
 			Optional<Category> findCategory = categoryService.findById(infoDto.getCategory().getId());
 			Category category = findCategory.orElseThrow(
@@ -147,6 +153,9 @@ public class ContactService {
 	}
 	
 	// edit 
-//	public Contact update(Long id, )
+	public boolean update(Long id, ContactSaveRequestDto dto) {
+		
+		return true;
+	}
 	
 }

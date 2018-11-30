@@ -62,4 +62,9 @@ public class Tag extends BaseEntity{
 	public void updateContacts(Set<Contact> contacts) {
 		this.contacts = contacts;
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("tag name: ", this.name);
+	}
 }
