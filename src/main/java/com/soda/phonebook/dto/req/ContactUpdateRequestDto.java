@@ -18,9 +18,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ContactSaveRequestDto {
+public class ContactUpdateRequestDto {
+
+	@NotEmpty
+	private Long id;
 	
-	private ContactType type = ContactType.DEFAULT;
+	@NotEmpty
+	private ContactType type;
 	
 	@NotEmpty
 	private String name;
@@ -28,18 +32,20 @@ public class ContactSaveRequestDto {
 	private String memo = null;
 	private byte[] photo = null;
 	
-	private List<DigitSaveRequestDto> digits = new ArrayList<>();
-	private List<UrlSaveRequestDto> urls = new ArrayList<>();
-	private List<EmailSaveRequestDto> emails = new ArrayList<>();
-	private List<DateSaveRequestDto> dates = new ArrayList<>();
-	private List<AddressSaveRequestDto> addresses = new ArrayList<>();
+	private List<DigitUpdateRequestDto> digits = new ArrayList<>();
+	private List<UrlUpdateRequestDto> urls = new ArrayList<>();
+	private List<EmailUpdateRequestDto> emails = new ArrayList<>();
+	private List<DateUpdateRequestDto> dates = new ArrayList<>();
+	private List<AddressUpdateRequestDto> addresses = new ArrayList<>();
 	
 	@Builder
-	public ContactSaveRequestDto(ContactType type, String name, String memo, byte[] photo, 
-			List<DigitSaveRequestDto> digits, List<UrlSaveRequestDto> urls,
-			List<EmailSaveRequestDto> emails,List<DateSaveRequestDto> dates,
-			List<AddressSaveRequestDto> addresses){
-		this.type = Optional.ofNullable(type).orElse(this.type);
+	public ContactUpdateRequestDto(Long id, ContactType type, String name, String memo, byte[] photo, 
+			List<DigitUpdateRequestDto> digits, List<UrlUpdateRequestDto> urls,
+			List<EmailUpdateRequestDto> emails,List<DateUpdateRequestDto> dates,
+			List<AddressUpdateRequestDto> addresses){
+		
+		this.id = id;
+		this.type = type;
 		this.name = name;
 		// nullable
 		this.memo = memo;
@@ -54,6 +60,7 @@ public class ContactSaveRequestDto {
 	
 	public Contact toEntity(User user) {
 		return Contact.builder()
+				.id(this.id)
 				.user(user)
 				.type(this.type)
 				.name(this.name)

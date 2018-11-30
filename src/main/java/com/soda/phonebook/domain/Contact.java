@@ -81,8 +81,9 @@ public class Contact extends BaseEntity{
 
 	
 	@Builder
-	public Contact(User user, ContactType type, String name, String memo, byte[] photo,
+	public Contact(Long id, User user, ContactType type, String name, String memo, byte[] photo,
 				List<Digit> digits, List<Info> infoes, Set<Tag> tags) {
+		this.id = id;
 		this.user = user;
 		this.type = type;
 		this.name = name;
@@ -94,29 +95,11 @@ public class Contact extends BaseEntity{
 		this.tags = Optional.ofNullable(tags).orElse(this.tags);
 	}
 	
-	
-	// Join Table
-	public void addTag(Tag tag) {
-		this.tags.add(tag);
-	}
-	
-	
-	// 밑에 확인 후 필요 없는 것 삭제 
-	
-	public void updateContactType(ContactType type) {
-		this.type = type;
-	}
-	
-	public void updateName(String name) {
-		this.name = name;
-	}
-	
-	public void updateMemo(String memo) {
-		this.memo = memo;
-	}
-	
-	public void updatePhoto(byte[] photo) {
-		this.photo = photo;
+	public void updateContact(Contact contact) {
+		this.type = contact.type;
+		this.name = contact.name;
+		this.memo = contact.memo;
+		this.photo = contact.photo;
 	}
 	
 	

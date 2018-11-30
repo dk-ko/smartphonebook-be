@@ -14,7 +14,7 @@ import lombok.Setter;
 public class DateSaveRequestDto extends InfoSaveRequestDto{
 	
 	public DateSaveRequestDto(CategorySaveRequestDto category, String contents) {
-		super();
+		super(category, contents);
 	}
 	
 

@@ -14,7 +14,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CategorySaveRequestDto {
+public class CategorySaveRequestDto implements CategoryRequestDto{
 	@NotEmpty
 	private Long id;
 	
@@ -26,7 +26,8 @@ public class CategorySaveRequestDto {
 	
 	
 	@Builder
-	public CategorySaveRequestDto(String name, DataType type) {
+	public CategorySaveRequestDto(Long id,String name, DataType type) {
+		this.id = id;
 		this.name = name;
 		this.type = type;
 	}

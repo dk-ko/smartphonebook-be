@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @DiscriminatorValue("U")
 public class Url extends Info{
 	@Builder
-	public Url (Contact contact, String contents, Category category) {
-		super(contact, contents, category);
+	public Url (Long id, Contact contact, String contents, Category category) {
+		super(id, contact, contents, category);
 	}
 }

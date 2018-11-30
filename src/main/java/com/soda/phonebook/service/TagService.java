@@ -21,12 +21,13 @@ public class TagService {
 	private final TagRepository tagRepository;
 	private final UserService userService;
 	
+	@Transactional(readOnly = true)
 	public Set<Tag> findAllByContact(Long id){
 		Set<Tag> findTags = tagRepository.findAllByContact(id);
 		return findTags; 
 	}
 	
-	
+	@Transactional(readOnly = true)
 	public Set<TagResponseDto> findAllByUser(){
 		Set<Tag> findTags = tagRepository.findByUser(userService.getCurrentUser());
 		Set<TagResponseDto> dtoList = new HashSet<>();

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.soda.phonebook.dto.res.ContactListReadResponseDto;
 import com.soda.phonebook.dto.res.ContactResponseDto;
 import com.soda.phonebook.dto.req.ContactSaveRequestDto;
+import com.soda.phonebook.dto.req.ContactUpdateRequestDto;
 import com.soda.phonebook.service.ContactService;
 
 import lombok.AllArgsConstructor;
@@ -59,8 +60,7 @@ public class ContactController {
 	
 	@PutMapping("/{id}")
 	@ResponseStatus(value = HttpStatus.OK)
-	public boolean editContacts(@PathVariable final Long id, @RequestBody final ContactSaveRequestDto dto) {
-		contactService.update(id, dto);
-		return true;
+	public boolean editContacts(@PathVariable final Long id, @RequestBody final ContactUpdateRequestDto dto) {
+		return contactService.update(id, dto);
 	}
 }

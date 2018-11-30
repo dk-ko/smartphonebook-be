@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @DiscriminatorValue("D")
 public class Date extends Info{
 	@Builder
-	public Date(Contact contact, String contents, Category category) {
-		super(contact, contents, category);
+	public Date(Long id, Contact contact, String contents, Category category) {
+		super(id, contact, contents, category);
 	}
 }

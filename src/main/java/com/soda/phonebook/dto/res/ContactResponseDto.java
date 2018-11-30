@@ -13,6 +13,7 @@ import lombok.Getter;
 
 @Getter
 public class ContactResponseDto {
+	private Long id;
 	private ContactType type;
 	private String name;
 	
@@ -27,6 +28,7 @@ public class ContactResponseDto {
 	@Builder
 	public ContactResponseDto(Contact contact, 
 			List<DigitResponseDto> digits, List<InfoResponseDto> infoes, Set<TagResponseDto> tags) {
+		this.id = contact.getId();
 		this.type = contact.getType();
 		this.name = contact.getName();
 		

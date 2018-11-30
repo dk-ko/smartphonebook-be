@@ -84,7 +84,7 @@ public class JoinTableTest {
 		
 		assertEquals(0, contact.getTags().size());
 		for(Tag tag : tags)
-			contact.addTag(tag);
+			contact.getTags().add(tag);
 		Contact savedContact = contactRepository.save(contact);
 		
 		assertNotNull(savedContact.getTags());

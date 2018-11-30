@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class Address extends Info{
 	
 	@Builder
-	public Address(Contact contact, String contents, Category category) {
-		super(contact, contents, category);
+	public Address(Long id, Contact contact, String contents, Category category) {
+		super(id, contact, contents, category);
 	}
 }

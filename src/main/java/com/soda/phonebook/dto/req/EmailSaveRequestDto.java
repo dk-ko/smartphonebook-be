@@ -14,7 +14,7 @@ import lombok.Setter;
 public class EmailSaveRequestDto extends InfoSaveRequestDto{
 	
 	public EmailSaveRequestDto(CategorySaveRequestDto category, String contents) {
-		super();
+		super(category, contents);
 	}
 	
 	@SuppressWarnings("unchecked")

@@ -13,15 +13,18 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public abstract class InfoSaveRequestDto implements ContactDataRequestDto{
+public abstract class InfoUpdateRequestDto implements ContactDataRequestDto{
+	@NotEmpty
+	protected Long id;
 	
 	@NotEmpty
-	protected CategorySaveRequestDto category;
+	protected CategoryUpdateRequestDto category;
 	
 	@NotEmpty
 	protected String contents;
 	
-	public InfoSaveRequestDto(CategorySaveRequestDto category, String contents) {
+	public InfoUpdateRequestDto(Long id, CategoryUpdateRequestDto category, String contents) {
+		this.id = id;
 		this.category = category;
 		this.contents = contents;
 	}

@@ -51,7 +51,8 @@ public class Digit extends BaseEntity{
 
 	
 	@Builder
-	public Digit(Contact contact, Category category, Numbers numbers, Mark rep) {
+	public Digit(Long id, Contact contact, Category category, Numbers numbers, Mark rep) {
+		this.id = id;
 		this.contact = contact;
 		this.category = category;
 		this.numbers = numbers;

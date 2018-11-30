@@ -26,7 +26,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="DTYPE")
-public abstract class Info extends BaseEntity{
+public abstract class Info extends BaseEntity {
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name="contact_id",
@@ -45,7 +45,8 @@ public abstract class Info extends BaseEntity{
 	private Category category;
 	
 	
-	public Info(Contact contact, String contents, Category category) {
+	public Info(Long id,Contact contact, String contents, Category category) {
+		this.id = id;
 		this.contact = contact;
 		this.contents = contents;
 		this.category = category;

@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @DiscriminatorValue("E")
 public class Email extends Info{
 	@Builder
-	public Email(Contact contact, String contents, Category category) {
-		super(contact, contents, category);
+	public Email(Long id, Contact contact, String contents, Category category) {
+		super(id, contact, contents, category);
 	}
 }

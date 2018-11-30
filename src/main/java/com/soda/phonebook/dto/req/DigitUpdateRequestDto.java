@@ -18,18 +18,22 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-public class DigitSaveRequestDto implements ContactDataRequestDto{
+public class DigitUpdateRequestDto implements ContactDataRequestDto{
 	
 	@NotEmpty
-	private CategorySaveRequestDto category;
+	private Long id;
+	
+	@NotEmpty
+	private CategoryUpdateRequestDto category;
 	
 	@NotEmpty
 	private Numbers numbers;
 	
-	private Mark rep = Mark.N;
+	private Mark rep;
 	
 	@Builder
-	public DigitSaveRequestDto(CategorySaveRequestDto category, Numbers numbers, Mark rep) {
+	public DigitUpdateRequestDto(Long id,CategoryUpdateRequestDto category, Numbers numbers, Mark rep) {
+		this.id = id;
 		this.category = category;
 		this.numbers = numbers;
 		this.rep = Optional.ofNullable(rep).orElse(this.rep);
@@ -37,11 +41,11 @@ public class DigitSaveRequestDto implements ContactDataRequestDto{
 	
 	public Digit toEntity(Contact contact, Category category) {
 		return Digit.builder()
+				.id(this.id)
 				.contact(contact)
 				.category(category)
 				.numbers(this.numbers)
 				.rep(this.rep)
 				.build();
 	}
-	
 }
