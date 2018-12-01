@@ -53,14 +53,8 @@ public class Tag extends BaseEntity{
 		this.contacts = Optional.ofNullable(contacts).orElse(this.contacts);
 	}
 	
-	
-	public void addContact(Contact contact) {
-		this.contacts.add(contact);
-		// xax
-	}
-	
-	public void updateContacts(Set<Contact> contacts) {
-		this.contacts = contacts;
+	public void updateName(String name) {
+		this.name = name;
 	}
 	
 	@Override

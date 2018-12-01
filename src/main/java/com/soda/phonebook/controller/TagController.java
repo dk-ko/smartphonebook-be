@@ -8,12 +8,14 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.soda.phonebook.dto.req.TagSaveRequestDto;
+import com.soda.phonebook.dto.req.TagUpdateRequestDto;
 import com.soda.phonebook.dto.res.ContactListReadResponseDto;
 import com.soda.phonebook.dto.res.TagResponseDto;
 import com.soda.phonebook.service.TagService;
@@ -57,6 +59,10 @@ public class TagController {
 		return tagService.create(dto);
 	}
 	
-	// tag 수정 - tag 이름 수정, tag에 contact 추가, 삭제
-	 
+	// tag 수정 - tag 이름 수정
+	@PutMapping("/{id}")
+	@ResponseStatus(value = HttpStatus.OK)
+	public boolean editTags(@PathVariable final Long id, @RequestBody final TagUpdateRequestDto dto) {
+		return tagService.update(id, dto);
+	}
 }

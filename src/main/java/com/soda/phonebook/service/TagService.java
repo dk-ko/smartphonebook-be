@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.soda.phonebook.domain.Contact;
 import com.soda.phonebook.domain.Tag;
 import com.soda.phonebook.dto.req.TagSaveRequestDto;
+import com.soda.phonebook.dto.req.TagUpdateRequestDto;
 import com.soda.phonebook.dto.res.ContactListReadResponseDto;
 import com.soda.phonebook.dto.res.TagResponseDto;
 import com.soda.phonebook.repository.TagRepository;
@@ -65,6 +66,12 @@ public class TagService {
 	public boolean create(TagSaveRequestDto dto) {
 		Tag tag = dto.toEntity(userService.getCurrentUser());
 		return tagRepository.save(tag) != null ? true : false;
+	}
+	
+	public boolean update(Long id, TagUpdateRequestDto dto) {
+		Tag findTag = findById(id);
+		findTag.updateName(dto.getName());
+		return tagRepository.save(findTag) != null ? true : false;
 	}
 	
 }
