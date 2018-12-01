@@ -89,8 +89,12 @@ public class ContactService {
 	public List<ContactListReadResponseDto> findAll() {
 		List<Contact> findList = contactRepository.findAll();
 		List<ContactListReadResponseDto> dtoList = new ArrayList<>();
-		for(Contact contact : findList)
-			dtoList.add(new ContactListReadResponseDto(contact));
+		for(Contact contact : findList) {
+			dtoList.add(ContactListReadResponseDto.builder()
+					.contact(contact)
+					.digits(getDigitsResponseDto(contact))
+					.build());
+		}
 		return dtoList;
 	}
 	
