@@ -14,9 +14,9 @@ import javax.persistence.Query;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-//import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+//import org.springframework.boot.test.context.SpringBootTest;
+//import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,9 +25,9 @@ import com.soda.phonebook.domain.User;
 import com.soda.phonebook.domain.VO.DataType;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
-@ActiveProfiles("local")
-//@DataJpaTest
+//@SpringBootTest
+//@ActiveProfiles("local")
+@DataJpaTest
 public class DataTypeAttributeConverterTest {
 	
 	@PersistenceContext

@@ -17,9 +17,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.soda.phonebook.domain.VO.ContactType;
 import com.soda.phonebook.repository.UserRepository;
 
-import lombok.extern.slf4j.Slf4j;
+//import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
+//@Slf4j
 @RunWith(SpringRunner.class)
 @DataJpaTest
 public class ContactTest {
@@ -31,12 +31,12 @@ public class ContactTest {
 	private UserRepository userRepository;
 	
 	private Contact contact;
-	private User savedUser;
+	private User user, savedUser;
 	
 	@Before
 	public void setUp() {
 		
-		User user = User.builder().name("테스트유저").build();
+		user = User.builder().name("testuser").build();
 		savedUser = userRepository.save(user);
 		
 		contact = Contact.builder()
@@ -49,7 +49,7 @@ public class ContactTest {
 	@Transactional
 	public void test_Contact_빌더패턴_생성() {
 		
-		log.info(contact.toString());
+//		log.info(contact.toString());
 		
 		assertThat(contact.getId(), is(nullValue())); // JPA ID 생성 규약 
 		assertThat(contact.getName(), is("koda"));

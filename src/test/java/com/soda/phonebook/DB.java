@@ -1,10 +1,7 @@
 package com.soda.phonebook;
 
-import lombok.Getter;
-
 enum TYPE {LOCAL, TEST};
 
-@Getter
 public class DB {
 	
 	private String DRIVER;
@@ -30,6 +27,22 @@ public class DB {
 	public static DB getInstance(TYPE type){
 		final DB INSTANCE = new DB(type);
 		return INSTANCE;
+	}
+	
+	public String getDRIVER() {
+		return this.DRIVER;
+	}
+	
+	public String getURL() {
+		return this.URL;
+	}
+	
+	public String getUSER() {
+		return this.USER;
+	}
+	
+	public String getPASSWORD() {
+		return this.PASSWORD;
 	}
 
 }

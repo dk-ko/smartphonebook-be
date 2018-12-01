@@ -51,7 +51,7 @@ public class MarkAttributeConverterTest {
 		em.persist(user);
 		
 		contact = Contact.builder()
-//				.user(user)
+				.user(user)
 				.name("연락처 A")
 				.type(ContactType.DEFAULT)
 				.build();

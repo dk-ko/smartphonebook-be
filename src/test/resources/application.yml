@@ -11,6 +11,16 @@ spring.profiles.include: common
 spring:    
   jpa:
     show-sql: true
+    
+  main:
+    allow-bean-definition-overriding: true
+  
+  datasource:
+    hikari:
+      jdbc-url: jdbc:h2:mem:contact;
+      username: sa
+      password: 
+      driver-class-name: org.h2.Driver
 
 logging:
   level:

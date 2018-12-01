@@ -40,7 +40,6 @@ public class User extends BaseEntity{
 				orphanRemoval = true)
 	private Set<Contact> contacts = new HashSet<>();
 	
-	//
 	@JsonIgnore
 	@OneToMany(	mappedBy="user",
 				fetch=FetchType.LAZY, 
@@ -68,9 +67,7 @@ public class User extends BaseEntity{
 	
 	@Builder
 	public User(String name, Set<Contact> contacts, Set<Tag> tags,
-					Set<Category> categories
-					, Set<Contact> favorites
-					) {
+					Set<Category> categories, Set<Contact> favorites) {
 		this.name = name;
 		
 		this.contacts = Optional.ofNullable(contacts).orElse(this.contacts);
