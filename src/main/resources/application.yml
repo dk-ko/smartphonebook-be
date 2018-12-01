@@ -44,14 +44,14 @@ spring:
       username: root
       password: test123 
       driver-class-name: org.mariadb.jdbc.Driver
-#      initialization-mode: always
+#    initialization-mode: always
         
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: create-drop
     generate-ddl: true
     properties:
       hibernate:

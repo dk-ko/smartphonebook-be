@@ -31,7 +31,7 @@
 *.dbf
 *.mdb
 *.pdb
-*.sql
+#*.sql
 *.sqlite3
 
 ### Eclipse ###
