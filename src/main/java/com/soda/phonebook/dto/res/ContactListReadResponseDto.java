@@ -2,6 +2,7 @@ package com.soda.phonebook.dto.res;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.soda.phonebook.domain.Contact;
 import com.soda.phonebook.domain.VO.ContactType;
@@ -21,6 +22,6 @@ public class ContactListReadResponseDto {
 		this.id = contact.getId();
 		this.type = contact.getType();
 		this.name = contact.getName();
-		this.digits = digits;
+		this.digits = Optional.ofNullable(digits).orElse(this.digits);
 	}
 }

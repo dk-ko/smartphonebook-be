@@ -43,7 +43,7 @@ public class ContactController {
 	@ResponseStatus(value = HttpStatus.OK)
 	public ContactResponseDto getContacts(@PathVariable final Long id) {
 		log.info("* before service");
-		ContactResponseDto dto = contactService.findById(id);
+		ContactResponseDto dto = contactService.findOneById(id);
 		log.info("* after service");
 		return dto;
 	}

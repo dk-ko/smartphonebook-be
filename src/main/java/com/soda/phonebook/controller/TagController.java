@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.soda.phonebook.dto.res.ContactListReadResponseDto;
 import com.soda.phonebook.dto.res.TagResponseDto;
 import com.soda.phonebook.service.TagService;
 
@@ -33,8 +34,11 @@ public class TagController {
 	}
 	
 	// tag 선택시 tag에 속한 연락처 목록 출력
-//	@GetMapping("/{id}")
-//	@ResponseStatus(value = HttpStatus.OK)
+	@GetMapping("/{id}")
+	@ResponseStatus(value = HttpStatus.OK)
+	public Set<ContactListReadResponseDto> getContactsByTags(@PathVariable final Long id){
+		return tagService.findContactsByTag(id);
+	}
 	
 	// tag 삭제
 	@DeleteMapping("/{id}")

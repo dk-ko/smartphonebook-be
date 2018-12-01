@@ -48,10 +48,9 @@ public class ContactService {
 	
 	// read one
 	@Transactional(readOnly = true)
-	public ContactResponseDto findById(Long id) {
+	public ContactResponseDto findOneById(Long id) {
 		
-		Contact findContact = contactRepository.findById(id)
-				.orElseThrow(()->new IllegalArgumentException("findById error : wrong id"));
+		Contact findContact = findById(id);
 		
 		return ContactResponseDto.builder()
 				.contact(findContact)
@@ -100,8 +99,7 @@ public class ContactService {
 	
 	// delete
 	public void delete(Long id) {
-		Contact findContact = contactRepository.findById(id)
-				.orElseThrow(()->new IllegalArgumentException("delete error : wrong id"));
+		Contact findContact = findById(id);
 		
 		removeContactFromTag(id, findContact);
 		
@@ -157,8 +155,7 @@ public class ContactService {
 	// edit 
 	public boolean update(Long id, ContactUpdateRequestDto dto) {
 		
-		Contact findContact = contactRepository.findById(id)
-				.orElseThrow(()->new IllegalArgumentException("findById error : wrong id"));
+		Contact findContact = findById(id);
 		
 		if(!(id == dto.getId())) 
 			throw new CanNotUpdateContact("id가 일치하지 않습니다.");
@@ -197,5 +194,10 @@ public class ContactService {
 		for(T dto : dtoList)
 			infoList.add(dto.toEntity(contact, checkCategory(dto)));
 		return infoList;
+	}
+	
+	private Contact findById(Long id) {
+		return contactRepository.findById(id)
+				.orElseThrow(()->new IllegalArgumentException("findById error : wrong id"));
 	}
 }

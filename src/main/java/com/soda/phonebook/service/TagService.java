@@ -6,7 +6,9 @@ import java.util.Set;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.soda.phonebook.domain.Contact;
 import com.soda.phonebook.domain.Tag;
+import com.soda.phonebook.dto.res.ContactListReadResponseDto;
 import com.soda.phonebook.dto.res.TagResponseDto;
 import com.soda.phonebook.repository.TagRepository;
 
@@ -37,10 +39,25 @@ public class TagService {
 	}
 	
 	public void delete(Long id) {
-		Tag findTag = tagRepository.findById(id)
-				.orElseThrow(()->new IllegalArgumentException("findById error : wrong id"));
+		tagRepository.delete(findById(id));
+	}
+	
+	public Set<ContactListReadResponseDto> findContactsByTag(Long id) {
+		Tag findTag = findById(id);
 		
-		tagRepository.delete(findTag);
+		Set<Contact> findContactList = findTag.getContacts();
+		Set<ContactListReadResponseDto> dtoList = new HashSet<>();
+		for(Contact contact : findContactList) {
+			dtoList.add(ContactListReadResponseDto.builder()
+					.contact(contact)
+					.build());
+		}
+		return dtoList;
+	}
+	
+	private Tag findById(Long id) {
+		return tagRepository.findById(id)
+			.orElseThrow(()->new IllegalArgumentException("findById error : wrong id"));
 	}
 	
 }
