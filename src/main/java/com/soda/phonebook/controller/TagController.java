@@ -4,7 +4,9 @@ import java.util.Set;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 //import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -34,7 +36,14 @@ public class TagController {
 //	@GetMapping("/{id}")
 //	@ResponseStatus(value = HttpStatus.OK)
 	
+	// tag 삭제
+	@DeleteMapping("/{id}")
+	@ResponseStatus(value = HttpStatus.NO_CONTENT)
+	public boolean deleteTags(@PathVariable final Long id) {
+		tagService.delete(id);
+		return true;
+	}
 	
 	// tag 수정 - tag 이름 수정, tag에 contact 추가, 삭제
-	// tag 삭제 
+	 
 }

@@ -36,4 +36,11 @@ public class TagService {
 		return dtoList;
 	}
 	
+	public void delete(Long id) {
+		Tag findTag = tagRepository.findById(id)
+				.orElseThrow(()->new IllegalArgumentException("findById error : wrong id"));
+		
+		tagRepository.delete(findTag);
+	}
+	
 }
