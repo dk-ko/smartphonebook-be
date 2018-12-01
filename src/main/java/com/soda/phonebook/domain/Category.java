@@ -39,7 +39,7 @@ public class Category extends BaseEntity{
 	private User user;
 	
 	@Convert(converter = MarkAttributeConverter.class)
-	@Column(name="default", nullable=false)
+	@Column(name="is_default", nullable=false)
 	private Mark isDefault = Mark.N;
 	
 	@Builder
