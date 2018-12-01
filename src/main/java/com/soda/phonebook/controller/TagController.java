@@ -30,7 +30,11 @@ public class TagController {
 		return tagService.findAllByUser();
 	}
 	
-	// tag 선택시 tag에 속한 연락처 목록 출력 
-	// tag 수정
+	// tag 선택시 tag에 속한 연락처 목록 출력
+//	@GetMapping("/{id}")
+//	@ResponseStatus(value = HttpStatus.OK)
+	
+	
+	// tag 수정 - tag 이름 수정, tag에 contact 추가, 삭제
 	// tag 삭제 
 }
