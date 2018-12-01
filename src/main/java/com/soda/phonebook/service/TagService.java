@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.soda.phonebook.domain.Contact;
 import com.soda.phonebook.domain.Tag;
+import com.soda.phonebook.dto.req.TagSaveRequestDto;
 import com.soda.phonebook.dto.res.ContactListReadResponseDto;
 import com.soda.phonebook.dto.res.TagResponseDto;
 import com.soda.phonebook.repository.TagRepository;
@@ -42,6 +43,7 @@ public class TagService {
 		tagRepository.delete(findById(id));
 	}
 	
+	@Transactional(readOnly = true)
 	public Set<ContactListReadResponseDto> findContactsByTag(Long id) {
 		Tag findTag = findById(id);
 		
@@ -58,6 +60,11 @@ public class TagService {
 	private Tag findById(Long id) {
 		return tagRepository.findById(id)
 			.orElseThrow(()->new IllegalArgumentException("findById error : wrong id"));
+	}
+	
+	public boolean create(TagSaveRequestDto dto) {
+		Tag tag = dto.toEntity(userService.getCurrentUser());
+		return tagRepository.save(tag) != null ? true : false;
 	}
 	
 }
