@@ -1,9 +1,14 @@
 package com.soda.phonebook.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.soda.phonebook.domain.Contact;
 import com.soda.phonebook.domain.User;
+import com.soda.phonebook.dto.res.ContactListReadResponseDto;
 import com.soda.phonebook.repository.UserRepository;
 
 import lombok.AllArgsConstructor;
@@ -33,5 +38,21 @@ public class UserService {
 	
 	public User create(User user) {
 		return userRepository.save(user);
+	}
+	
+	@Transactional(readOnly = true)
+	public List<ContactListReadResponseDto> getFavorites(Long id) {
+		User findUser = findById(id);
+		
+		List<ContactListReadResponseDto> favorites = new ArrayList<>();
+		for(Contact contact : findUser.getFavorites())
+			favorites.add(ContactListReadResponseDto.builder()
+					.contact(contact).build());
+		return favorites;
+	}
+	
+	private User findById(Long id) {
+		return userRepository.findById(id)
+				.orElseThrow(()->new IllegalArgumentException("findById error : wrong id")); 
 	}
 }

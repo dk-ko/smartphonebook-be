@@ -77,10 +77,6 @@ public class User extends BaseEntity{
 	}
 	
 	
-	public void addFavorite(Contact contact) {
-		this.favorites.add(contact);
-	}
-	
 	public void updateName(String name) {
 		this.name = name;
 	}

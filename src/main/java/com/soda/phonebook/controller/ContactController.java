@@ -1,12 +1,12 @@
 package com.soda.phonebook.controller;
 
 import java.util.List;
-//import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.soda.phonebook.dto.res.ContactListReadResponseDto;
 import com.soda.phonebook.dto.res.ContactResponseDto;
+import com.soda.phonebook.dto.res.TagResponseDto;
 import com.soda.phonebook.dto.req.ContactSaveRequestDto;
 import com.soda.phonebook.dto.req.ContactUpdateRequestDto;
 import com.soda.phonebook.service.ContactService;
@@ -36,14 +37,14 @@ public class ContactController {
 	@GetMapping("/")
 	@ResponseStatus(value = HttpStatus.OK)
 	public List<ContactListReadResponseDto> getAllContacts() {
-		return contactService.findAll();
+		return contactService.getAllContacts();
 	}
 	
 	@GetMapping("/{id}")
 	@ResponseStatus(value = HttpStatus.OK)
 	public ContactResponseDto getContacts(@PathVariable final Long id) {
 		log.info("* before service");
-		ContactResponseDto dto = contactService.findOneById(id);
+		ContactResponseDto dto = contactService.getContacts(id);
 		log.info("* after service");
 		return dto;
 	}
@@ -68,12 +69,40 @@ public class ContactController {
 	
 	// Contact에 Tag 추가, 삭제 
 	@PostMapping("/{id}/tags/{tagId}")
+	@ResponseStatus(value = HttpStatus.CREATED)
 	public boolean addTagToContact(@PathVariable final Long id, @PathVariable final Long tagId) {
 		return contactService.addTagToContact(id, tagId);
 	}
 	
 	@DeleteMapping("/{id}/tags/{tagId}")
+	@ResponseStatus(value = HttpStatus.NO_CONTENT)
 	public boolean deleteTagToContact(@PathVariable final Long id, @PathVariable final Long tagId) {
 		return contactService.deleteTagToContact(id, tagId);
+	}
+	
+	@GetMapping("{id}/tags")
+	@ResponseStatus(value = HttpStatus.OK)
+	public List<TagResponseDto> getAllTagsByContact(@PathVariable final Long id){
+		return contactService.getAllTagsByContact(id);
+	}
+	
+	// 대표번호 설정
+	@PatchMapping("/{id}/digits/{digitId}")
+	@ResponseStatus(value = HttpStatus.OK)
+	public boolean setRepresentativeDigit(@PathVariable final Long id, @PathVariable final Long digitId) {
+		 return contactService.setRepresentativeDigit(id, digitId);
+	}
+	
+	// 즐겨찾기 
+	@PostMapping("/{id}/favorites")
+	@ResponseStatus(value = HttpStatus.CREATED)
+	public boolean addToFavorites(@PathVariable final Long id) {
+		return contactService.addToFavorites(id);
+	}
+	
+	@DeleteMapping("/{id}/favorites")
+	@ResponseStatus(value = HttpStatus.NO_CONTENT)
+	public boolean deleteToFavorites(@PathVariable final Long id) {
+		return contactService.deleteToFavorites(id);
 	}
 }

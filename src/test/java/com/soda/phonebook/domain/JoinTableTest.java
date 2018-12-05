@@ -93,7 +93,7 @@ public class JoinTableTest {
 	@Test
 	public void test_user_contact_1toM_favorite_조인테이블() throws Exception{
 		
-		user.addFavorite(c); 
+		user.getFavorites().add(c);
 		User savedUser = userRepository.save(user); // cascade
 		
 		Set<Contact> findFavorite = savedUser.getFavorites();
