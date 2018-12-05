@@ -15,7 +15,7 @@ server:
 
 spring:   
   main:
-    allow-bean-definition-overriding: false
+    allow-bean-definition-overriding: true
 
   output:
     ansi:

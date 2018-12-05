@@ -1,13 +1,10 @@
 package com.soda.phonebook.dto.req;
 
-import java.util.Optional;
-
 import javax.validation.constraints.NotEmpty;
 
 import com.soda.phonebook.domain.Category;
 import com.soda.phonebook.domain.Contact;
 import com.soda.phonebook.domain.Digit;
-import com.soda.phonebook.domain.VO.Mark;
 import com.soda.phonebook.domain.VO.Numbers;
 
 import lombok.Builder;
@@ -26,13 +23,11 @@ public class DigitSaveRequestDto implements ContactDataRequestDto{
 	@NotEmpty
 	private Numbers numbers;
 	
-	private Mark rep = Mark.N;
 	
 	@Builder
-	public DigitSaveRequestDto(CategorySaveRequestDto category, Numbers numbers, Mark rep) {
+	public DigitSaveRequestDto(CategorySaveRequestDto category, Numbers numbers) {
 		this.category = category;
 		this.numbers = numbers;
-		this.rep = Optional.ofNullable(rep).orElse(this.rep);
 	}
 	
 	public Digit toEntity(Contact contact, Category category) {
@@ -40,7 +35,6 @@ public class DigitSaveRequestDto implements ContactDataRequestDto{
 				.contact(contact)
 				.category(category)
 				.numbers(this.numbers)
-				.rep(this.rep)
 				.build();
 	}
 	

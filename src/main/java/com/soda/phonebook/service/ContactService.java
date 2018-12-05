@@ -14,7 +14,6 @@ import com.soda.phonebook.domain.Contact;
 import com.soda.phonebook.domain.Digit;
 import com.soda.phonebook.domain.Tag;
 import com.soda.phonebook.domain.User;
-import com.soda.phonebook.domain.VO.Mark;
 import com.soda.phonebook.domain.info.Info;
 import com.soda.phonebook.dto.req.ContactDataRequestDto;
 import com.soda.phonebook.dto.req.ContactSaveRequestDto;
@@ -46,7 +45,6 @@ public class ContactService {
 	private final UserService userService;
 	private final TagService tagService;
 	private final CategoryService categoryService;
-	private final DigitService digitService;
 	
 	
 	// read one
@@ -234,16 +232,6 @@ public class ContactService {
 		for(Tag tag : findContact.getTags())
 			dtoList.add(new TagResponseDto(tag));
 		return dtoList;
-	}
-	
-	public boolean setRepresentativeDigit(Long id, Long digitId) {
-		Contact findContact = findById(id);
-		Digit findDigit = digitService.findById(digitId);
-		
-		//
-		
-		findDigit.updateRep(Mark.Y);
-		return true;
 	}
 	
 	public boolean addToFavorites(Long id) {

@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.soda.phonebook.domain.VO.Mark;
 import com.soda.phonebook.domain.VO.Numbers;
 import com.soda.phonebook.repository.DigitRepository;
 
@@ -38,25 +37,11 @@ public class DigitTest {
 	}
 	
 	
-	
-	@Test
-	public void testDigitCreate() {
-		
-		Digit digit = Digit.builder()
-				.rep(Mark.Y)
-				.numbers(numbers).build();
-		
-		assertThat(digit.getNumbers().getFirst(),is("010"));
-		assertThat(digit.getRep(),is(Mark.Y));
-		
-	}
-	
 	@Test
 	public void testDigitUpdatePhoneNumber() {
 		
 		Digit digit = MockEntity.mock(Digit.class, 1l);
 		digit.updateNumbers(numbers);
-		digit.updateRep(Mark.N);
 		
 		digit.updateNumbers(Numbers.builder()
 				.first("010")

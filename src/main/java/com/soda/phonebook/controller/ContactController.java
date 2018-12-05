@@ -6,7 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -84,13 +83,6 @@ public class ContactController {
 	@ResponseStatus(value = HttpStatus.OK)
 	public List<TagResponseDto> getAllTagsByContact(@PathVariable final Long id){
 		return contactService.getAllTagsByContact(id);
-	}
-	
-	// 대표번호 설정
-	@PatchMapping("/{id}/digits/{digitId}")
-	@ResponseStatus(value = HttpStatus.OK)
-	public boolean setRepresentativeDigit(@PathVariable final Long id, @PathVariable final Long digitId) {
-		 return contactService.setRepresentativeDigit(id, digitId);
 	}
 	
 	// 즐겨찾기 

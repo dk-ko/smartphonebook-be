@@ -20,12 +20,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.soda.phonebook.domain.Category;
 import com.soda.phonebook.domain.Contact;
-import com.soda.phonebook.domain.Digit;
 import com.soda.phonebook.domain.User;
 import com.soda.phonebook.domain.VO.ContactType;
 import com.soda.phonebook.domain.VO.DataType;
 import com.soda.phonebook.domain.VO.Mark;
-import com.soda.phonebook.domain.VO.Numbers;
 
 
 @RunWith(SpringRunner.class)
@@ -37,11 +35,9 @@ public class MarkAttributeConverterTest {
 	@PersistenceContext
     private EntityManager em;
 	
-	private Digit digit;
 	private User user;
 	private Contact contact;
 	private Category category;
-	private Numbers numbers;
 	
 	@Before
 	public void setUp() {
@@ -64,19 +60,6 @@ public class MarkAttributeConverterTest {
 				.build();
 		em.persist(category);
 		
-		numbers = Numbers.builder()
-				.first("010")
-				.second("1234")
-				.third("5678").build();
-		
-		digit = Digit.builder()
-				.contact(contact)
-				.category(category)
-				.numbers(numbers)
-				.rep(Mark.Y)
-				.build();
-		
-		em.persist(digit);
 		em.flush();
 		em.clear();
 	}
@@ -87,13 +70,13 @@ public class MarkAttributeConverterTest {
 	public void test_mark_converter() {
 
 		// native query 
-		Query query = em.createNativeQuery("select * from digit where rep = :rep", Digit.class);
-		query.setParameter("rep", 1); // Y is 1
-		List<Digit> list = query.getResultList();
+		Query query = em.createNativeQuery("select * from category where is_default = :is_default", Category.class);
+		query.setParameter("is_default", 0); // N is 0
+		List<Category> list = query.getResultList();
 		
 		// confirm
-		Mark resultMark = list.get(0).getRep();
-		assertThat(Mark.Y, is(resultMark));
+		Mark resultMark = list.get(0).getIsDefault();
+		assertThat(Mark.N, is(resultMark));
 		
 	}
 }
