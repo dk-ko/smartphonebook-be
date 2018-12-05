@@ -1,10 +1,7 @@
 package com.soda.phonebook.domain;
 
-import java.util.Optional;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,8 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.soda.phonebook.converter.MarkAttributeConverter;
-import com.soda.phonebook.domain.VO.Mark;
 import com.soda.phonebook.domain.VO.Numbers;
 
 import lombok.AccessLevel;
@@ -44,19 +39,14 @@ public class Digit extends BaseEntity{
 	@Embedded 
 	@Column(name="numbers", nullable=false)
 	private Numbers numbers;
-	
-	@Convert(converter = MarkAttributeConverter.class)
-	@Column(name="rep", nullable=false)
-	private Mark rep = Mark.N;
 
 	
 	@Builder
-	public Digit(Long id, Contact contact, Category category, Numbers numbers, Mark rep) {
+	public Digit(Long id, Contact contact, Category category, Numbers numbers) {
 		this.id = id;
 		this.contact = contact;
 		this.category = category;
 		this.numbers = numbers;
-		this.rep = Optional.ofNullable(rep).orElse(this.rep);
 	}
 	
 	
@@ -64,20 +54,14 @@ public class Digit extends BaseEntity{
 		this.numbers = numbers;
 	}
 	
-	public void updateRep(Mark rep) {
-		this.rep = rep;
-	}
-	
-	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("id: %d\n")
 				.append("contact_id: %d\n")
 				.append("numbers: %s\n")
-				.append("rep: %s\n")
 				.append("category_id: %d\n");
 		return String.format(builder.toString(), this.id, this.contact.getId(), 
-				this.numbers.toString(),this.rep,this.category.getId());
+				this.numbers.toString(),this.category.getId());
 	}
 }

@@ -13,6 +13,7 @@ import com.soda.phonebook.domain.Category;
 import com.soda.phonebook.domain.Contact;
 import com.soda.phonebook.domain.Digit;
 import com.soda.phonebook.domain.Tag;
+import com.soda.phonebook.domain.User;
 import com.soda.phonebook.domain.info.Info;
 import com.soda.phonebook.dto.req.ContactDataRequestDto;
 import com.soda.phonebook.dto.req.ContactSaveRequestDto;
@@ -48,7 +49,7 @@ public class ContactService {
 	
 	// read one
 	@Transactional(readOnly = true)
-	public ContactResponseDto findOneById(Long id) {
+	public ContactResponseDto getContacts(Long id) {
 		
 		Contact findContact = findById(id);
 		
@@ -85,7 +86,7 @@ public class ContactService {
 	
 	// read all
 	@Transactional(readOnly = true)
-	public List<ContactListReadResponseDto> findAll() {
+	public List<ContactListReadResponseDto> getAllContacts() {
 		List<Contact> findList = contactRepository.findAll();
 		List<ContactListReadResponseDto> dtoList = new ArrayList<>();
 		for(Contact contact : findList) {
@@ -200,4 +201,53 @@ public class ContactService {
 		return contactRepository.findById(id)
 				.orElseThrow(()->new IllegalArgumentException("findById error : wrong id"));
 	}
+	
+	public boolean addTagToContact(Long id, Long tagId) {
+		Contact findContact = findById(id);
+		Tag findTag = tagService.findById(tagId);
+		
+		findContact.getTags().add(findTag);
+		findTag.getContacts().add(findContact);
+		
+		contactRepository.save(findContact);
+		return true;
+	}
+	
+	public boolean deleteTagToContact(Long id, Long tagId) {
+		Contact findContact = findById(id);
+		Tag findTag = tagService.findById(tagId);
+		
+		findContact.getTags().remove(findTag);
+		findTag.getContacts().remove(findContact);
+		
+		contactRepository.save(findContact);
+		return true;
+	}
+	
+	@Transactional(readOnly = true)
+	public List<TagResponseDto> getAllTagsByContact(Long id){
+		Contact findContact = findById(id);
+		List<TagResponseDto> dtoList = new ArrayList<>();
+		
+		for(Tag tag : findContact.getTags())
+			dtoList.add(new TagResponseDto(tag));
+		return dtoList;
+	}
+	
+	public boolean addToFavorites(Long id) {
+		User user = userService.getCurrentUser();
+		Contact findContact = findById(id);
+		
+		user.getFavorites().add(findContact);
+		return true;
+	}
+	
+	public boolean deleteToFavorites(Long id) {
+		User user = userService.getCurrentUser();
+		Contact findContact = findById(id);
+		
+		user.getFavorites().remove(findContact);
+		return true;
+	}
+	
 }

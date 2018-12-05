@@ -32,4 +32,9 @@ public class DigitService {
 	public Digit save(Digit digit) {
 		return digitRepository.save(digit);
 	}
+	
+	public Digit findById(Long id) {
+		return digitRepository.findById(id)
+				.orElseThrow(()->new IllegalArgumentException("findById error : wrong id"));
+	}
 }

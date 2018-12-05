@@ -58,7 +58,7 @@ public class TagService {
 		return dtoList;
 	}
 	
-	private Tag findById(Long id) {
+	public Tag findById(Long id) {
 		return tagRepository.findById(id)
 			.orElseThrow(()->new IllegalArgumentException("findById error : wrong id"));
 	}
