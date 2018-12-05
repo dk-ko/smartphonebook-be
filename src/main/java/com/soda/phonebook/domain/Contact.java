@@ -46,7 +46,7 @@ public class Contact extends BaseEntity{
 	
 	@Convert(converter = ContactTypeAttributeConverter.class)
 	@Column(name="contact_type", nullable=false)
-	private ContactType type;
+	private ContactType type = ContactType.DEFAULT;
 	
 	@Column(name="name", nullable=false)
 	@OrderBy("name asc")
@@ -85,7 +85,7 @@ public class Contact extends BaseEntity{
 				List<Digit> digits, List<Info> infoes, Set<Tag> tags) {
 		this.id = id;
 		this.user = user;
-		this.type = type;
+		this.type = Optional.ofNullable(type).orElse(this.type);
 		this.name = name;
 		
 		this.memo = Optional.ofNullable(memo).orElse(this.memo);
