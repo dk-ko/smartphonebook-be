@@ -65,4 +65,15 @@ public class ContactController {
 	public boolean editContacts(@PathVariable final Long id, @RequestBody final ContactUpdateRequestDto dto) {
 		return contactService.update(id, dto);
 	}
+	
+	// Contact에 Tag 추가, 삭제 
+	@PostMapping("/{id}/tags/{tagId}")
+	public boolean addTagToContact(@PathVariable final Long id, @PathVariable final Long tagId) {
+		return contactService.addTagToContact(id, tagId);
+	}
+	
+	@DeleteMapping("/{id}/tags/{tagId}")
+	public boolean deleteTagToContact(@PathVariable final Long id, @PathVariable final Long tagId) {
+		return contactService.deleteTagToContact(id, tagId);
+	}
 }

@@ -200,4 +200,20 @@ public class ContactService {
 		return contactRepository.findById(id)
 				.orElseThrow(()->new IllegalArgumentException("findById error : wrong id"));
 	}
+	
+	public boolean addTagToContact(Long id, Long tagId) {
+		Contact findContact = findById(id);
+		Tag findTag = tagService.findById(tagId);
+		
+		findContact.getTags().add(findTag);
+		return true;
+	}
+	
+	public boolean deleteTagToContact(Long id, Long tagId) {
+		Contact findContact = findById(id);
+		Tag findTag = tagService.findById(tagId);
+		
+		findContact.getTags().remove(findTag);
+		return true;
+	}
 }
