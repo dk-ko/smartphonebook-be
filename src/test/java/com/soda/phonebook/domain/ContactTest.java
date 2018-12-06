@@ -18,6 +18,7 @@ import com.soda.phonebook.domain.VO.DataType;
 import com.soda.phonebook.domain.VO.Numbers;
 import com.soda.phonebook.domain.info.Address;
 import com.soda.phonebook.repository.AddressRepository;
+import com.soda.phonebook.repository.ContactRepository;
 import com.soda.phonebook.repository.DigitRepository;
 import com.soda.phonebook.repository.UserRepository;
 
@@ -36,6 +37,9 @@ public class ContactTest {
 	
 	@Autowired
 	private AddressRepository addressRepository;
+	
+	@Autowired
+	private ContactRepository contactRepository;
 
 	private Contact contact;
 	private User user, savedUser;
@@ -79,8 +83,7 @@ public class ContactTest {
 	public void test_Contact_cascade_저장() {
 
 		// contact만 persist
-		em.persist(contact);
-		em.flush();
+		contactRepository.save(contact);
 		
 		assertThat(digitRepository.findById(1l).get().getNumbers(), is(numbers));
 		assertThat(addressRepository.findById(1l).get().getContents(), is("서울시 구로구 ..."));
