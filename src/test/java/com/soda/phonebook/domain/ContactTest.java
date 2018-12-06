@@ -16,6 +16,7 @@ import com.soda.phonebook.domain.VO.ContactType;
 import com.soda.phonebook.domain.VO.DataType;
 import com.soda.phonebook.domain.VO.Numbers;
 import com.soda.phonebook.domain.info.Address;
+import com.soda.phonebook.repository.AddressRepository;
 import com.soda.phonebook.repository.UserRepository;
 
 @RunWith(SpringRunner.class)
@@ -27,6 +28,9 @@ public class ContactTest {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private AddressRepository addressRepository;
 
 	private Contact contact;
 	private User user, savedUser;
@@ -76,7 +80,8 @@ public class ContactTest {
 		em.flush();
 		
 		assertNotNull(em.find(Digit.class, 1l));
-		assertNotNull(em.find(Address.class, 1l));
+//		assertNotNull(em.find(Address.class, 1l));
+		assertTrue(addressRepository.findById(1l).get().getClass() == Address.class);
 		
 		em.remove(contact);
 		em.flush();
