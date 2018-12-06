@@ -6,8 +6,11 @@ import com.soda.phonebook.domain.VO.DataType;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
+import java.util.Optional;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,6 +19,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.soda.phonebook.repository.CategoryRepository;
+import com.soda.phonebook.repository.ContactRepository;
+import com.soda.phonebook.repository.TagRepository;
 import com.soda.phonebook.repository.UserRepository;
 
 @RunWith(SpringRunner.class)
@@ -27,6 +33,15 @@ public class UserTest {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private CategoryRepository categoryRepository;
+	
+	@Autowired
+	private ContactRepository contactRepository;
+	
+	@Autowired
+	private TagRepository tagRepository;
 	
 	private User user, sUser;
 	private Contact contact;
@@ -82,19 +97,21 @@ public class UserTest {
 	}
 	
 	@Test
+	@Transactional
 	public void test_User삭제시_Cascade적용() {
-		// user - contact, tag, category, favorite
-		assertNotNull(em.find(Category.class, 1l));
-		assertNotNull(em.find(Category.class, 2l));
-		assertNotNull(em.find(Contact.class, 1l));
-		assertNotNull(em.find(Tag.class, 1l));
+		// user - contact, tag, category, favorite		
+		assertNotNull(categoryRepository.findById(1l));
+		assertNotNull(categoryRepository.findById(2l));
+		assertNotNull(contactRepository.findById(1l));
+		assertNotNull(tagRepository.findById(1l));
 		
 		em.remove(sUser);
 		em.flush();
 		
-		assertNull(em.find(Category.class, 1l));
+		assertThat(categoryRepository.findById(1l),is(Optional.empty()));
 		assertNull(em.find(Category.class, 2l));
 		assertNull(em.find(Contact.class, 1l));
 		assertNull(em.find(Tag.class, 1l));
+		
 	}
 }
