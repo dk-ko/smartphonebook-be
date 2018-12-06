@@ -1,5 +1,6 @@
 package com.soda.phonebook.domain;
 
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
 import javax.persistence.EntityManager;
@@ -17,7 +18,8 @@ import com.soda.phonebook.domain.VO.ContactType;
 import com.soda.phonebook.domain.VO.DataType;
 import com.soda.phonebook.domain.VO.Numbers;
 import com.soda.phonebook.domain.info.Address;
-import com.soda.phonebook.repository.TagRepository;
+import com.soda.phonebook.repository.AddressRepository;
+import com.soda.phonebook.repository.DigitRepository;
 import com.soda.phonebook.repository.UserRepository;
 
 @RunWith(SpringRunner.class)
@@ -29,9 +31,12 @@ public class ContactTest {
 
 	@Autowired
 	private UserRepository userRepository;
-
+	
 	@Autowired
-	private TagRepository tagRepository;
+	private DigitRepository digitRepository;
+	
+	@Autowired
+	private AddressRepository addressRepository;
 
 	private Contact contact;
 	private User user, savedUser;
@@ -65,26 +70,22 @@ public class ContactTest {
 				.contents("서울시 구로구 ...")
 				.category(category2)
 				.contact(contact).build();
-		Tag tag = Tag.builder()
-				.name("태그저장")
-				.user(savedUser).build();
 
 		contact.getDigits().add(digit);
 		contact.getInfoes().add(address);
-		contact.getTags().add(tag);
 
-		// contact만 persist
-		em.persist(contact);
-		em.flush();
 	}
 
 	@Test
 	@Transactional
 	public void test_Contact_cascade_저장() {
 
-		assertNotNull(em.find(Digit.class, 1l));
-		assertNotNull(em.find(Address.class, 1l));
-		assertNotNull(tagRepository.findById(1l));
+		// contact만 persist
+		em.persist(contact);
+		em.flush();
+		
+		assertThat(digitRepository.findById(1l).get().getNumbers(), is(numbers));
+		assertThat(addressRepository.findById(1l).get().getContents(), is("서울시 구로구 ..."));
 	}
 
 	public void test_Contact_cascade_삭제() {
