@@ -80,24 +80,18 @@ public class ContactTest {
 	}
 
 	@Test
-	public void test_Contact_cascade_저장() {
+	public void test_Contact_cascade_저장및삭제() {
 
 		// contact만 persist
 		contactRepository.save(contact);
 		
 		assertThat(digitRepository.findById(1l).get().getNumbers(), is(numbers));
 		assertThat(addressRepository.findById(1l).get().getContents(), is("서울시 구로구 ..."));
-	}
-
-	@Test
-	public void test_Contact_cascade_삭제() {
-		em.remove(contact);
-		em.flush();
-
+		
+		contactRepository.delete(contact);
+		
 		// 삭제 후 null
 		assertNull(em.find(Digit.class, 1l));
 		assertNull(em.find(Address.class, 1l));
-
-		em.clear();
 	}
 }
