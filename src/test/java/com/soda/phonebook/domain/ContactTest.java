@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -77,7 +76,6 @@ public class ContactTest {
 	}
 
 	@Test
-	@Transactional
 	public void test_Contact_cascade_저장() {
 
 		// contact만 persist
@@ -88,6 +86,7 @@ public class ContactTest {
 		assertThat(addressRepository.findById(1l).get().getContents(), is("서울시 구로구 ..."));
 	}
 
+	@Test
 	public void test_Contact_cascade_삭제() {
 		em.remove(contact);
 		em.flush();
