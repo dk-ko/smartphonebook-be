@@ -30,7 +30,12 @@ spring:
     
   jpa:
     open-in-view: false
-
+    
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 3MB
+      max-request-size: 3MB
 
 # local 환경
 ---
@@ -48,7 +53,7 @@ spring:
         
   jpa:
     database: mysql
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+#    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     show-sql: true
     hibernate:
       ddl-auto: create-drop
