@@ -102,6 +102,10 @@ public class Contact extends BaseEntity{
 		this.photo = contact.photo;
 	}
 	
+	public void updateType(ContactType type) {
+		this.type = type;
+	}
+	
 	
 	@Override
 	public String toString() {
