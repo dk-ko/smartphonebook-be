@@ -186,11 +186,17 @@ public class ContactService {
 		
 		contactRepository.save(findContact);
 		
+		log.info("* contact favorite 수정");
 		User user = userService.getCurrentUser();
-		if(findContact.getType()==ContactType.DEFAULT && dto.getType()==ContactType.FAVORITED) {
-			user.getFavorites().add(findContact);
-		}else if(findContact.getType()==ContactType.FAVORITED && dto.getType()==ContactType.DEFAULT) {
-			user.getFavorites().remove(findContact);
+		switch(dto.getType()) {
+		case FAVORITED:
+			addFavoritesToUser(user, findContact);
+			break;
+		case DEFAULT:
+			deleteFavoritesToUser(user, findContact);
+			break;
+		case ME:
+			throw new CanNotUpdateContact("타입을 변경할 수 없습니다.");
 		}
 			
 		return true;
@@ -251,15 +257,25 @@ public class ContactService {
 		User user = userService.getCurrentUser();
 		Contact findContact = findById(id);
 		
-		user.getFavorites().add(findContact);
-		return true;
+		return addFavoritesToUser(user, findContact);
 	}
 	
 	public boolean deleteToFavorites(Long id) {
 		User user = userService.getCurrentUser();
 		Contact findContact = findById(id);
 		
-		user.getFavorites().remove(findContact);
+		return deleteFavoritesToUser(user, findContact);
+	}
+	
+	private boolean addFavoritesToUser(User user, Contact contact) {
+		contact.updateType(ContactType.FAVORITED);
+		user.getFavorites().add(contact);
+		return true;
+	}
+	
+	private boolean deleteFavoritesToUser(User user, Contact contact) {
+		contact.updateType(ContactType.DEFAULT);
+		user.getFavorites().remove(contact);
 		return true;
 	}
 	

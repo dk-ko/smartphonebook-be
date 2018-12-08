@@ -26,7 +26,7 @@ public class UserService {
 		if( findUser != null) {
 			return findUser;
 		}else {
-			return create(User.builder().name("테스트유저").build());
+			return save(User.builder().name("테스트유저").build());
 		}
 	}
 	
@@ -36,7 +36,7 @@ public class UserService {
 		return savedUser;
 	}
 	
-	public User create(User user) {
+	public User save(User user) {
 		return userRepository.save(user);
 	}
 	
