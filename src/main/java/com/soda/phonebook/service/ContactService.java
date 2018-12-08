@@ -104,6 +104,7 @@ public class ContactService {
 		Contact findContact = findById(id);
 		
 		removeContactFromTag(id, findContact);
+		deleteFavoritesToUser(userService.getCurrentUser(), findContact);
 		
 		contactRepository.deleteById(id);
 	}
