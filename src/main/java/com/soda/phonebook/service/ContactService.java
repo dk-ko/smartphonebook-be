@@ -14,6 +14,7 @@ import com.soda.phonebook.domain.Contact;
 import com.soda.phonebook.domain.Digit;
 import com.soda.phonebook.domain.Tag;
 import com.soda.phonebook.domain.User;
+import com.soda.phonebook.domain.VO.ContactType;
 import com.soda.phonebook.domain.info.Info;
 import com.soda.phonebook.dto.req.ContactDataRequestDto;
 import com.soda.phonebook.dto.req.ContactSaveRequestDto;
@@ -131,7 +132,12 @@ public class ContactService {
 		addInfoToContact(contact, dto.getDates());
 		addInfoToContact(contact, dto.getAddresses());
 		
-		return Optional.ofNullable(contactRepository.save(contact)).isPresent(); 
+		contactRepository.save(contact);
+		if(contact.getType()==ContactType.FAVORITED) {
+			User user = userService.getCurrentUser();
+			user.getFavorites().add(contact);
+		}
+		return true;
 	}
 	
 	private void addDigitToContact(Contact contact, List<DigitSaveRequestDto> getDigits) {
@@ -180,6 +186,13 @@ public class ContactService {
 		
 		contactRepository.save(findContact);
 		
+		User user = userService.getCurrentUser();
+		if(findContact.getType()==ContactType.DEFAULT && dto.getType()==ContactType.FAVORITED) {
+			user.getFavorites().add(findContact);
+		}else if(findContact.getType()==ContactType.FAVORITED && dto.getType()==ContactType.DEFAULT) {
+			user.getFavorites().remove(findContact);
+		}
+			
 		return true;
 	}
 	

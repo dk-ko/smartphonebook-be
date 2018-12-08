@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.soda.phonebook.dto.res.ContactListReadResponseDto;
 import com.soda.phonebook.dto.res.ContactResponseDto;
@@ -20,6 +22,7 @@ import com.soda.phonebook.dto.res.TagResponseDto;
 import com.soda.phonebook.dto.req.ContactSaveRequestDto;
 import com.soda.phonebook.dto.req.ContactUpdateRequestDto;
 import com.soda.phonebook.service.ContactService;
+//import com.soda.phonebook.service.DBFileStorageService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -97,4 +100,19 @@ public class ContactController {
 	public boolean deleteToFavorites(@PathVariable final Long id) {
 		return contactService.deleteToFavorites(id);
 	}
+	/*
+	// 사진 업로드 / 삭제
+	@PostMapping("{id}/photo")
+	@ResponseStatus(value = HttpStatus.OK)
+	public boolean uploadPhoto(@PathVariable final Long id, @RequestParam("file") MultipartFile file) {
+		DBFile dbFile = DBFileStorageService.storeFile(file);
+		
+		String
+	}
+	
+	@DeleteMapping("{id}/photo")
+	@ResponseStatus(value = HttpStatus.NO_CONTENT)
+	public boolean deletePhoto() {
+		
+	}*/
 }
