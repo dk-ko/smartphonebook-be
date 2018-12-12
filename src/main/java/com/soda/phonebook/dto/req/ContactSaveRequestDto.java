@@ -52,6 +52,13 @@ public class ContactSaveRequestDto {
 		this.addresses = Optional.ofNullable(addresses).orElse(this.addresses);
 	}
 	
+	public ContactSaveRequestDto(Contact contact) {
+		this.type = Optional.ofNullable(contact.getType()).orElse(this.type);
+		this.name = contact.getName();
+		this.memo = contact.getMemo();
+		this.photo = contact.getPhoto();
+	}
+	
 	public Contact toEntity(User user) {
 		return Contact.builder()
 				.user(user)

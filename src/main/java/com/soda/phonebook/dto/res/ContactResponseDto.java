@@ -3,6 +3,7 @@ package com.soda.phonebook.dto.res;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import com.soda.phonebook.domain.Contact;
@@ -36,8 +37,18 @@ public class ContactResponseDto {
 		this.memo = contact.getMemo();
 		this.photo = contact.getPhoto();
 		
-		this.digits = digits;
-		this.infoes = infoes;
-		this.tags = tags;
+		this.digits = Optional.ofNullable(digits).orElse(this.digits);
+		this.infoes = Optional.ofNullable(infoes).orElse(this.infoes);
+		this.tags = Optional.ofNullable(tags).orElse(this.tags);
+	}
+	
+	public ContactResponseDto(Contact contact) {
+		this.id = contact.getId();
+		this.type = contact.getType();
+		this.name = contact.getName();
+		
+		// nullable
+		this.memo = contact.getMemo();
+		this.photo = contact.getPhoto();
 	}
 }
