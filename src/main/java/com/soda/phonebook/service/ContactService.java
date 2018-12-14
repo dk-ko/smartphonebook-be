@@ -125,17 +125,18 @@ public class ContactService {
 	// create
 //	public boolean create(ContactSaveRequestDto dto) throws IOException {
 	public Long create(ContactSaveRequestDto dto) throws IOException {
-		
+		log.info("* contactservice create");
 		Contact contact = dto.toEntity(userService.getCurrentUser());
-
+		log.info("* dto.toEntity 후");
 		addDigitToContact(contact, dto.getDigits());
 
 		addInfoToContact(contact, dto.getUrls());
 		addInfoToContact(contact, dto.getEmails());
 		addInfoToContact(contact, dto.getDates());
 		addInfoToContact(contact, dto.getAddresses());
-		
+		log.info("* save 전");
 		contactRepository.save(contact);
+		log.info("* save 후");
 		if(contact.getType()==ContactType.FAVORITED) {
 			User user = userService.getCurrentUser();
 			user.getFavorites().add(contact);
@@ -203,7 +204,7 @@ public class ContactService {
 		case ME:
 			throw new CanNotUpdateContact("타입을 변경할 수 없습니다.");
 		}
-			
+		log.info("* service return 전");	
 //		return true;
 		return id;
 	}

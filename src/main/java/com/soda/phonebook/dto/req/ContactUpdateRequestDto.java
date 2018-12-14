@@ -76,7 +76,7 @@ public class ContactUpdateRequestDto {
 				.type(this.type)
 				.name(this.name)
 				.memo(this.memo)
-				.photo(this.photo.getBytes())
+				.photo(this.photo != null ? this.photo.getBytes() : null)
 				.build();
 	}
 }

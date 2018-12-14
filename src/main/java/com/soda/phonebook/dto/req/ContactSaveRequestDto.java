@@ -33,7 +33,7 @@ public class ContactSaveRequestDto {
 	private String memo = null;
 //	private byte[] photo = null;
 	@JsonIgnore
-	private MultipartFile photo;
+	private MultipartFile photo = null;
 	
 	@JsonProperty("photo")
 	private String photoName;
@@ -69,7 +69,7 @@ public class ContactSaveRequestDto {
 				.type(this.type)
 				.name(this.name)
 				.memo(this.memo)
-				.photo(this.photo.getBytes())
+				.photo(this.photo != null ? this.photo.getBytes() : null)
 				.build();
 	}
 	

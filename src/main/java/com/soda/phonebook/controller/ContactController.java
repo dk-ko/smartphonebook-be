@@ -74,26 +74,39 @@ public class ContactController {
 	@ResponseStatus(value = HttpStatus.CREATED)
 //	public boolean createContacts(@RequestBody final ContactSaveRequestDto dto) {
 	public String createContacts(@ModelAttribute final ContactSaveRequestDto dto) throws IOException {
+		log.info("* post controller");
 		Long savedContactId = contactService.create(dto);
+		log.info("* create 이후");
+		
+		if(dto.getPhoto() == null) return "saved";
+		
 		String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
 				.path("/api/contacts/")
 				.path(savedContactId.toString())
 				.path("/downloadFile")
 				.toUriString();
+		log.info("* download uri 생성");
 //		return contactService.create(dto);
-		return fileDownloadUri != null ? fileDownloadUri : "saved";
+		return fileDownloadUri;
 	}
 	
-	@PutMapping("/{id}")
+	@PutMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
 	@ResponseStatus(value = HttpStatus.OK)
 //	public boolean editContacts(@PathVariable final Long id, @RequestBody final ContactUpdateRequestDto dto) {
 	public String editContacts(@PathVariable final Long id, @ModelAttribute final ContactUpdateRequestDto dto) throws IOException {
+		log.info("* put controller");
 		Long savedContactId = contactService.update(id, dto);
+		log.info("* update 이후");
+		
+		if(dto.getPhoto() == null) return "saved";
+		
 		String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
 				.path("/api/contacts/")
 				.path(savedContactId.toString())
 				.path("/downloadFile")
 				.toUriString();
+		log.info("* download uri 생성");
 		return fileDownloadUri != null ? fileDownloadUri : "saved";
 //		return contactService.update(id, dto);
 	}
