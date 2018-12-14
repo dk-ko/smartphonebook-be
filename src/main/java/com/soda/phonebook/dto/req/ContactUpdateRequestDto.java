@@ -29,7 +29,7 @@ public class ContactUpdateRequestDto {
 	private Long id;
 	
 	@NotEmpty
-	private ContactType type;
+	private ContactType type = ContactType.DEFAULT;
 	
 	@NotEmpty
 	private String name;
@@ -56,7 +56,7 @@ public class ContactUpdateRequestDto {
 			List<AddressUpdateRequestDto> addresses){
 		
 		this.id = id;
-		this.type = type;
+		this.type = Optional.ofNullable(type).orElse(this.type);
 		this.name = name;
 		// nullable
 		this.memo = memo;

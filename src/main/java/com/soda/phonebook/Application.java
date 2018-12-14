@@ -5,7 +5,6 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 
 import lombok.extern.slf4j.Slf4j;
 
-
 @SpringBootApplication
 @Slf4j
 public class Application {

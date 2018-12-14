@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.soda.phonebook.domain.VO.ContactType;
@@ -16,12 +17,14 @@ import com.soda.phonebook.domain.info.Address;
 import com.soda.phonebook.domain.info.Info;
 import com.soda.phonebook.domain.User;
 import com.soda.phonebook.domain.Contact;
+import com.soda.phonebook.config.JpaAuditConfiguration;
 import com.soda.phonebook.domain.Category;
 import com.soda.phonebook.repository.AddressRepository;
 import com.soda.phonebook.repository.CategoryRepository;
 import com.soda.phonebook.repository.ContactRepository;
 import com.soda.phonebook.repository.UserRepository;
 
+@Import(value = JpaAuditConfiguration.class)
 @RunWith(SpringRunner.class)
 @DataJpaTest
 public class InfoTest {

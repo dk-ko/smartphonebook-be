@@ -13,16 +13,18 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.Import;
 //import org.springframework.boot.test.context.SpringBootTest;
 //import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.soda.phonebook.config.JpaAuditConfiguration;
 import com.soda.phonebook.domain.Contact;
 import com.soda.phonebook.domain.User;
 import com.soda.phonebook.domain.VO.ContactType;
 
-
+@Import(value = JpaAuditConfiguration.class)
 @RunWith(SpringRunner.class)
 //@ActiveProfiles("local")
 //@SpringBootTest
