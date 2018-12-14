@@ -63,7 +63,7 @@ public class ContactSaveRequestDto {
 		this.addresses = Optional.ofNullable(addresses).orElse(this.addresses);
 	}
 	
-	public Contact toEntity(User user) throws IOException {
+	public Contact toEntity(User user) throws IOException{
 		return Contact.builder()
 				.user(user)
 				.type(this.type)

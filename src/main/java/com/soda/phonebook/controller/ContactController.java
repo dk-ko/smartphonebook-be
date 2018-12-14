@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,11 +20,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.soda.phonebook.dto.res.ContactListReadResponseDto;
@@ -32,9 +31,7 @@ import com.soda.phonebook.dto.res.TagResponseDto;
 import com.google.common.net.HttpHeaders;
 import com.soda.phonebook.dto.req.ContactSaveRequestDto;
 import com.soda.phonebook.dto.req.ContactUpdateRequestDto;
-import com.soda.phonebook.dto.req.DigitSaveRequestDto;
 import com.soda.phonebook.service.ContactService;
-//import com.soda.phonebook.service.DBFileStorageService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -72,7 +69,7 @@ public class ContactController {
 		contactService.delete(id);
 	}
 	
-	@PostMapping("/")
+	@PostMapping(path = "/", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ResponseStatus(value = HttpStatus.CREATED)
 //	public boolean createContacts(@RequestBody final ContactSaveRequestDto dto) {
