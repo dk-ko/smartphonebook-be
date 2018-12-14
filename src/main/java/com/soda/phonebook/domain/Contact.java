@@ -19,6 +19,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+
 import javax.persistence.ForeignKey;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -36,7 +37,7 @@ import lombok.NoArgsConstructor;
 @AttributeOverride(name="id", column=@Column(name="contact_id"))
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Contact extends BaseEntity{
+public class Contact extends BaseEntity {
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name="user_id", 
@@ -60,6 +61,7 @@ public class Contact extends BaseEntity{
 	@Column(name="photo")
 	private byte[] photo = null;
 	
+	
 	@JsonIgnore
 	@OneToMany(mappedBy="contact", 
 				cascade = CascadeType.ALL,
@@ -82,6 +84,7 @@ public class Contact extends BaseEntity{
 	
 	@Builder
 	public Contact(Long id, User user, ContactType type, String name, String memo, byte[] photo,
+//	public Contact(Long id, User user, ContactType type, String name, String memo, MultipartFile photo,
 				List<Digit> digits, List<Info> infoes, Set<Tag> tags) {
 		this.id = id;
 		this.user = user;
@@ -89,6 +92,7 @@ public class Contact extends BaseEntity{
 		this.name = name;
 		
 		this.memo = Optional.ofNullable(memo).orElse(this.memo);
+//		this.photo = Optional.ofNullable(photo).orElse(this.photo);
 		this.photo = Optional.ofNullable(photo).orElse(this.photo);
 		this.digits= Optional.ofNullable(digits).orElse(this.digits);
 		this.infoes = Optional.ofNullable(infoes).orElse(this.infoes);
@@ -119,4 +123,9 @@ public class Contact extends BaseEntity{
 	private String withPhoto() {
 		return this.photo != null ? "exist" : "none";
 	}
+	
+	//
+//	public String getPhotoName() {
+//		return this.photo.getOriginalFilename();
+//	}
 }

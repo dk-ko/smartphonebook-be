@@ -20,7 +20,6 @@ public class ContactResponseDto {
 	private String memo;
 	private byte[] photo;
 	
-	
 	private List<DigitResponseDto> digits = new ArrayList<>();
 	private List<InfoResponseDto> infoes = new ArrayList<>();
 	private Set<TagResponseDto> tags = new HashSet<>();

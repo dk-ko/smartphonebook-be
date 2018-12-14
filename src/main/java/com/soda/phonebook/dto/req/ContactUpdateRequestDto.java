@@ -1,11 +1,16 @@
 package com.soda.phonebook.dto.req;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import javax.validation.constraints.NotEmpty;
 
+import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.soda.phonebook.domain.Contact;
 import com.soda.phonebook.domain.User;
 import com.soda.phonebook.domain.VO.ContactType;
@@ -30,7 +35,12 @@ public class ContactUpdateRequestDto {
 	private String name;
 	
 	private String memo = null;
-	private byte[] photo = null;
+//	private byte[] photo = null;
+	@JsonIgnore
+	private MultipartFile photo;
+	
+	@JsonProperty("photo")
+	private String photoName;
 	
 	private List<DigitUpdateRequestDto> digits = new ArrayList<>();
 	private List<UrlUpdateRequestDto> urls = new ArrayList<>();
@@ -39,7 +49,8 @@ public class ContactUpdateRequestDto {
 	private List<AddressUpdateRequestDto> addresses = new ArrayList<>();
 	
 	@Builder
-	public ContactUpdateRequestDto(Long id, ContactType type, String name, String memo, byte[] photo, 
+//	public ContactUpdateRequestDto(Long id, ContactType type, String name, String memo, byte[] photo,
+	public ContactUpdateRequestDto(Long id, ContactType type, String name, String memo, MultipartFile photo,
 			List<DigitUpdateRequestDto> digits, List<UrlUpdateRequestDto> urls,
 			List<EmailUpdateRequestDto> emails,List<DateUpdateRequestDto> dates,
 			List<AddressUpdateRequestDto> addresses){
@@ -58,14 +69,14 @@ public class ContactUpdateRequestDto {
 		this.addresses = Optional.ofNullable(addresses).orElse(this.addresses);
 	}
 	
-	public Contact toEntity(User user) {
+	public Contact toEntity(User user) throws IOException {
 		return Contact.builder()
 				.id(this.id)
 				.user(user)
 				.type(this.type)
 				.name(this.name)
 				.memo(this.memo)
-				.photo(this.photo)
+				.photo(this.photo.getBytes())
 				.build();
 	}
 }

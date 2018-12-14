@@ -1,5 +1,6 @@
 package com.soda.phonebook.service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -122,7 +123,8 @@ public class ContactService {
 	}
 	
 	// create
-	public boolean create(ContactSaveRequestDto dto) {
+//	public boolean create(ContactSaveRequestDto dto) throws IOException {
+	public Long create(ContactSaveRequestDto dto) throws IOException {
 		
 		Contact contact = dto.toEntity(userService.getCurrentUser());
 
@@ -138,7 +140,8 @@ public class ContactService {
 			User user = userService.getCurrentUser();
 			user.getFavorites().add(contact);
 		}
-		return true;
+//		return true;
+		return contact.getId();
 	}
 	
 	private void addDigitToContact(Contact contact, List<DigitSaveRequestDto> getDigits) {
@@ -161,7 +164,8 @@ public class ContactService {
 	}
 	
 	// edit 
-	public boolean update(Long id, ContactUpdateRequestDto dto) {
+//	public boolean update(Long id, ContactUpdateRequestDto dto) {
+	public Long update(Long id, ContactUpdateRequestDto dto) throws IOException {
 		
 		Contact findContact = findById(id);
 		
@@ -200,7 +204,8 @@ public class ContactService {
 			throw new CanNotUpdateContact("타입을 변경할 수 없습니다.");
 		}
 			
-		return true;
+//		return true;
+		return id;
 	}
 	
 	private List<Digit> dtoToDigitList(Contact contact, List<DigitUpdateRequestDto> dtoList){
