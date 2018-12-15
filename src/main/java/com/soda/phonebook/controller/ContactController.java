@@ -69,7 +69,8 @@ public class ContactController {
 		contactService.delete(id);
 	}
 	
-	@PostMapping(path = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+//	@PostMapping(path = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping("/")
 	@ResponseBody
 	@ResponseStatus(value = HttpStatus.CREATED)
 //	public boolean createContacts(@RequestBody final ContactSaveRequestDto dto) {
@@ -90,7 +91,8 @@ public class ContactController {
 		return fileDownloadUri;
 	}
 	
-	@PutMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+//	@PutMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(path = "/{id}")
 	@ResponseBody
 	@ResponseStatus(value = HttpStatus.OK)
 //	public boolean editContacts(@PathVariable final Long id, @RequestBody final ContactUpdateRequestDto dto) {
