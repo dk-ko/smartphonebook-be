@@ -47,7 +47,7 @@ public class ContactController {
 	
 	private final ContactService contactService;
 	
-	@GetMapping("/")
+	@GetMapping(path = {"/", ""})
 	@ResponseBody
 	@ResponseStatus(value = HttpStatus.OK)
 	public List<ContactListReadResponseDto> getAllContacts() {
@@ -73,7 +73,7 @@ public class ContactController {
 	}
 	
 //	@PostMapping(path = "/", produces = MediaType.APPLICATION_JSON_VALUE)
-	@PostMapping("/")
+	@PostMapping(path = {"/", ""})
 	@ResponseBody
 	@ResponseStatus(value = HttpStatus.CREATED)
 //	public boolean createContacts(@RequestBody final ContactSaveRequestDto dto) {

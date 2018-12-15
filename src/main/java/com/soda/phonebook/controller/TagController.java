@@ -31,7 +31,7 @@ public class TagController {
 	private final TagService tagService;
 	
 	// tag 전체 목록
-	@GetMapping("/")
+	@GetMapping(path= {"/", ""})
 	@ResponseStatus(value = HttpStatus.OK)
 	public Set<TagResponseDto> getAllTags() {
 		return tagService.findAllByUser();
@@ -53,7 +53,7 @@ public class TagController {
 	}
 	
 	// tag 생성
-	@PostMapping("/")
+	@PostMapping(path= {"/", ""})
 	@ResponseStatus(value = HttpStatus.CREATED)
 	public boolean createContacts(@RequestBody final TagSaveRequestDto dto) {
 		return tagService.create(dto);
