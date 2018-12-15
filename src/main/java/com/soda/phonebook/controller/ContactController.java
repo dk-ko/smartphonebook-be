@@ -29,6 +29,7 @@ import com.soda.phonebook.dto.res.ContactListReadResponseDto;
 import com.soda.phonebook.dto.res.ContactResponseDto;
 import com.soda.phonebook.dto.res.TagResponseDto;
 import com.google.common.net.HttpHeaders;
+import com.soda.phonebook.domain.VO.Mark;
 import com.soda.phonebook.dto.req.ContactSaveRequestDto;
 import com.soda.phonebook.dto.req.ContactUpdateRequestDto;
 import com.soda.phonebook.service.ContactService;
@@ -60,6 +61,8 @@ public class ContactController {
 		log.info("* before service");
 		ContactResponseDto dto = contactService.getContacts(id);
 		log.info("* after service");
+//		if(dto.getPhoto() != Mark.N) dto.updatePhotoPath(makeDownloadUri(dto.getId()));
+		if(dto.getPhoto() != null) dto.updatePhotoPath(makeDownloadUri(dto.getId()));
 		return dto;
 	}
 	
@@ -81,11 +84,7 @@ public class ContactController {
 		
 		if(dto.getPhoto() == null) return "saved";
 		
-		String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-				.path("/api/contacts/")
-				.path(savedContactId.toString())
-				.path("/downloadFile")
-				.toUriString();
+		String fileDownloadUri = makeDownloadUri(savedContactId);
 		log.info("* download uri 생성");
 //		return contactService.create(dto);
 		return fileDownloadUri;
@@ -103,11 +102,7 @@ public class ContactController {
 		
 		if(dto.getPhoto() == null) return "saved";
 		
-		String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-				.path("/api/contacts/")
-				.path(savedContactId.toString())
-				.path("/downloadFile")
-				.toUriString();
+		String fileDownloadUri = makeDownloadUri(savedContactId);
 		log.info("* download uri 생성");
 		return fileDownloadUri != null ? fileDownloadUri : "saved";
 //		return contactService.update(id, dto);
@@ -159,4 +154,11 @@ public class ContactController {
 		return contactService.deleteToFavorites(id);
 	}
 	
+	private String makeDownloadUri(Long id) {
+		return ServletUriComponentsBuilder.fromCurrentContextPath()
+				.path("/api/contacts/")
+				.path(id.toString())
+				.path("/downloadFile")
+				.toUriString();
+	}
 }

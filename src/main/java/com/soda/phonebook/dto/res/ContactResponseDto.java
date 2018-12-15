@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.soda.phonebook.domain.Contact;
 import com.soda.phonebook.domain.VO.ContactType;
+import com.soda.phonebook.domain.VO.Mark;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -19,7 +21,14 @@ public class ContactResponseDto {
 	private String name;
 	
 	private String memo;
+	
+	@JsonIgnore
 	private byte[] photo;
+	
+//	@JsonIgnore
+//	private Mark photo;
+	
+	private String photoPath = null;
 	
 	private List<DigitResponseDto> digits = new ArrayList<>();
 	private List<InfoResponseDto> infoes = new ArrayList<>();
@@ -35,6 +44,7 @@ public class ContactResponseDto {
 		// nullable
 		this.memo = contact.getMemo();
 		this.photo = contact.getPhoto();
+//		this.photo = contact.getPhoto() != null ? Mark.Y : Mark.N;
 		
 		this.digits = Optional.ofNullable(digits).orElse(this.digits);
 		this.infoes = Optional.ofNullable(infoes).orElse(this.infoes);
@@ -49,5 +59,10 @@ public class ContactResponseDto {
 		// nullable
 		this.memo = contact.getMemo();
 		this.photo = contact.getPhoto();
+//		this.photo = contact.getPhoto() != null ? Mark.Y : Mark.N;
+	}
+	
+	public void updatePhotoPath(String photoPath) {
+		this.photoPath = photoPath;
 	}
 }

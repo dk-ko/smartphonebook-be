@@ -89,7 +89,9 @@ public class ContactService {
 	// read all
 	@Transactional(readOnly = true)
 	public List<ContactListReadResponseDto> getAllContacts() {
+		log.info("* repository 전");
 		List<Contact> findList = contactRepository.findAll();
+		log.info("* repository 후");
 		List<ContactListReadResponseDto> dtoList = new ArrayList<>();
 		for(Contact contact : findList) {
 			dtoList.add(ContactListReadResponseDto.builder()
@@ -97,6 +99,7 @@ public class ContactService {
 					.digits(getDigitsResponseDto(contact))
 					.build());
 		}
+		log.info("* dto 변환");
 		return dtoList;
 	}
 	
