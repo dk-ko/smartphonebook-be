@@ -8,6 +8,7 @@ import java.util.Set;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.soda.phonebook.common.CanNotDeleteCategory;
 import com.soda.phonebook.domain.Category;
 import com.soda.phonebook.domain.Digit;
 import com.soda.phonebook.domain.User;
@@ -16,7 +17,6 @@ import com.soda.phonebook.domain.VO.Mark;
 import com.soda.phonebook.domain.info.Info;
 import com.soda.phonebook.dto.req.CategorySaveRequestDto;
 import com.soda.phonebook.dto.res.CategoryResponseDto;
-import com.soda.phonebook.exception.CanNotDeleteCategory;
 import com.soda.phonebook.repository.CategoryRepository;
 
 import lombok.AllArgsConstructor;

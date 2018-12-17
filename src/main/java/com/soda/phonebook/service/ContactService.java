@@ -10,6 +10,8 @@ import java.util.Set;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.soda.phonebook.common.CanNotFindCategory;
+import com.soda.phonebook.common.CanNotUpdateContact;
 import com.soda.phonebook.domain.Category;
 import com.soda.phonebook.domain.Contact;
 import com.soda.phonebook.domain.Digit;
@@ -29,8 +31,6 @@ import com.soda.phonebook.dto.res.ContactResponseDto;
 import com.soda.phonebook.dto.res.DigitResponseDto;
 import com.soda.phonebook.dto.res.InfoResponseDto;
 import com.soda.phonebook.dto.res.TagResponseDto;
-import com.soda.phonebook.exception.CanNotFindCategory;
-import com.soda.phonebook.exception.CanNotUpdateContact;
 import com.soda.phonebook.repository.ContactRepository;
 
 import lombok.AllArgsConstructor;

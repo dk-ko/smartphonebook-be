@@ -51,6 +51,7 @@ spring:
       password: test123 
       driver-class-name: org.mariadb.jdbc.Driver
 #    initialization-mode: always
+#    data: classpath:init.sql
         
   jpa:
     database: mysql
@@ -121,6 +122,15 @@ logging:
     org.springframework.web.client: DEBUG
     org.hibernate.SQL: DEBUG
     org.hibernate.type: TRACE
+
+#server:
+#  ssl:
+#    enabled: true
+#    key-store: keystore.p12
+#    key-store-password: test123
+#    key-store-type: PKCS12
+#    key-alias: bns-ssl
+#  port: 8443
 
 
 # production 환경 

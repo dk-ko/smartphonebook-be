@@ -1,4 +1,4 @@
-package com.soda.phonebook.exception;
+package com.soda.phonebook.common;
 
 import javax.servlet.http.HttpServletRequest;
 
