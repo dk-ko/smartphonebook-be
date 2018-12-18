@@ -31,12 +31,12 @@ public class ContactSaveRequestDto {
 	private String name;
 	
 	private String memo = null;
-//	private byte[] photo = null;
-	@JsonIgnore
-	private MultipartFile photo = null;
-	
-	@JsonProperty("photo")
-	private String photoName;
+	private byte[] photo = null;
+//	@JsonIgnore
+//	private MultipartFile photo = null;
+//	
+//	@JsonProperty("photo")
+//	private String photoName;
 	
 	private List<DigitSaveRequestDto> digits = new ArrayList<>();
 	private List<UrlSaveRequestDto> urls = new ArrayList<>();
@@ -45,8 +45,8 @@ public class ContactSaveRequestDto {
 	private List<AddressSaveRequestDto> addresses = new ArrayList<>();
 	
 	@Builder
-//	public ContactSaveRequestDto(ContactType type, String name, String memo, byte[] photo,
-	public ContactSaveRequestDto(ContactType type, String name, String memo, MultipartFile photo,
+	public ContactSaveRequestDto(ContactType type, String name, String memo, byte[] photo,
+//	public ContactSaveRequestDto(ContactType type, String name, String memo, MultipartFile photo,
 			List<DigitSaveRequestDto> digits, List<UrlSaveRequestDto> urls,
 			List<EmailSaveRequestDto> emails,List<DateSaveRequestDto> dates,
 			List<AddressSaveRequestDto> addresses){
@@ -69,7 +69,8 @@ public class ContactSaveRequestDto {
 				.type(this.type)
 				.name(this.name)
 				.memo(this.memo)
-				.photo(this.photo != null ? this.photo.getBytes() : null)
+//				.photo(this.photo != null ? this.photo.getBytes() : null)
+				.photo(this.photo)
 				.build();
 	}
 	

@@ -35,12 +35,12 @@ public class ContactUpdateRequestDto {
 	private String name;
 	
 	private String memo = null;
-//	private byte[] photo = null;
-	@JsonIgnore
-	private MultipartFile photo;
-	
-	@JsonProperty("photo")
-	private String photoName;
+	private byte[] photo = null;
+//	@JsonIgnore
+//	private MultipartFile photo;
+//	
+//	@JsonProperty("photo")
+//	private String photoName;
 	
 	private List<DigitUpdateRequestDto> digits = new ArrayList<>();
 	private List<UrlUpdateRequestDto> urls = new ArrayList<>();
@@ -49,8 +49,8 @@ public class ContactUpdateRequestDto {
 	private List<AddressUpdateRequestDto> addresses = new ArrayList<>();
 	
 	@Builder
-//	public ContactUpdateRequestDto(Long id, ContactType type, String name, String memo, byte[] photo,
-	public ContactUpdateRequestDto(Long id, ContactType type, String name, String memo, MultipartFile photo,
+	public ContactUpdateRequestDto(Long id, ContactType type, String name, String memo, byte[] photo,
+//	public ContactUpdateRequestDto(Long id, ContactType type, String name, String memo, MultipartFile photo,
 			List<DigitUpdateRequestDto> digits, List<UrlUpdateRequestDto> urls,
 			List<EmailUpdateRequestDto> emails,List<DateUpdateRequestDto> dates,
 			List<AddressUpdateRequestDto> addresses){
@@ -76,7 +76,8 @@ public class ContactUpdateRequestDto {
 				.type(this.type)
 				.name(this.name)
 				.memo(this.memo)
-				.photo(this.photo != null ? this.photo.getBytes() : null)
+//				.photo(this.photo != null ? this.photo.getBytes() : null)
+				.photo(this.photo)
 				.build();
 	}
 }

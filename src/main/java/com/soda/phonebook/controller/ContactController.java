@@ -77,7 +77,8 @@ public class ContactController {
 	@ResponseBody
 	@ResponseStatus(value = HttpStatus.CREATED)
 //	public boolean createContacts(@RequestBody final ContactSaveRequestDto dto) {
-	public String createContacts(@ModelAttribute final ContactSaveRequestDto dto) throws IOException {
+	public String createContacts(@RequestBody final ContactSaveRequestDto dto) throws IOException {
+//	public String createContacts(@ModelAttribute final ContactSaveRequestDto dto) throws IOException {
 		log.info("* post controller");
 		Long savedContactId = contactService.create(dto);
 		log.info("* create 이후");
@@ -94,8 +95,8 @@ public class ContactController {
 	@PutMapping(path = "/{id}")
 	@ResponseBody
 	@ResponseStatus(value = HttpStatus.OK)
-//	public boolean editContacts(@PathVariable final Long id, @RequestBody final ContactUpdateRequestDto dto) {
-	public String editContacts(@PathVariable final Long id, @ModelAttribute final ContactUpdateRequestDto dto) throws IOException {
+	public String editContacts(@PathVariable final Long id, @RequestBody final ContactUpdateRequestDto dto) throws IOException {
+//	public String editContacts(@PathVariable final Long id, @ModelAttribute final ContactUpdateRequestDto dto) throws IOException {
 		log.info("* put controller");
 		Long savedContactId = contactService.update(id, dto);
 		log.info("* update 이후");
