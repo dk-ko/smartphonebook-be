@@ -31,12 +31,7 @@ public class ContactSaveRequestDto {
 	private String name;
 	
 	private String memo = null;
-	
-	@JsonIgnore
-	private byte[] decoded = null;
-	
-	private String photo = null;
-	
+	private byte[] photo = null;
 //	@JsonIgnore
 //	private MultipartFile photo = null;
 //	
