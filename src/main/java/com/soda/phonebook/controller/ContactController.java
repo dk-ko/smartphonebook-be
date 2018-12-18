@@ -41,8 +41,8 @@ import lombok.extern.slf4j.Slf4j;
 @CrossOrigin(origins = "*")
 @AllArgsConstructor
 @RequestMapping("/api/contacts")
-//@RestController
-@Controller
+@RestController
+//@Controller
 public class ContactController {
 	
 	private final ContactService contactService;
@@ -136,9 +136,10 @@ public class ContactController {
 		return contactService.deleteTagToContact(id, tagId);
 	}
 	
-	@GetMapping("{id}/tags")
+	@GetMapping(path = {"/{id}/tags", "/{id}/tags/"})
 	@ResponseStatus(value = HttpStatus.OK)
 	public List<TagResponseDto> getAllTagsByContact(@PathVariable final Long id){
+		log.info("contact에 속한 tag 출력 ");
 		return contactService.getAllTagsByContact(id);
 	}
 	
