@@ -92,7 +92,6 @@ public class ContactController {
 	}
 	
 //	@PutMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	@CrossOrigin(origins = "*")
 	@PutMapping(path = {"/{id}", "/{id}/"})
 	@ResponseBody
 	@ResponseStatus(value = HttpStatus.OK)
