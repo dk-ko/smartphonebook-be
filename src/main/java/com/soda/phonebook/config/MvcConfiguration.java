@@ -12,10 +12,11 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @Configuration
 @EnableWebMvc
 public class MvcConfiguration implements WebMvcConfigurer{
+//public class MvcConfiguration extends WebMvcConfigurerAdapter{
     @Bean
     public ViewResolver getViewResolver() {
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-        resolver.setPrefix("/WEB-INF/");
+        resolver.setPrefix("/templates/");
         resolver.setSuffix(".html");
         return resolver;
     }

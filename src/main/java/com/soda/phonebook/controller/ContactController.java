@@ -92,7 +92,8 @@ public class ContactController {
 	}
 	
 //	@PutMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	@PutMapping(path = "/{id}")
+	@CrossOrigin(origins = "*")
+	@PutMapping(path = {"/{id}", "/{id}/"})
 	@ResponseBody
 	@ResponseStatus(value = HttpStatus.OK)
 	public String editContacts(@PathVariable final Long id, @RequestBody final ContactUpdateRequestDto dto) throws IOException {
