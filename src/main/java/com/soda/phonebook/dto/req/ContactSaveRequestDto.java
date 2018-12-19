@@ -1,6 +1,7 @@
 package com.soda.phonebook.dto.req;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -39,13 +40,10 @@ public class ContactSaveRequestDto {
 	
 	private String memo = null;
 	
-//	@JsonInclude(JsonInclude.Include.NON_NULL)
-	private byte[] photo = null;
-//	@JsonInclude(JsonInclude.Include.NON_DEFAULT)
-//	private String photo = null;
+//	@JsonIgnore
+//	private byte[] photo = null;
 	
-	@JsonIgnore
-	private byte[] decoded = null;
+	private String photo = null;
 	
 //	@JsonIgnore
 //	private MultipartFile photo = null;
@@ -60,9 +58,9 @@ public class ContactSaveRequestDto {
 	private List<AddressSaveRequestDto> addresses = new ArrayList<>();
 	
 	@Builder
-	public ContactSaveRequestDto(ContactType type, String name, String memo, byte[] photo,
+//	public ContactSaveRequestDto(ContactType type, String name, String memo, byte[] photo,
 //	public ContactSaveRequestDto(ContactType type, String name, String memo, MultipartFile photo,
-//	public ContactSaveRequestDto(ContactType type, String name, String memo, String photo,
+	public ContactSaveRequestDto(ContactType type, String name, String memo, String photo,
 			List<DigitSaveRequestDto> digits, List<UrlSaveRequestDto> urls,
 			List<EmailSaveRequestDto> emails,List<DateSaveRequestDto> dates,
 			List<AddressSaveRequestDto> addresses){
@@ -92,21 +90,9 @@ public class ContactSaveRequestDto {
 				.build();
 	}
 	
-	
-	private byte[] photoDecoder(byte[] photo) {
-////		Decoder decoder = Base64.getDecoder();
-////		Decoder decoder = Base64.getMimeDecoder();
-////		Decoder decoder = Base64.getUrlDecoder();
-////		byte[] result = Base64.getDecoder().decode(photo.toString());
-//		byte[] result = Base64.getDecoder().decode(photo);
-//		if(result.length > fileSize) throw new CanNotSaveContact("업로드할 수 있는 파일 크기를 초과하였습니다.");
-//		return result;
-//	}
-	
-//	private byte[] photoDecoder(String photo) {
+	private byte[] photoDecoder(String photo) {
 		byte[] result = Base64.getDecoder().decode(photo);
 		if(result.length > fileSize) throw new CanNotSaveContact("업로드할 수 있는 파일 크기를 초과하였습니다.");
 		return result;
 	}
-	
 }

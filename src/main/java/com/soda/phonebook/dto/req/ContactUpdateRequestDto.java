@@ -42,12 +42,12 @@ public class ContactUpdateRequestDto {
 	
 	private String memo = null;
 	
-	@JsonIgnore
-	private byte[] decoded = null;
+//	@JsonIgnore
+//	private byte[] decoded = null;
 	
-//	private String photo = null;
+	private String photo = null;
 	
-	private byte[] photo = null;
+//	private byte[] photo = null;
 //	@JsonIgnore
 //	private MultipartFile photo;
 //	
@@ -61,9 +61,9 @@ public class ContactUpdateRequestDto {
 	private List<AddressUpdateRequestDto> addresses = new ArrayList<>();
 	
 	@Builder
-	public ContactUpdateRequestDto(Long id, ContactType type, String name, String memo, byte[] photo,
+//	public ContactUpdateRequestDto(Long id, ContactType type, String name, String memo, byte[] photo,
 //	public ContactUpdateRequestDto(Long id, ContactType type, String name, String memo, MultipartFile photo,
-//	public ContactUpdateRequestDto(Long id, ContactType type, String name, String memo, String photo,
+	public ContactUpdateRequestDto(Long id, ContactType type, String name, String memo, String photo,
 			List<DigitUpdateRequestDto> digits, List<UrlUpdateRequestDto> urls,
 			List<EmailUpdateRequestDto> emails,List<DateUpdateRequestDto> dates,
 			List<AddressUpdateRequestDto> addresses){
@@ -95,7 +95,7 @@ public class ContactUpdateRequestDto {
 				.build();
 	}
 	
-	private byte[] photoDecoder(byte[] photo) {
+	private byte[] photoDecoder(String photo) {
 		Decoder decoder = Base64.getDecoder();
 		byte[] result = decoder.decode(photo);
 		if(result.length > fileSize) throw new CanNotSaveContact("업로드할 수 있는 파일 크기를 초과하였습니다.");
