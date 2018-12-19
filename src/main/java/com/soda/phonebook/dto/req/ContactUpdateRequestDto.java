@@ -2,8 +2,10 @@ package com.soda.phonebook.dto.req;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
+import java.util.Base64.Decoder;
 
 import javax.validation.constraints.NotEmpty;
 
@@ -11,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.soda.phonebook.common.CanNotSaveContact;
 import com.soda.phonebook.domain.Contact;
 import com.soda.phonebook.domain.User;
 import com.soda.phonebook.domain.VO.ContactType;
@@ -25,6 +28,9 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ContactUpdateRequestDto {
 
+	@JsonIgnore
+	private static final int fileSize = 3145728; //3MB
+	
 	@NotEmpty
 	private Long id;
 	
@@ -35,7 +41,13 @@ public class ContactUpdateRequestDto {
 	private String name;
 	
 	private String memo = null;
-	private byte[] photo = null;
+	
+	@JsonIgnore
+	private byte[] decoded = null;
+	
+	private String photo = null;
+	
+//	private byte[] photo = null;
 //	@JsonIgnore
 //	private MultipartFile photo;
 //	
@@ -49,8 +61,9 @@ public class ContactUpdateRequestDto {
 	private List<AddressUpdateRequestDto> addresses = new ArrayList<>();
 	
 	@Builder
-	public ContactUpdateRequestDto(Long id, ContactType type, String name, String memo, byte[] photo,
+//	public ContactUpdateRequestDto(Long id, ContactType type, String name, String memo, byte[] photo,
 //	public ContactUpdateRequestDto(Long id, ContactType type, String name, String memo, MultipartFile photo,
+	public ContactUpdateRequestDto(Long id, ContactType type, String name, String memo, String photo,
 			List<DigitUpdateRequestDto> digits, List<UrlUpdateRequestDto> urls,
 			List<EmailUpdateRequestDto> emails,List<DateUpdateRequestDto> dates,
 			List<AddressUpdateRequestDto> addresses){
@@ -77,7 +90,15 @@ public class ContactUpdateRequestDto {
 				.name(this.name)
 				.memo(this.memo)
 //				.photo(this.photo != null ? this.photo.getBytes() : null)
-				.photo(this.photo)
+//				.photo(this.photo)
+				.photo(this.photo != null? photoDecoder(this.photo) : null)
 				.build();
+	}
+	
+	private byte[] photoDecoder(String photo) {
+		Decoder decoder = Base64.getDecoder();
+		byte[] result = decoder.decode(photo);
+		if(result.length > fileSize) throw new CanNotSaveContact("업로드할 수 있는 파일 크기를 초과하였습니다.");
+		return result;
 	}
 }

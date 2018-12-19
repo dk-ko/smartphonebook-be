@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.soda.phonebook.common.CanNotFindCategory;
-import com.soda.phonebook.common.CanNotUpdateContact;
+import com.soda.phonebook.common.CanNotSaveContact;
 import com.soda.phonebook.domain.Category;
 import com.soda.phonebook.domain.Contact;
 import com.soda.phonebook.domain.Digit;
@@ -174,7 +174,7 @@ public class ContactService {
 		Contact findContact = findById(id);
 		
 		if(!(id == dto.getId())) 
-			throw new CanNotUpdateContact("id가 일치하지 않습니다.");
+			throw new CanNotSaveContact("id가 일치하지 않습니다.");
 		
 		log.info("* contact 의존성 없는 내용 수정");
 		findContact.updateContact(dto.toEntity(userService.getCurrentUser()));
@@ -205,7 +205,7 @@ public class ContactService {
 			deleteFavoritesToUser(user, findContact);
 			break;
 		case ME:
-			throw new CanNotUpdateContact("타입을 변경할 수 없습니다.");
+			throw new CanNotSaveContact("타입을 변경할 수 없습니다.");
 		}
 		log.info("* service return 전");	
 //		return true;

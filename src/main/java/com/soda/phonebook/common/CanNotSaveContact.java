@@ -1,13 +1,13 @@
 package com.soda.phonebook.common;
 
-public class CanNotUpdateContact extends RuntimeException{
+public class CanNotSaveContact extends RuntimeException{
 
 	private static final long serialVersionUID = 1211377727628790293L;
 
-	public CanNotUpdateContact(){
+	public CanNotSaveContact(){
 		super();
 	}
-	public CanNotUpdateContact(String string){
+	public CanNotSaveContact(String string){
 		super(string);
 	}
 }
