@@ -27,10 +27,10 @@ public class MvcConfiguration implements WebMvcConfigurer {
 		return resolver;
 	}
 
-//	@Override
-//	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-//		configurer.enable();
-//	}
+	@Override
+	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+		configurer.enable();
+	}
 //
 //	@Bean
 //	public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
