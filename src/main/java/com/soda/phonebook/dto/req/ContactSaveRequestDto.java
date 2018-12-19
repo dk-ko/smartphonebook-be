@@ -12,6 +12,7 @@ import javax.validation.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.soda.phonebook.common.CanNotSaveContact;
 import com.soda.phonebook.domain.Contact;
@@ -37,12 +38,14 @@ public class ContactSaveRequestDto {
 	private String name;
 	
 	private String memo = null;
-//	private byte[] photo = null;
+	
+//	@JsonInclude(JsonInclude.Include.NON_NULL)
+	private byte[] photo = null;
+//	@JsonInclude(JsonInclude.Include.NON_DEFAULT)
+//	private String photo = null;
 	
 	@JsonIgnore
 	private byte[] decoded = null;
-	
-	private String photo = null;
 	
 //	@JsonIgnore
 //	private MultipartFile photo = null;
@@ -57,9 +60,9 @@ public class ContactSaveRequestDto {
 	private List<AddressSaveRequestDto> addresses = new ArrayList<>();
 	
 	@Builder
-//	public ContactSaveRequestDto(ContactType type, String name, String memo, byte[] photo,
+	public ContactSaveRequestDto(ContactType type, String name, String memo, byte[] photo,
 //	public ContactSaveRequestDto(ContactType type, String name, String memo, MultipartFile photo,
-	public ContactSaveRequestDto(ContactType type, String name, String memo, String photo,
+//	public ContactSaveRequestDto(ContactType type, String name, String memo, String photo,
 			List<DigitSaveRequestDto> digits, List<UrlSaveRequestDto> urls,
 			List<EmailSaveRequestDto> emails,List<DateSaveRequestDto> dates,
 			List<AddressSaveRequestDto> addresses){
@@ -67,7 +70,8 @@ public class ContactSaveRequestDto {
 		this.name = name;
 		// nullable
 		this.memo = memo;
-		this.photo = photo;
+//		this.photo = photo;
+		this.photo = Optional.ofNullable(photo).orElse(this.photo);
 		
 		this.digits = Optional.ofNullable(digits).orElse(this.digits);
 		this.urls = Optional.ofNullable(urls).orElse(this.urls);
@@ -88,9 +92,19 @@ public class ContactSaveRequestDto {
 				.build();
 	}
 	
-	private byte[] photoDecoder(String photo) {
-		Decoder decoder = Base64.getDecoder();
-		byte[] result = decoder.decode(photo);
+	
+	private byte[] photoDecoder(byte[] photo) {
+////		Decoder decoder = Base64.getDecoder();
+////		Decoder decoder = Base64.getMimeDecoder();
+////		Decoder decoder = Base64.getUrlDecoder();
+////		byte[] result = Base64.getDecoder().decode(photo.toString());
+//		byte[] result = Base64.getDecoder().decode(photo);
+//		if(result.length > fileSize) throw new CanNotSaveContact("업로드할 수 있는 파일 크기를 초과하였습니다.");
+//		return result;
+//	}
+	
+//	private byte[] photoDecoder(String photo) {
+		byte[] result = Base64.getDecoder().decode(photo);
 		if(result.length > fileSize) throw new CanNotSaveContact("업로드할 수 있는 파일 크기를 초과하였습니다.");
 		return result;
 	}
