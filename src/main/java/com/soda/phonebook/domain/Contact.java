@@ -92,7 +92,6 @@ public class Contact extends BaseEntity {
 		this.name = name;
 		
 		this.memo = Optional.ofNullable(memo).orElse(this.memo);
-//		this.photo = Optional.ofNullable(photo).orElse(this.photo);
 		this.photo = Optional.ofNullable(photo).orElse(this.photo);
 		this.digits= Optional.ofNullable(digits).orElse(this.digits);
 		this.infoes = Optional.ofNullable(infoes).orElse(this.infoes);
@@ -124,8 +123,4 @@ public class Contact extends BaseEntity {
 		return this.photo != null ? "exist" : "none";
 	}
 	
-	//
-//	public String getPhotoName() {
-//		return this.photo.getOriginalFilename();
-//	}
 }

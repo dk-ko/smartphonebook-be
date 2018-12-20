@@ -21,7 +21,7 @@ public class MvcConfiguration implements WebMvcConfigurer {
 	public ViewResolver getViewResolver() {
 		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
 //		resolver.setPrefix("/templates/");
-		resolver.setPrefix("/static/");
+		resolver.setPrefix("/resources/static/");
 //		resolver.setPrefix("/");
 		resolver.setSuffix(".html");
 		return resolver;
@@ -31,13 +31,5 @@ public class MvcConfiguration implements WebMvcConfigurer {
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 		configurer.enable();
 	}
-//
-//	@Bean
-//	public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
-//		MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter();
-//		ObjectMapper objectMapper = new ObjectMapper();
-//		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-//		jsonConverter.setObjectMapper(objectMapper);
-//		return jsonConverter;
-//	}
+
 }

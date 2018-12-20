@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Base64;
 import java.util.Base64.Decoder;
+import java.util.Set;
+import java.util.HashSet;
 
 import javax.validation.constraints.NotEmpty;
 
@@ -56,6 +58,7 @@ public class ContactSaveRequestDto {
 	private List<EmailSaveRequestDto> emails = new ArrayList<>();
 	private List<DateSaveRequestDto> dates = new ArrayList<>();
 	private List<AddressSaveRequestDto> addresses = new ArrayList<>();
+	private Set<TagUpdateRequestDto> tags = new HashSet<>();
 	
 	@Builder
 //	public ContactSaveRequestDto(ContactType type, String name, String memo, byte[] photo,
@@ -63,7 +66,7 @@ public class ContactSaveRequestDto {
 	public ContactSaveRequestDto(ContactType type, String name, String memo, String photo,
 			List<DigitSaveRequestDto> digits, List<UrlSaveRequestDto> urls,
 			List<EmailSaveRequestDto> emails,List<DateSaveRequestDto> dates,
-			List<AddressSaveRequestDto> addresses){
+			List<AddressSaveRequestDto> addresses, Set<TagUpdateRequestDto> tags){
 		this.type = Optional.ofNullable(type).orElse(this.type);
 		this.name = name;
 		// nullable
@@ -76,6 +79,7 @@ public class ContactSaveRequestDto {
 		this.emails = Optional.ofNullable(emails).orElse(this.emails);
 		this.dates = Optional.ofNullable(dates).orElse(this.dates);
 		this.addresses = Optional.ofNullable(addresses).orElse(this.addresses);
+		this.tags = Optional.ofNullable(tags).orElse(this.tags);
 	}
 	
 	public Contact toEntity(User user) throws IOException{

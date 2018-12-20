@@ -1,6 +1,8 @@
 package com.soda.phonebook.controller;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.core.io.ByteArrayResource;
@@ -160,7 +162,8 @@ public class ContactController {
 		return ServletUriComponentsBuilder.fromCurrentContextPath()
 				.path("/api/contacts/")
 				.path(id.toString())
-				.path("/downloadFile")
+				.path("/downloadFile/")
+				.path(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd/HH-mm-ss")))
 				.toUriString();
 	}
 }

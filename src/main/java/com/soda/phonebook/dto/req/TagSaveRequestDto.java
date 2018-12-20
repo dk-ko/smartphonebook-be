@@ -13,7 +13,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-public class TagSaveRequestDto {
+public class TagSaveRequestDto { // Tag 생성, 삭제 시
 	
 	@NotEmpty
 	private String name;
