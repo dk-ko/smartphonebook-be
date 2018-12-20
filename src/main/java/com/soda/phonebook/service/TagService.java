@@ -68,7 +68,7 @@ public class TagService {
 		return tagRepository.save(tag) != null ? true : false;
 	}
 	
-	public boolean update(Long id, TagUpdateRequestDto dto) {
+	public boolean update(Long id, TagSaveRequestDto dto) {
 		Tag findTag = findById(id);
 		findTag.updateName(dto.getName());
 		return tagRepository.save(findTag) != null ? true : false;

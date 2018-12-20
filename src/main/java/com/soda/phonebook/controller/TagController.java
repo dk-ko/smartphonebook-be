@@ -62,7 +62,7 @@ public class TagController {
 	// tag 수정 - tag 이름 수정
 	@PutMapping("/{id}")
 	@ResponseStatus(value = HttpStatus.OK)
-	public boolean editTags(@PathVariable final Long id, @RequestBody final TagUpdateRequestDto dto) {
+	public boolean editTags(@PathVariable final Long id, @RequestBody final TagSaveRequestDto dto) {
 		return tagService.update(id, dto);
 	}
 }

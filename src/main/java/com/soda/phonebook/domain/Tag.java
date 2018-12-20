@@ -46,7 +46,8 @@ public class Tag extends BaseEntity{
 	
 	
 	@Builder
-	public Tag (String name, User user, Set<Contact> contacts){
+	public Tag (Long id, String name, User user, Set<Contact> contacts){
+		this.id = id;
 		this.name = name;
 		this.user = user;
 		

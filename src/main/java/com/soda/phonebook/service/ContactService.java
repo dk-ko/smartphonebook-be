@@ -2,6 +2,8 @@ package com.soda.phonebook.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +28,8 @@ import com.soda.phonebook.dto.req.DigitSaveRequestDto;
 import com.soda.phonebook.dto.req.DigitUpdateRequestDto;
 import com.soda.phonebook.dto.req.InfoSaveRequestDto;
 import com.soda.phonebook.dto.req.InfoUpdateRequestDto;
+import com.soda.phonebook.dto.req.TagSaveRequestDto;
+import com.soda.phonebook.dto.req.TagUpdateRequestDto;
 import com.soda.phonebook.dto.res.ContactListReadResponseDto;
 import com.soda.phonebook.dto.res.ContactResponseDto;
 import com.soda.phonebook.dto.res.DigitResponseDto;
@@ -137,6 +141,9 @@ public class ContactService {
 		addInfoToContact(contact, dto.getEmails());
 		addInfoToContact(contact, dto.getDates());
 		addInfoToContact(contact, dto.getAddresses());
+		
+		addTagToContact(contact, dto.getTags());
+		
 		log.info("* save 전");
 		contactRepository.save(contact);
 		log.info("* save 후");
@@ -149,14 +156,33 @@ public class ContactService {
 	}
 	
 	private void addDigitToContact(Contact contact, List<DigitSaveRequestDto> getDigits) {
-		for(DigitSaveRequestDto digitDto : getDigits) {
+		for(DigitSaveRequestDto digitDto : getDigits) 
 			contact.getDigits().add(digitDto.toEntity(contact, checkCategory(digitDto)));
-		}
 	}
 	
 	private <T extends InfoSaveRequestDto> void addInfoToContact(Contact contact, List<T> getInfoes) {
-		for(T infoDto : getInfoes) {
+		for(T infoDto : getInfoes) 
 			contact.getInfoes().add(infoDto.toEntity(contact, checkCategory(infoDto)));
+	}
+	
+	private void addTagToContact(Contact contact, Set<TagUpdateRequestDto> getTags) {
+		for(TagUpdateRequestDto tagDto : getTags) {
+			Tag findTag = tagService.findById(tagDto.getId());
+			contact.getTags().add(findTag);
+			findTag.getContacts().add(contact);
+		}
+	}
+	
+	private void deleteTagToContact(Contact contact) {
+		Iterator<Tag> it = contact.getTags().iterator();
+		
+		while(it.hasNext()) {
+			Tag tag = it.next();
+			
+			// tag에서 contact 제거 
+			tag.getContacts().remove(contact);
+			// contact에서 tag 제거 
+			it.remove();
 		}
 	}
 	
@@ -193,6 +219,11 @@ public class ContactService {
 		findContact.getInfoes().clear();
 		findContact.getInfoes().addAll(infoList);
 		
+		log.info("* contact tag 수정");
+		deleteTagToContact(findContact);
+		addTagToContact(findContact, dto.getTags());
+		
+		log.info("* contact save");
 		contactRepository.save(findContact);
 		
 		log.info("* contact favorite 수정");
