@@ -112,7 +112,7 @@ public class ContactController {
 	}
 	
 	// 사진 불러오기 
-	@GetMapping("/{id}/downloadFile")
+	@GetMapping("/{id}/downloadFile/{date}")
 	public ResponseEntity<Resource> downloadFile(@PathVariable Long id){
 		ContactResponseDto dto = contactService.getContacts(id);
 		byte[] file = dto.getPhoto();
@@ -163,7 +163,7 @@ public class ContactController {
 				.path("/api/contacts/")
 				.path(id.toString())
 				.path("/downloadFile/")
-				.path(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd/HH-mm-ss")))
+				.path(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss")))
 				.toUriString();
 	}
 }
