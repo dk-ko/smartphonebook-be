@@ -28,7 +28,7 @@ public class ContactResponseDto {
 //	@JsonIgnore
 //	private Mark photo;
 	
-	private String photoPath = null;
+	private String photoPath;
 	
 	private List<DigitResponseDto> digits = new ArrayList<>();
 	private List<InfoResponseDto> infoes = new ArrayList<>();

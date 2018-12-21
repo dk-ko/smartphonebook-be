@@ -63,8 +63,8 @@ public class ContactController {
 		log.info("* before service");
 		ContactResponseDto dto = contactService.getContacts(id);
 		log.info("* after service");
-//		if(dto.getPhoto() != Mark.N) dto.updatePhotoPath(makeDownloadUri(dto.getId()));
-		if(dto.getPhoto() != null) dto.updatePhotoPath(makeDownloadUri(dto.getId()));
+//		if(dto.getPhoto() != null) dto.updatePhotoPath(makeDownloadUri(dto.getId()));
+		if(dto.getPhoto().equals("".getBytes())) dto.updatePhotoPath(makeDownloadUri(dto.getId()));
 		return dto;
 	}
 	
@@ -85,7 +85,7 @@ public class ContactController {
 		Long savedContactId = contactService.create(dto);
 		log.info("* create 이후");
 		
-		if(dto.getPhoto() == null) return "saved";
+		if(dto.getPhoto().length() == 0) return "saved";
 		
 		String fileDownloadUri = makeDownloadUri(savedContactId);
 		log.info("* download uri 생성");
@@ -103,7 +103,7 @@ public class ContactController {
 		Long savedContactId = contactService.update(id, dto);
 		log.info("* update 이후");
 		
-		if(dto.getPhoto() == null) return "saved";
+		if(dto.getPhoto().length() == 0) return "saved";
 		
 		String fileDownloadUri = makeDownloadUri(savedContactId);
 		log.info("* download uri 생성");
