@@ -45,7 +45,7 @@ public class ContactSaveRequestDto {
 //	@JsonIgnore
 //	private byte[] photo = null;
 	
-	private String photo = null;
+	private String photo = "";
 	
 //	@JsonIgnore
 //	private MultipartFile photo = null;

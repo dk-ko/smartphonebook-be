@@ -58,6 +58,7 @@ public class ContactControllerTest {
 		Contact contact = Contact.builder()
 				.id(1l)
 				.name("테스트연락처")
+				.photo("".getBytes())
 				.build();
 		ContactResponseDto dto = new ContactResponseDto(contact);
 		ContactSaveRequestDto saveDto = ContactSaveRequestDto.builder()

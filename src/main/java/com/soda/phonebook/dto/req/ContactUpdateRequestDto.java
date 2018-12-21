@@ -47,7 +47,7 @@ public class ContactUpdateRequestDto {
 //	@JsonIgnore
 //	private byte[] decoded = null;
 	
-	private String photo = null;
+	private String photo = "";
 	
 //	private byte[] photo = null;
 //	@JsonIgnore
