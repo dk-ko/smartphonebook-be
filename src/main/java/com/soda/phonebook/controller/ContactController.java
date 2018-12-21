@@ -64,7 +64,7 @@ public class ContactController {
 		ContactResponseDto dto = contactService.getContacts(id);
 		log.info("* after service");
 //		if(dto.getPhoto() != null) dto.updatePhotoPath(makeDownloadUri(dto.getId()));
-		if(dto.getPhoto().equals("".getBytes())) dto.updatePhotoPath(makeDownloadUri(dto.getId()));
+		if(dto.getPhoto().length != 0) dto.updatePhotoPath(makeDownloadUri(dto.getId()));
 		return dto;
 	}
 	
