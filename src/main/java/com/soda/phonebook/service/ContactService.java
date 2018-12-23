@@ -36,6 +36,7 @@ import com.soda.phonebook.dto.res.DigitResponseDto;
 import com.soda.phonebook.dto.res.InfoResponseDto;
 import com.soda.phonebook.dto.res.TagResponseDto;
 import com.soda.phonebook.repository.ContactRepository;
+import com.soda.phonebook.repository.UserRepository;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -52,6 +53,7 @@ public class ContactService {
 	private final TagService tagService;
 	private final CategoryService categoryService;
 	
+	private final UserRepository userRepository;
 	
 	// read one
 	@Transactional(readOnly = true)
@@ -92,9 +94,11 @@ public class ContactService {
 	
 	// read all
 	@Transactional(readOnly = true)
-	public List<ContactListReadResponseDto> getAllContacts() {
+	public List<ContactListReadResponseDto> getAllContacts(User user) {
+//		log.info(userRepository.);
+		User findUser = userRepository.findById(user.getId()).get();
 		log.info("* repository 전");
-		List<Contact> findList = contactRepository.findAll();
+		List<Contact> findList = contactRepository.findAllByUser(findUser);
 		log.info("* repository 후");
 		List<ContactListReadResponseDto> dtoList = new ArrayList<>();
 		for(Contact contact : findList) {
