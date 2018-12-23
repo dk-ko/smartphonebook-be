@@ -6,12 +6,14 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.soda.phonebook.domain.User;
 import com.soda.phonebook.security.SessionConstants;
 
 @RestController
+@RequestMapping("/api")
 public class MainController {
 
     private HttpSession httpSession;
