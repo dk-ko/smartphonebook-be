@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
@@ -30,7 +32,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.soda.phonebook.dto.res.ContactListReadResponseDto;
 import com.soda.phonebook.dto.res.ContactResponseDto;
 import com.soda.phonebook.dto.res.TagResponseDto;
+import com.soda.phonebook.security.SessionConstants;
 import com.google.common.net.HttpHeaders;
+import com.soda.phonebook.domain.User;
 import com.soda.phonebook.domain.VO.Mark;
 import com.soda.phonebook.dto.req.ContactSaveRequestDto;
 import com.soda.phonebook.dto.req.ContactUpdateRequestDto;
@@ -48,12 +52,14 @@ import lombok.extern.slf4j.Slf4j;
 public class ContactController {
 	
 	private final ContactService contactService;
+	private HttpServletRequest request;
 	
 	@GetMapping(path = {"/", ""})
 	@ResponseBody
 	@ResponseStatus(value = HttpStatus.OK)
-	public List<ContactListReadResponseDto> getAllContacts() {
-		return contactService.getAllContacts();
+	public List<ContactListReadResponseDto> getAllContacts(HttpServletRequest request) {
+		User currentUser = (User) request.getAttribute(SessionConstants.LOGIN_USER);
+		return contactService.getAllContacts(currentUser);
 	}
 	
 	@GetMapping("/{id}")

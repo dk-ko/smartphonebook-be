@@ -10,6 +10,7 @@ import com.soda.phonebook.domain.Contact;
 import com.soda.phonebook.domain.User;
 import com.soda.phonebook.dto.res.ContactListReadResponseDto;
 import com.soda.phonebook.repository.UserRepository;
+import com.soda.phonebook.security.GoogleUser;
 
 import lombok.AllArgsConstructor;
 
@@ -19,6 +20,7 @@ import lombok.AllArgsConstructor;
 public class UserService {
 	
 	private final UserRepository userRepository;
+//	private final ContactService contactService;
 	
 	// test
 	public User testUser() {
@@ -54,5 +56,10 @@ public class UserService {
 	private User findById(Long id) {
 		return userRepository.findById(id)
 				.orElseThrow(()->new IllegalArgumentException("findById error : wrong id")); 
+	}
+	
+	public void createUser(GoogleUser googleUser) {
+		
+//		User savedUser = userRepository.save(entity);
 	}
 }

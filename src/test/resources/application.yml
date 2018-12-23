@@ -8,6 +8,9 @@ spring:
 spring.profiles: local
 spring.profiles.include: common
 
+server:
+  port: 8085
+
 spring:    
   jpa:
     show-sql: true

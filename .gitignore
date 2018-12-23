@@ -169,3 +169,6 @@ gradle-app.setting
 
 *.out
 *.bak
+
+# 인증 정보 
+/src/main/resources/google.yml

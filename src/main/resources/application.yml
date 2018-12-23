@@ -37,6 +37,7 @@ spring:
       max-file-size: 3MB
       max-request-size: 3MB
       file-size-threshold: 1MB
+      
 
 # local 환경
 ---
