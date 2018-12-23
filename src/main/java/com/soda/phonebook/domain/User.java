@@ -1,5 +1,6 @@
 package com.soda.phonebook.domain;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -27,10 +28,18 @@ import lombok.NoArgsConstructor;
 @AttributeOverride(name="id", column=@Column(name="user_id"))
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class User extends BaseEntity{
+public class User extends BaseEntity implements Serializable{
+	
+	private static final long serialVersionUID = 6312104514380193520L;
+
+	@Column(name="email", nullable=false, unique=true)
+	private String email;
 	
 	@Column(name="name", nullable=false)
 	private String name;
+	
+	@Column(name="role", nullable=false)
+	private String role;
 	
 	
 	@JsonIgnore
@@ -66,8 +75,11 @@ public class User extends BaseEntity{
 	
 	
 	@Builder
-	public User(String name, Set<Contact> contacts, Set<Tag> tags,
+	public User(String email, String role, String name, 
+					Set<Contact> contacts, Set<Tag> tags,
 					Set<Category> categories, Set<Contact> favorites) {
+		this.email = email;
+		this.role = role;
 		this.name = name;
 		
 		this.contacts = Optional.ofNullable(contacts).orElse(this.contacts);
@@ -79,5 +91,9 @@ public class User extends BaseEntity{
 	
 	public void updateName(String name) {
 		this.name = name;
+	}
+	
+	public void updateRole(String role) {
+		this.role = role;
 	}
 }

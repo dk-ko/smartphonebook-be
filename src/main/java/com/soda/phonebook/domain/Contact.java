@@ -1,5 +1,6 @@
 package com.soda.phonebook.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -37,8 +38,10 @@ import lombok.NoArgsConstructor;
 @AttributeOverride(name="id", column=@Column(name="contact_id"))
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Contact extends BaseEntity {
+public class Contact extends BaseEntity implements Serializable{
 	
+	private static final long serialVersionUID = 6097304999563349306L;
+
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name="user_id", 
 				foreignKey = @ForeignKey(name="fk_contact_user"),

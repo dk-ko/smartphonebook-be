@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.soda.phonebook.domain.User;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,4 +23,10 @@ public class GoogleUser implements Serializable {
     @JsonProperty("picture")
     private String picture;
 
+    public User toEntity() {
+    		return User.builder()
+    				.email(this.email)
+    				.name(this.name)
+    				.build();
+    }
 }
