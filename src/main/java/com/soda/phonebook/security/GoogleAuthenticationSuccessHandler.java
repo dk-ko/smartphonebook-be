@@ -34,7 +34,7 @@ public class GoogleAuthenticationSuccessHandler implements AuthenticationSuccess
 	private UserRepository userRepository;
 	private ContactRepository contactRepository;
 	
-	public GoogleAuthenticationSuccessHandler(HttpSession httpSession, ObjectMapper objectMapper, UserRepository userRepository, ContactRepository contactRepository) {//, UserRepository userRepository, UserRoleRepository userRoleRepository) {
+	public GoogleAuthenticationSuccessHandler(HttpSession httpSession, ObjectMapper objectMapper, UserRepository userRepository, ContactRepository contactRepository) {
         this.httpSession = httpSession;
         this.objectMapper = objectMapper;
         this.userRepository = userRepository;
@@ -43,14 +43,14 @@ public class GoogleAuthenticationSuccessHandler implements AuthenticationSuccess
 	
 	@Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-//        httpSession.setAttribute(SessionConstants.LOGIN_USER, getUser(getGoogleUser(authentication)));
+
         httpSession.setAttribute(SessionConstants.LOGIN_USER, getUser(getGoogleUser(authentication)));
         
         SecurityContextHolder.getContext().setAuthentication(authentication);
         httpSession.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
         
         httpSession.setMaxInactiveInterval(60*30);
-        response.sendRedirect("/me");
+        response.sendRedirect("/");
     }
 	
 	private GoogleUser getGoogleUser(Authentication authentication) { 
