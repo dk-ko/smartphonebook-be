@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.soda.phonebook.dto.res.ContactListReadResponseDto;
-//import com.soda.phonebook.security.GoogleUser;
-//import com.soda.phonebook.security.SessionConstants;
+import com.soda.phonebook.security.GoogleUser;
+import com.soda.phonebook.security.SessionConstants;
 import com.soda.phonebook.service.UserService;
 
 import lombok.AllArgsConstructor;

@@ -32,7 +32,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.soda.phonebook.dto.res.ContactListReadResponseDto;
 import com.soda.phonebook.dto.res.ContactResponseDto;
 import com.soda.phonebook.dto.res.TagResponseDto;
-//import com.soda.phonebook.security.SessionConstants;
+import com.soda.phonebook.security.SessionConstants;
 import com.google.common.net.HttpHeaders;
 import com.soda.phonebook.domain.User;
 import com.soda.phonebook.domain.VO.Mark;

@@ -12,7 +12,7 @@ public class Application {
 	public static final String APPLICATION_LOCATIONS=
 			"spring.config.location="
 			+ "classpath:application.yml,"
-			+ "classpath:google.yml,"
+			+ "/app/config/soda/google.yml,"
 			+ "/app/config/soda/real-application.yml";
 	
 
