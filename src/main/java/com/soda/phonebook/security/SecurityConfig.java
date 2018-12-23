@@ -26,7 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     		http.antMatcher("/**")
     		
     		.authorizeRequests()
-    			.antMatchers("/", "/h2/**", "/favicon.ico", "/swagger-ui.html**/**", "/api/login**")
+    			.antMatchers("/", "/#/", "/h2/**", "/favicon.ico", "/swagger-ui.html**/**", "/api/login**")
         			.permitAll()
         		.antMatchers(HttpMethod.OPTIONS, "/**")
         			.permitAll()
@@ -37,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         
         .and().logout()
         		.logoutRequestMatcher(new AntPathRequestMatcher("/api/logout_processing"))
-        		.logoutSuccessUrl("/")
+        		.logoutSuccessUrl("/#/")
         			.permitAll()
         		.invalidateHttpSession(true)
         		
