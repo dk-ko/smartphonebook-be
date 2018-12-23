@@ -33,18 +33,19 @@ public class CategoryService {
 	private final InfoService<Info> infoService;
 	
 	@Transactional(readOnly = true)
-	public Set<CategoryResponseDto> findByType(DataType type){
-		User user = userService.getCurrentUser();
+	public Set<CategoryResponseDto> findByType(DataType type, User user){
+//		User user = userService.getCurrentUser();
+		User findUser = userService.findByEmail(user.getEmail());
 		
-		Set<Category> findCategories = categoryRepository.findByType(user, type);
+		Set<Category> findCategories = categoryRepository.findByType(findUser, type);
 		Set<CategoryResponseDto> dtoList = new LinkedHashSet<>();
 		for(Category category : findCategories)
 			dtoList.add(new CategoryResponseDto(category));
 		return dtoList;
 	}
 	
-	public CategoryResponseDto create(CategorySaveRequestDto dto) {
-		Category category = dto.toEntity(userService.getCurrentUser());
+	public CategoryResponseDto create(CategorySaveRequestDto dto, User user) {
+		Category category = dto.toEntity(userService.findByEmail(user.getEmail()));
 		
 		return new CategoryResponseDto(categoryRepository.save(category));
 	}

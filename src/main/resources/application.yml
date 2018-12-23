@@ -38,6 +38,10 @@ spring:
       max-request-size: 3MB
       file-size-threshold: 1MB
       
+  mustache:
+    #expose-request-attributes : true
+    expose-session-attributes: true
+      
 
 # local 환경
 ---

@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,7 +39,6 @@ import com.soda.phonebook.dto.res.DigitResponseDto;
 import com.soda.phonebook.dto.res.InfoResponseDto;
 import com.soda.phonebook.dto.res.TagResponseDto;
 import com.soda.phonebook.repository.ContactRepository;
-import com.soda.phonebook.repository.UserRepository;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -52,8 +54,6 @@ public class ContactService {
 	private final UserService userService;
 	private final TagService tagService;
 	private final CategoryService categoryService;
-	
-	private final UserRepository userRepository;
 	
 	// read one
 	@Transactional(readOnly = true)
@@ -94,13 +94,15 @@ public class ContactService {
 	
 	// read all
 	@Transactional(readOnly = true)
-//	public List<ContactListReadResponseDto> getAllContacts(User user) {
-	public List<ContactListReadResponseDto> getAllContacts() {
-//		log.info(userRepository.);
-//		User findUser = userRepository.findById(user.getId()).get();
-		log.info("* repository 전");
-//		List<Contact> findList = contactRepository.findAllByUser(findUser);
-		List<Contact> findList = contactRepository.findAll();
+	public List<ContactListReadResponseDto> getAllContacts(User user) {
+//	public List<ContactListReadResponseDto> getAllContacts() {
+		
+		log.info("* userService.findById");
+		User findUser = userService.findByEmail(user.getEmail());
+		
+		log.info("* contact repository 전");
+		List<Contact> findList = contactRepository.findAllByUser(findUser);
+
 		log.info("* repository 후");
 		List<ContactListReadResponseDto> dtoList = new ArrayList<>();
 		for(Contact contact : findList) {
@@ -114,11 +116,12 @@ public class ContactService {
 	}
 	
 	// delete
-	public void delete(Long id) {
+	public void delete(Long id, User user) {
 		Contact findContact = findById(id);
+		User findUser = userService.findByEmail(user.getEmail());
 		
 		removeContactFromTag(id, findContact);
-		deleteFavoritesToUser(userService.getCurrentUser(), findContact);
+		deleteFavoritesToUser(findUser, findContact);
 		
 		contactRepository.deleteById(id);
 	}
@@ -137,9 +140,11 @@ public class ContactService {
 	
 	// create
 //	public boolean create(ContactSaveRequestDto dto) throws IOException {
-	public Long create(ContactSaveRequestDto dto) throws IOException {
+	public Long create(ContactSaveRequestDto dto, User user) throws IOException {
 		log.info("* contactservice create");
-		Contact contact = dto.toEntity(userService.getCurrentUser());
+		User findUser = userService.findByEmail(user.getEmail());
+		
+		Contact contact = dto.toEntity(findUser);
 		log.info("* dto.toEntity 후");
 		addDigitToContact(contact, dto.getDigits());
 
@@ -154,8 +159,8 @@ public class ContactService {
 		contactRepository.save(contact);
 		log.info("* save 후");
 		if(contact.getType()==ContactType.FAVORITED) {
-			User user = userService.getCurrentUser();
-			user.getFavorites().add(contact);
+//			User user = userService.getCurrentUser();
+			findUser.getFavorites().add(contact);
 		}
 //		return true;
 		return contact.getId();
@@ -201,15 +206,16 @@ public class ContactService {
 	
 	// edit 
 //	public boolean update(Long id, ContactUpdateRequestDto dto) {
-	public Long update(Long id, ContactUpdateRequestDto dto) throws IOException {
+	public Long update(Long id, ContactUpdateRequestDto dto, User user) throws IOException {
 		
 		Contact findContact = findById(id);
+		User findUser = userService.findByEmail(user.getEmail());
 		
 		if(!(id == dto.getId())) 
 			throw new CanNotSaveContact("id가 일치하지 않습니다.");
 		
 		log.info("* contact 의존성 없는 내용 수정");
-		findContact.updateContact(dto.toEntity(userService.getCurrentUser()));
+		findContact.updateContact(dto.toEntity(findUser));
 		
 		log.info("* contact digit 수정");
 		List<Digit> digitList = dtoToDigitList(findContact, dto.getDigits());
@@ -233,13 +239,13 @@ public class ContactService {
 		contactRepository.save(findContact);
 		
 		log.info("* contact favorite 수정");
-		User user = userService.getCurrentUser();
+//		User user = userService.getCurrentUser();
 		switch(dto.getType()) {
 		case FAVORITED:
-			addFavoritesToUser(user, findContact);
+			addFavoritesToUser(findUser, findContact);
 			break;
 		case DEFAULT:
-			deleteFavoritesToUser(user, findContact);
+			deleteFavoritesToUser(findUser, findContact);
 			break;
 		case ME:
 			throw new CanNotSaveContact("타입을 변경할 수 없습니다.");
@@ -300,18 +306,19 @@ public class ContactService {
 		return dtoList;
 	}
 	
-	public boolean addToFavorites(Long id) {
-		User user = userService.getCurrentUser();
+	public boolean addToFavorites(Long id, User user) {
+//		User user = userService.getCurrentUser();
+		User findUser = userService.findByEmail(user.getEmail());
 		Contact findContact = findById(id);
 		
-		return addFavoritesToUser(user, findContact);
+		return addFavoritesToUser(findUser, findContact);
 	}
 	
-	public boolean deleteToFavorites(Long id) {
-		User user = userService.getCurrentUser();
+	public boolean deleteToFavorites(Long id, User user) {
+		User findUser = userService.findByEmail(user.getEmail());
 		Contact findContact = findById(id);
 		
-		return deleteFavoritesToUser(user, findContact);
+		return deleteFavoritesToUser(findUser, findContact);
 	}
 	
 	private boolean addFavoritesToUser(User user, Contact contact) {
