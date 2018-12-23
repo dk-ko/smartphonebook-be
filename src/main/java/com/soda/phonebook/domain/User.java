@@ -96,4 +96,15 @@ public class User extends BaseEntity implements Serializable{
 	public void updateRole(String role) {
 		this.role = role;
 	}
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder()
+				.append("user id: %d")
+				.append(" name: %s")
+				.append(" role: %s")
+				.append(" email: %s").append(this.email).append("\n");
+				
+		return String.format(builder.toString(), this.id, this.name, this.role, this.email);
+	}
 }

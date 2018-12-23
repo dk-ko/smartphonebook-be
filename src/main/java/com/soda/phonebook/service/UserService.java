@@ -11,6 +11,7 @@ import com.soda.phonebook.domain.User;
 import com.soda.phonebook.dto.res.ContactListReadResponseDto;
 import com.soda.phonebook.repository.UserRepository;
 import com.soda.phonebook.security.GoogleUser;
+import com.soda.phonebook.security.SessionConstants;
 
 import lombok.AllArgsConstructor;
 
@@ -20,8 +21,8 @@ import lombok.AllArgsConstructor;
 public class UserService {
 	
 	private final UserRepository userRepository;
-//	private final ContactService contactService;
-	
+
+	/*
 	// test
 	public User testUser() {
 		User findUser = userRepository.findByName("테스트유저");
@@ -37,6 +38,7 @@ public class UserService {
 		User savedUser = testUser();
 		return savedUser;
 	}
+	*/
 	
 	public User save(User user) {
 		return userRepository.save(user);
@@ -58,8 +60,21 @@ public class UserService {
 				.orElseThrow(()->new IllegalArgumentException("findById error : wrong id")); 
 	}
 	
-	public void createUser(GoogleUser googleUser) {
-		
-//		User savedUser = userRepository.save(entity);
+	public User findByEmail(String email) {
+		return userRepository.findByEmail(email);
 	}
+	
+	/*
+	@Transactional
+    public User getOrSave(GoogleUser google){
+        User savedUser = userRepository.findByEmail(google.getEmail());
+
+        if(savedUser == null){
+            User newUser = google.toEntity();
+            newUser.updateRole(SessionConstants.LOGIN_USER);;
+            savedUser = userRepository.save(newUser);
+        }
+
+        return savedUser;
+    }*/
 }

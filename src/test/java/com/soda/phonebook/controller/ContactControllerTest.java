@@ -11,8 +11,10 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import com.google.gson.Gson;
 import com.soda.phonebook.domain.Contact;
+import com.soda.phonebook.domain.User;
 import com.soda.phonebook.dto.req.ContactSaveRequestDto;
 import com.soda.phonebook.dto.res.ContactResponseDto;
+import com.soda.phonebook.security.SessionConstants;
 import com.soda.phonebook.service.ContactService;
 
 import static org.mockito.BDDMockito.given;
@@ -55,6 +57,11 @@ public class ContactControllerTest {
 	@Test
 	public void test_ContactController에서Get으로Contact조회() throws Exception {
 		
+		User user = User.builder()
+				.email("test@test.com")
+				.name("테스트유저")
+				.role(SessionConstants.LOGIN_USER).build();
+				
 		Contact contact = Contact.builder()
 				.id(1l)
 				.name("테스트연락처")
@@ -65,7 +72,7 @@ public class ContactControllerTest {
 				.type(contact.getType())
 				.name(contact.getName())
 				.memo(contact.getMemo()).build();
-		contactService.create(saveDto);
+		contactService.create(saveDto, user);
 		
 		given(contactService.getContacts(1l))
 			.willReturn(dto);
