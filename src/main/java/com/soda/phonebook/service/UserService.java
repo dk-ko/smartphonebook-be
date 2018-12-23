@@ -10,7 +10,7 @@ import com.soda.phonebook.domain.Contact;
 import com.soda.phonebook.domain.User;
 import com.soda.phonebook.dto.res.ContactListReadResponseDto;
 import com.soda.phonebook.repository.UserRepository;
-import com.soda.phonebook.security.GoogleUser;
+//import com.soda.phonebook.security.GoogleUser;
 
 import lombok.AllArgsConstructor;
 
@@ -58,8 +58,8 @@ public class UserService {
 				.orElseThrow(()->new IllegalArgumentException("findById error : wrong id")); 
 	}
 	
-	public void createUser(GoogleUser googleUser) {
+//	public void createUser(GoogleUser googleUser) {
 		
 //		User savedUser = userRepository.save(entity);
-	}
+//	}
 }

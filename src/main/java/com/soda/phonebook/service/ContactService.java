@@ -94,11 +94,13 @@ public class ContactService {
 	
 	// read all
 	@Transactional(readOnly = true)
-	public List<ContactListReadResponseDto> getAllContacts(User user) {
+//	public List<ContactListReadResponseDto> getAllContacts(User user) {
+	public List<ContactListReadResponseDto> getAllContacts() {
 //		log.info(userRepository.);
-		User findUser = userRepository.findById(user.getId()).get();
+//		User findUser = userRepository.findById(user.getId()).get();
 		log.info("* repository 전");
-		List<Contact> findList = contactRepository.findAllByUser(findUser);
+//		List<Contact> findList = contactRepository.findAllByUser(findUser);
+		List<Contact> findList = contactRepository.findAll();
 		log.info("* repository 후");
 		List<ContactListReadResponseDto> dtoList = new ArrayList<>();
 		for(Contact contact : findList) {
