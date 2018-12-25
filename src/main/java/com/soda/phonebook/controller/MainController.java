@@ -2,14 +2,16 @@ package com.soda.phonebook.controller;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.soda.phonebook.common.AuthenticationException;
 import com.soda.phonebook.domain.User;
 import com.soda.phonebook.security.SessionConstants;
 
-@RestController
+@Controller
 @RequestMapping("/api")
 public class MainController {
 
@@ -30,4 +32,11 @@ public class MainController {
         			.toString();
     }
 
+    @GetMapping("/isAuth")
+    public String isAuth() {
+    		User user = (User)httpSession.getAttribute(SessionConstants.LOGIN_USER);
+//    		if(user == null) return "redirect:/#/";
+    		if(user == null) throw new AuthenticationException("로그인에 실패했습니다.");
+    		return "redirect:/#/list";
+    }
 }
