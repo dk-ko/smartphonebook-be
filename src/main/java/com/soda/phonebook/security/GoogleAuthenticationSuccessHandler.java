@@ -58,8 +58,8 @@ public class GoogleAuthenticationSuccessHandler implements AuthenticationSuccess
         httpSession.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
         
         httpSession.setMaxInactiveInterval(60*60);
-        response.sendRedirect("/#/list");
-//        response.sendRedirect("/api/isAuth");
+//        response.sendRedirect("/#/list");
+        response.sendRedirect("/api/isAuth");
     }
 	
 	private GoogleUser getGoogleUser(Authentication authentication) { 
@@ -79,10 +79,10 @@ public class GoogleAuthenticationSuccessHandler implements AuthenticationSuccess
             savedUser = userRepository.save(newUser);
             
             log.info("* default tag create");
-//            createDafaultTag(savedUser);
+            createDafaultTag(savedUser);
             
             log.info(" default category create");
-//            createDefaultCategory(savedUser);
+            createDefaultCategory(savedUser);
             
             Contact defaultContact = Contact.builder()
             		.user(savedUser)
