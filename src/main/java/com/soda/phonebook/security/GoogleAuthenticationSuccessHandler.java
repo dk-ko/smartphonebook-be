@@ -102,33 +102,60 @@ public class GoogleAuthenticationSuccessHandler implements AuthenticationSuccess
     }
 	
 	private void createDafaultTag(User user) {
-		tagRepository.save(Tag.builder().name("가족").user(user).build());
-        tagRepository.save(Tag.builder().name("친구").user(user).build());
-        tagRepository.save(Tag.builder().name("학교").user(user).build());
-        tagRepository.save(Tag.builder().name("직장").user(user).build());
+		Tag tag1 = Tag.builder().name("가족").user(user).build();
+		Tag tag2 = Tag.builder().name("친구").user(user).build();
+        Tag tag3 = Tag.builder().name("학교").user(user).build();
+        Tag tag4 = Tag.builder().name("직장").user(user).build();
+        
+        tagRepository.save(tag1);
+        tagRepository.save(tag2);
+        tagRepository.save(tag3);
+        tagRepository.save(tag4);
 	}
 	
 	private void createDefaultCategory(User user) {
-		categoryRepository.save(Category.builder().type(DataType.DIGIT).name("휴대전화").user(user).build());
-		categoryRepository.save(Category.builder().type(DataType.DIGIT).name("집").user(user).build());
-		categoryRepository.save(Category.builder().type(DataType.DIGIT).name("직장").user(user).build());
-		categoryRepository.save(Category.builder().type(DataType.DIGIT).name("팩스").user(user).build());
-		categoryRepository.save(Category.builder().type(DataType.DIGIT).name("기타").user(user).build());
+		Category digit1 = Category.builder().type(DataType.DIGIT).name("휴대전화").user(user).build();
+		Category digit2 = Category.builder().type(DataType.DIGIT).name("집").user(user).build();
+		Category digit3 = Category.builder().type(DataType.DIGIT).name("직장").user(user).build();
+		Category digit4 = Category.builder().type(DataType.DIGIT).name("팩스").user(user).build();
+		Category digit5 = Category.builder().type(DataType.DIGIT).name("기타").user(user).build();
 		
-		categoryRepository.save(Category.builder().type(DataType.URL).name("개인").user(user).build());
-		categoryRepository.save(Category.builder().type(DataType.URL).name("직장").user(user).build());
-		categoryRepository.save(Category.builder().type(DataType.URL).name("기타").user(user).build());
+		categoryRepository.save(digit1);
+		categoryRepository.save(digit2);
+		categoryRepository.save(digit3);
+		categoryRepository.save(digit4);
+		categoryRepository.save(digit5);
 		
-		categoryRepository.save(Category.builder().type(DataType.EMAIL).name("개인").user(user).build());
-		categoryRepository.save(Category.builder().type(DataType.EMAIL).name("직장").user(user).build());
-		categoryRepository.save(Category.builder().type(DataType.EMAIL).name("기타").user(user).build());
+		Category url1 = Category.builder().type(DataType.URL).name("개인").user(user).build();
+		Category url2 = Category.builder().type(DataType.URL).name("직장").user(user).build();
+		Category url3 = Category.builder().type(DataType.URL).name("기타").user(user).build();
 		
-		categoryRepository.save(Category.builder().type(DataType.DATE).name("생일").user(user).build());
-		categoryRepository.save(Category.builder().type(DataType.DATE).name("기념일").user(user).build());
-		categoryRepository.save(Category.builder().type(DataType.DATE).name("기타").user(user).build());
+		categoryRepository.save(url1);
+		categoryRepository.save(url2);
+		categoryRepository.save(url3);
 		
-		categoryRepository.save(Category.builder().type(DataType.ADDRESS).name("집").user(user).build());
-		categoryRepository.save(Category.builder().type(DataType.ADDRESS).name("직장").user(user).build());
-		categoryRepository.save(Category.builder().type(DataType.ADDRESS).name("기타").user(user).build());
+		Category email1 = Category.builder().type(DataType.EMAIL).name("개인").user(user).build();
+		Category email2 = Category.builder().type(DataType.EMAIL).name("직장").user(user).build();
+		Category email3 = Category.builder().type(DataType.EMAIL).name("기타").user(user).build();
+		
+		categoryRepository.save(email1);
+		categoryRepository.save(email2);
+		categoryRepository.save(email3);
+		
+		Category date1 = Category.builder().type(DataType.DATE).name("생일").user(user).build();
+		Category date2 = Category.builder().type(DataType.DATE).name("기념일").user(user).build();
+		Category date3 = Category.builder().type(DataType.DATE).name("기타").user(user).build();
+		
+		categoryRepository.save(date1);
+		categoryRepository.save(date2);
+		categoryRepository.save(date3);
+		
+		Category address1 = Category.builder().type(DataType.ADDRESS).name("집").user(user).build();
+		Category address2 = Category.builder().type(DataType.ADDRESS).name("직장").user(user).build();
+		Category address3 = Category.builder().type(DataType.ADDRESS).name("기타").user(user).build();
+		
+		categoryRepository.save(address1);
+		categoryRepository.save(address2);
+		categoryRepository.save(address3);
 	}
 }
