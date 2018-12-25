@@ -253,7 +253,8 @@ public class ContactService {
 			deleteFavoritesToUser(findUser, findContact);
 			break;
 		case ME:
-			throw new CanNotSaveContact("타입을 변경할 수 없습니다.");
+//			throw new CanNotSaveContact("타입을 변경할 수 없습니다.");
+			break;
 		}
 		log.info("* service return 전");	
 //		return true;
