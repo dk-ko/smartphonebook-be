@@ -45,8 +45,8 @@ public class MainController {
     		User user = (User)httpSession.getAttribute(SessionConstants.LOGIN_USER);
     		
     		if(user == null) throw new AuthenticationException("로그인에 실패했습니다.");
-    		log.info("* default tag create");
-    		tagService.createDafaultTag(HttpSessionUtils.getUserFromSession(session));
+//    		log.info("* default tag create");
+//    		tagService.createDafaultTag(HttpSessionUtils.getUserFromSession(session));
     		log.info("* default category create");
     		categoryService.createDefaultCategory(HttpSessionUtils.getUserFromSession(session));
     		
