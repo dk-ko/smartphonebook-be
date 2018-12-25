@@ -28,9 +28,6 @@ public class MainController {
     private TagService tagService;
     private CategoryService categoryService;
 
-    public MainController(HttpSession httpSession) {
-        this.httpSession = httpSession;
-    }
     
     @GetMapping("/me")
     public String me(){
