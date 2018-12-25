@@ -50,7 +50,7 @@ public class GoogleAuthenticationSuccessHandler implements AuthenticationSuccess
         httpSession.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
         
         httpSession.setMaxInactiveInterval(60*30);
-        response.sendRedirect("/#/list");
+        response.sendRedirect("/#/");
     }
 	
 	private GoogleUser getGoogleUser(Authentication authentication) { 

@@ -45,7 +45,7 @@ public class UserService {
 	}
 	
 	@Transactional(readOnly = true)
-	public List<ContactListReadResponseDto> getFavorites(Long id, User user) {
+	public List<ContactListReadResponseDto> getFavorites(User user) {
 		User findUser = findByEmail(user.getEmail());
 		
 		List<ContactListReadResponseDto> favorites = new ArrayList<>();
