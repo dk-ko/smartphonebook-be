@@ -39,7 +39,7 @@ public class MainController {
         			.append(user.getEmail())
         			.toString();
     }
-
+/*
     @GetMapping("/isAuth")
     public String isAuth(HttpSession session) {
     		User user = (User)httpSession.getAttribute(SessionConstants.LOGIN_USER);
@@ -51,5 +51,5 @@ public class MainController {
     		categoryService.createDefaultCategory(HttpSessionUtils.getUserFromSession(session));
     		
     		return "redirect:/#/list";
-    }
+    }*/
 }
