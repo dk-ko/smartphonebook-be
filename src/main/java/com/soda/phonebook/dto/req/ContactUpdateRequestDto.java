@@ -106,4 +106,8 @@ public class ContactUpdateRequestDto {
 		if(result.length > fileSize) throw new CanNotSaveContact("업로드할 수 있는 파일 크기를 초과하였습니다.");
 		return result;
 	}
+	
+	public byte[] getPhotoValue() {
+		return photoDecoder(this.photo);
+	}
 }

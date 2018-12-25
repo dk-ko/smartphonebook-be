@@ -222,6 +222,9 @@ public class ContactService {
 		log.info("* contact 의존성 없는 내용 수정");
 		findContact.updateContact(dto.toEntity(findUser));
 		
+		if(!(dto.getPhoto().length() == 0 && findContact.getPhoto().length != 0))
+			findContact.updatePhoto(dto.getPhotoValue());
+		
 		log.info("* contact digit 수정");
 		List<Digit> digitList = dtoToDigitList(findContact, dto.getDigits());
 		findContact.getDigits().clear();

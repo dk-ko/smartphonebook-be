@@ -105,7 +105,7 @@ public class Contact extends BaseEntity implements Serializable{
 		this.type = contact.type;
 		this.name = contact.name;
 		this.memo = contact.memo;
-		this.photo = contact.photo;
+//		this.photo = contact.photo;
 	}
 	
 	public void updateType(ContactType type) {
@@ -124,6 +124,10 @@ public class Contact extends BaseEntity implements Serializable{
 	
 	private String withPhoto() {
 		return this.photo != null ? "exist" : "none";
+	}
+	
+	public void updatePhoto(byte[] photo) {
+		this.photo = photo;
 	}
 	
 }
