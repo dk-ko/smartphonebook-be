@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.soda.phonebook.common.CanNotDeleteContact;
 import com.soda.phonebook.common.CanNotFindCategory;
 import com.soda.phonebook.common.CanNotSaveContact;
 import com.soda.phonebook.domain.Category;
@@ -118,6 +119,10 @@ public class ContactService {
 	// delete
 	public void delete(Long id, User user) {
 		Contact findContact = findById(id);
+		
+		if(findContact.getType() == ContactType.ME)
+			throw new CanNotDeleteContact("삭제할 수 없습니다.");
+		
 		User findUser = userService.findByEmail(user.getEmail());
 		
 		removeContactFromTag(id, findContact);
