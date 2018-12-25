@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.soda.phonebook.common.AuthenticationException;
 import com.soda.phonebook.domain.User;
@@ -37,6 +38,8 @@ public class MainController {
     		User user = (User)httpSession.getAttribute(SessionConstants.LOGIN_USER);
 //    		if(user == null) return "redirect:/#/";
     		if(user == null) throw new AuthenticationException("로그인에 실패했습니다.");
+//    		ModelAndView model;
+//    		model.setViewName(viewName);
     		return "redirect:/#/list";
     }
 }
