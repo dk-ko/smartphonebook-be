@@ -9,14 +9,24 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.soda.phonebook.common.AuthenticationException;
+import com.soda.phonebook.common.HttpSessionUtils;
 import com.soda.phonebook.domain.User;
 import com.soda.phonebook.security.SessionConstants;
+import com.soda.phonebook.service.CategoryService;
+import com.soda.phonebook.service.TagService;
 
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@AllArgsConstructor
 @Controller
 @RequestMapping("/api")
 public class MainController {
 
     private HttpSession httpSession;
+    private TagService tagService;
+    private CategoryService categoryService;
 
     public MainController(HttpSession httpSession) {
         this.httpSession = httpSession;
@@ -34,12 +44,15 @@ public class MainController {
     }
 
     @GetMapping("/isAuth")
-    public String isAuth() {
+    public String isAuth(HttpSession session) {
     		User user = (User)httpSession.getAttribute(SessionConstants.LOGIN_USER);
-//    		if(user == null) return "redirect:/#/";
+    		
     		if(user == null) throw new AuthenticationException("로그인에 실패했습니다.");
-//    		ModelAndView model;
-//    		model.setViewName(viewName);
+    		log.info("* default tag create");
+    		tagService.createDafaultTag(HttpSessionUtils.getUserFromSession(session));
+    		log.info("* default category create");
+    		categoryService.createDefaultCategory(HttpSessionUtils.getUserFromSession(session));
+    		
     		return "redirect:/#/list";
     }
 }

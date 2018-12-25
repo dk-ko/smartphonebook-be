@@ -79,10 +79,10 @@ public class GoogleAuthenticationSuccessHandler implements AuthenticationSuccess
             savedUser = userRepository.save(newUser);
             
             log.info("* default tag create");
-            createDafaultTag(savedUser);
+//            createDafaultTag(savedUser);
             
             log.info(" default category create");
-            createDefaultCategory(savedUser);
+//            createDefaultCategory(savedUser);
             
             Contact defaultContact = Contact.builder()
             		.user(savedUser)

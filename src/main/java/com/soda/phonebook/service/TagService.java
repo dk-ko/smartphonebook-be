@@ -77,4 +77,16 @@ public class TagService {
 		return tagRepository.save(findTag) != null ? true : false;
 	}
 	
+	public void createDafaultTag(User user) {
+		Tag tag1 = Tag.builder().name("가족").user(user).build();
+		Tag tag2 = Tag.builder().name("친구").user(user).build();
+        Tag tag3 = Tag.builder().name("학교").user(user).build();
+        Tag tag4 = Tag.builder().name("직장").user(user).build();
+        
+        tagRepository.save(tag1);
+        tagRepository.save(tag2);
+        tagRepository.save(tag3);
+        tagRepository.save(tag4);
+	}
+	
 }
