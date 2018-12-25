@@ -244,7 +244,7 @@ public class ContactService {
 		contactRepository.save(findContact);
 		
 		log.info("* contact favorite 수정");
-//		User user = userService.getCurrentUser();
+
 		switch(dto.getType()) {
 		case FAVORITED:
 			addFavoritesToUser(findUser, findContact);

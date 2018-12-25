@@ -16,11 +16,16 @@ import org.springframework.security.web.context.HttpSessionSecurityContextReposi
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.soda.phonebook.domain.Category;
 import com.soda.phonebook.domain.Contact;
+import com.soda.phonebook.domain.Tag;
 import com.soda.phonebook.domain.User;
 import com.soda.phonebook.domain.VO.ContactType;
+import com.soda.phonebook.domain.VO.DataType;
 import com.soda.phonebook.dto.req.ContactSaveRequestDto;
+import com.soda.phonebook.repository.CategoryRepository;
 import com.soda.phonebook.repository.ContactRepository;
+import com.soda.phonebook.repository.TagRepository;
 import com.soda.phonebook.repository.UserRepository;
 
 import lombok.extern.slf4j.Slf4j;
@@ -31,8 +36,11 @@ public class GoogleAuthenticationSuccessHandler implements AuthenticationSuccess
 	
 	private HttpSession httpSession;
 	private ObjectMapper objectMapper;
+	
 	private UserRepository userRepository;
 	private ContactRepository contactRepository;
+	private TagRepository tagRepository;
+	private CategoryRepository categoryRepository;
 	
 	public GoogleAuthenticationSuccessHandler(HttpSession httpSession, ObjectMapper objectMapper, UserRepository userRepository, ContactRepository contactRepository) {
         this.httpSession = httpSession;
@@ -66,13 +74,16 @@ public class GoogleAuthenticationSuccessHandler implements AuthenticationSuccess
         User savedUser = userRepository.findByEmail(google.getEmail());
 
         if(savedUser == null){
-        		log.debug("* savedUser == null");
             User newUser = google.toEntity();
-            log.debug("* google.toEntity");
             newUser.updateRole(SessionConstants.LOGIN_USER);
-            log.debug("* updateRole");
             savedUser = userRepository.save(newUser);
-            log.debug("* user save");
+            
+            log.info("* default tag create");
+            createDafaultTag(savedUser);
+            
+            log.info(" default category create");
+            createDefaultCategory(savedUser);
+            
             Contact defaultContact = Contact.builder()
             		.user(savedUser)
             		.type(ContactType.ME)
@@ -89,4 +100,35 @@ public class GoogleAuthenticationSuccessHandler implements AuthenticationSuccess
         log.debug("* savedUser return 전 ");
         return savedUser;
     }
+	
+	private void createDafaultTag(User user) {
+		tagRepository.save(Tag.builder().name("가족").user(user).build());
+        tagRepository.save(Tag.builder().name("친구").user(user).build());
+        tagRepository.save(Tag.builder().name("학교").user(user).build());
+        tagRepository.save(Tag.builder().name("직장").user(user).build());
+	}
+	
+	private void createDefaultCategory(User user) {
+		categoryRepository.save(Category.builder().type(DataType.DIGIT).name("휴대전화").user(user).build());
+		categoryRepository.save(Category.builder().type(DataType.DIGIT).name("집").user(user).build());
+		categoryRepository.save(Category.builder().type(DataType.DIGIT).name("직장").user(user).build());
+		categoryRepository.save(Category.builder().type(DataType.DIGIT).name("팩스").user(user).build());
+		categoryRepository.save(Category.builder().type(DataType.DIGIT).name("기타").user(user).build());
+		
+		categoryRepository.save(Category.builder().type(DataType.URL).name("개인").user(user).build());
+		categoryRepository.save(Category.builder().type(DataType.URL).name("직장").user(user).build());
+		categoryRepository.save(Category.builder().type(DataType.URL).name("기타").user(user).build());
+		
+		categoryRepository.save(Category.builder().type(DataType.EMAIL).name("개인").user(user).build());
+		categoryRepository.save(Category.builder().type(DataType.EMAIL).name("직장").user(user).build());
+		categoryRepository.save(Category.builder().type(DataType.EMAIL).name("기타").user(user).build());
+		
+		categoryRepository.save(Category.builder().type(DataType.DATE).name("생일").user(user).build());
+		categoryRepository.save(Category.builder().type(DataType.DATE).name("기념일").user(user).build());
+		categoryRepository.save(Category.builder().type(DataType.DATE).name("기타").user(user).build());
+		
+		categoryRepository.save(Category.builder().type(DataType.ADDRESS).name("집").user(user).build());
+		categoryRepository.save(Category.builder().type(DataType.ADDRESS).name("직장").user(user).build());
+		categoryRepository.save(Category.builder().type(DataType.ADDRESS).name("기타").user(user).build());
+	}
 }
