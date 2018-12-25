@@ -24,9 +24,9 @@ public class UserController {
 	
 	private final UserService userService;
 	 
-	@GetMapping("/{id}/favorites")
+	@GetMapping("/favorites")
 	public List<ContactListReadResponseDto> getFavorites(@PathVariable final Long id, HttpSession session) {
 		if(!HttpSessionUtils.isLoginUser(session)) return null;
-		return userService.getFavorites(id);
+		return userService.getFavorites(id, HttpSessionUtils.getUserFromSession(session));
 	}
 }

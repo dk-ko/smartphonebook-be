@@ -45,8 +45,8 @@ public class UserService {
 	}
 	
 	@Transactional(readOnly = true)
-	public List<ContactListReadResponseDto> getFavorites(Long id) {
-		User findUser = findById(id);
+	public List<ContactListReadResponseDto> getFavorites(Long id, User user) {
+		User findUser = findByEmail(user.getEmail());
 		
 		List<ContactListReadResponseDto> favorites = new ArrayList<>();
 		for(Contact contact : findUser.getFavorites())
@@ -55,10 +55,10 @@ public class UserService {
 		return favorites;
 	}
 	
-	private User findById(Long id) {
-		return userRepository.findById(id)
-				.orElseThrow(()->new IllegalArgumentException("findById error : wrong id")); 
-	}
+//	private User findById(Long id) {
+//		return userRepository.findById(id)
+//				.orElseThrow(()->new IllegalArgumentException("findById error : wrong id")); 
+//	}
 	
 	public User findByEmail(String email) {
 		return userRepository.findByEmail(email);
