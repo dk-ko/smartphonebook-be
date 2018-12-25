@@ -50,7 +50,7 @@ public class GoogleAuthenticationSuccessHandler implements AuthenticationSuccess
         httpSession.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
         
         httpSession.setMaxInactiveInterval(60*30);
-        response.sendRedirect("/#/");
+        response.sendRedirect("/#/list");
     }
 	
 	private GoogleUser getGoogleUser(Authentication authentication) { 
@@ -76,6 +76,7 @@ public class GoogleAuthenticationSuccessHandler implements AuthenticationSuccess
             		.user(savedUser)
             		.type(ContactType.ME)
             		.name(google.getName())
+            		.photo("".getBytes())
 //            		.photo(Base64.getDecoder().decode(google.getPicture()))
             		.build();
             log.debug("* contact build");
