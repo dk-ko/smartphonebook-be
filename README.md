@@ -47,10 +47,14 @@
 - OAuth 2
 - SSL
 - Logback 1.2.x
-- Swagger2 2.5.x
+- Swagger 2.5.x
 - JDBC
 - JUnit
 - Rest-Assured 3.0.x
+
+## System Architecture
+
+![System Arcthitecture](/images/system_architecture.jpeg)
 
 ## 개발자 및 역할
 - 공통 : 기획 및 UI 설계, DB 설계
