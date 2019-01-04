@@ -17,11 +17,7 @@
 - Travis, AWS를 이용해 CI/CD 환경을 구축해본다.
 - AWS를 이용해 https로 서비스를 배포해본다.
 
-## 프로젝트 일정
-
-> 2018\. 9. 8 ~ 진행중
-
-## 주요 기능
+## Features
 - 연락처 생성, 수정, 삭제
 - 연락처에 번호, 주소, 기념일 등의 추가 정보 저장
 - 각 정보의 custom 카테고리 추가/삭제
@@ -33,7 +29,7 @@
 - 연락처 검색
 - 주소록 백업 Excel Export/Import
 
-## 시스템 정보 및 개발 환경
+## Stack
 
 - Spring Boot 2.1.x
 - JPA 5.2.x
@@ -56,7 +52,14 @@
 
 ![System Arcthitecture](/images/system_architecture.jpeg)
 
-## 개발자 및 역할
+## Related
+- [spring-boot-webservice](https://github.com/koda93/spring-boot-webservice)
+- [JPA Study](https://github.com/koda93/jpa-study)
+- [spring-boot-file](https://github.com/koda93/spring-boot-file)
+- [spring-boot-oauth](https://github.com/koda93/spring-boot-oauth)
+
+
+## Members
 - 공통 : 기획 및 UI 설계, DB 설계
 - 고다경 : 서버 및 개발환경 구축, 웹 백엔드 개발, 서비스 배포
 - 정소연 :  [웹 프론트 엔드](https://github.com/JESS2/SmartPhoneBook_FE) 개발
