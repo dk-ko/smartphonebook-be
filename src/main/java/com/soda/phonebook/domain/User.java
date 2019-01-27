@@ -28,9 +28,9 @@ import lombok.NoArgsConstructor;
 @AttributeOverride(name="id", column=@Column(name="user_id"))
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-//public class User extends BaseEntity implements Serializable{
-public class User extends BaseEntity {
-//	private static final long serialVersionUID = 6312104514380193520L;
+public class User extends BaseEntity implements Serializable{
+//public class User extends BaseEntity {
+	private static final long serialVersionUID = 6312104514380193520L;
 
 	@Column(name="email", nullable=false, unique=true)
 	private String email;
