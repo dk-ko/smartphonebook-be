@@ -38,9 +38,9 @@ import lombok.NoArgsConstructor;
 @AttributeOverride(name="id", column=@Column(name="contact_id"))
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Contact extends BaseEntity implements Serializable{
-	
-	private static final long serialVersionUID = 6097304999563349306L;
+//public class Contact extends BaseEntity implements Serializable{
+public class Contact extends BaseEntity{
+//	private static final long serialVersionUID = 6097304999563349306L;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name="user_id", 
