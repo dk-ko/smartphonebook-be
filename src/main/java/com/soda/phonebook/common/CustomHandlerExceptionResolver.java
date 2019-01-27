@@ -31,7 +31,7 @@ public class CustomHandlerExceptionResolver implements HandlerExceptionResolver{
 		log.error(ex.getClass() + " : " + ex.getMessage());
 		
 		ModelAndView mv = new ModelAndView(); 
-		mv.setViewName("error");
+		mv.setViewName("/");
 
 		return mv;
 	}
